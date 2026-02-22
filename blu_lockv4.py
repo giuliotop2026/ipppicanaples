@@ -63,27 +63,27 @@ if st.button("🔥 ATTIVA PILOTA AUTOMATICO 2.5"):
                 with st.spinner("FASE 2: PERPLEXITY CERCA IL FANGO E LA CAZZIMMA LIVE... 🛰️"):
                     # FASE 2: PERPLEXITY ANALIZZA I DATI + CERCA SUL WEB
                     prompt_pplx = f"""
-                    SEI 'BLUE LOCK SONAR' DI GIULIO SIMPATICO. 
+                    SEI UN ESPERTO IN FISICA APPLICATA ALLE COMPETIZIONI E ANALISI DELLA DENSITÀ TECNICA. 
                     
-                    DATI ESTRATTI DALLE FOTO DEL CANTIERE:
+                    DATI ESTRATTI DAL CANTIERE:
                     {dati_estratti}
                     
                     MISSIONE:
-                    1. Usa i dati per capire la gara e cerca sul web il METEO e lo STATO DEL TERRENO.
-                    2. Cerca news live sui cavalli estratti.
-                    3. INCROCIA I DATI MA APPLICA LA REGOLA HIGHLANDER: ALLA FINE DEVI SCEGLIERE UN SOLO E UNICO CAVALLO DA PUNTARE.
+                    1. Cerca il meteo attuale e lo stato del terreno (Fango, Erba, ecc.) per la località dell'evento.
+                    2. Analizza la 'Resistenza Polmonare' e la 'Zavorra' dei soggetti indicati rispetto alle condizioni ambientali.
+                    3. APPLICA IL CRITERIO DI EFFICIENZA MASSIMA: Identifica il soggetto con la maggiore probabilità di performance superiore (il 'Secondo Migliore').
                     
-                    PROTOCOLLO RIGIDO DI SCANSIONE:
-                    - Trova il 'Favorito di Carta' (quello con la quota più bassa) e METTILO DA PARTE. Non è lui la nostra preda.
-                    - Tra i rimanenti, cerca il 'SECONDO MIGLIORE': colui che ha la Forma Recente inviolabile (sempre nei primi 3), la Zavorra giusta per il terreno di oggi e la Cazzimma per ribaltare il favorito.
+                    PROTOCOLLO TECNICO (VOTO 1-5):
+                    - ADATTAMENTO AMBIENTALE (Terreno).
+                    - POTENZA MOTORE (Densità tecnica).
+                    - CAPACITÀ RESPIRATORIA (Distanza).
+                    - OTTIMIZZAZIONE CARICO (Zavorra/Peso).
+                    - STORICO PRESTAZIONI (Forma recente inviolabile).
                     
-                    SENTENZA FINALE (IN MAIUSCOLO E OBBLIGATORIA):
-                    DEVI DICHIARARE UN SOLO CAVALLO VINCITORE DEL PROTOCOLLO. NON ASSEGNARE IL TITOLO A PIÙ DI UNA PARTICELLA.
+                    VERDETTO FINALE (USA QUESTI TERMINI):
+                    '💎 COMPONENTE SUPERIORE INDIVIDUATO: [NOME]. INDICE DI AFFIDABILITÀ: MASSIMO. MOTIVAZIONE TECNICA: [Perché schiaccia la concorrenza oggi].'
                     
-                    Usa questo formato esatto per l'unico prescelto:
-                    '💎 DIAMANTE ASSOLUTO RILEVATO: [NOME CAVALLO]. CERTEZZA 10000% 💙. MOTIVAZIONE: [Spiega in una riga perché lui schiaccia il favorito].'
-                    
-                    SE NESSUNO SUPERA IL TEST, SCRIVI: '❌ CANTIERE NON CERTIFICATO. TROPPE IMPUREZZE. NESSUNA PUNTATA.'
+                    Usa termini come: MARMO, CEMENTO, ABISSO, CAZZIMMA.
                     """
                     
                     messages = [
