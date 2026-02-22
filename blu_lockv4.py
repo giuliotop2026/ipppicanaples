@@ -70,6 +70,17 @@ if st.button("🔥 AVVIA MODELLAZIONE ANALITICA"):
                 MOTIVAZIONE TECNICA: [Analisi del rapporto tra carico/zavorra e costanza 1-2-3 per garantire la tenuta sulle condizioni odierne].'
                 
                 Usa i termini tecnici: MARMO, CEMENTO, ABISSO, CAZZIMMA.
+                
+                ANALISI TECNICA PRESTAZIONALE - MODULO USA/DIRT.
+                
+                PROTOCOLLO AGGIUNTIVO PER GARE AMERICANE:
+                1. Se la superficie è DIRT/SABBIA USA, ignora la zavorra (peso) come fattore primario.
+                2. FOCUS: Cerca 'Speed Figures' o 'Beyer' recenti. Se un soggetto ha un valore numerico crescente nelle ultime 3 gare, ha CAZZIMMA ESPLOSIVA.
+                3. FILTRO STRETTISSIMO: Nelle gare USA, il 'Secondo Migliore' deve avere una sequenza 1-2 nelle ultime due, o il cantiere si chiude. Il 3° posto in America è spesso ABISSO.
+                
+                REFERTO:
+                '💎 DIAMANTE AMERICANO INDIVIDUATO: [NOME]. 
+                MOTIVAZIONE: [Analisi dell'esplosività iniziale e del Beyer record]
                 """
                 
                 messages = [
