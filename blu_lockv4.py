@@ -2,87 +2,69 @@ import streamlit as st
 from google import genai
 from PIL import Image
 
-# 1. CASSAFORTE INVIOLABILE - BENZINA DALLE SETTINGS
+# 1. CASSAFORTE E BENZINA
 try:
     API_KEY = st.secrets["GEMINI_API_KEY"]
 except KeyError:
-    st.error("❌ BENZINA NON TROVATA! CONFIGURA I SECRETS CON 'GEMINI_API_KEY'.")
+    st.error("❌ BENZINA NON TROVATA! CONFIGURA I SECRETS.")
     st.stop()
 
-# Innesco del Client GenAI
 client = genai.Client(api_key=API_KEY)
 
-# CONFIGURAZIONE PAGINA
-st.set_page_config(page_title="BLUE LOCK SONAR - GIULIO", page_icon="🔵", layout="centered")
+st.set_page_config(page_title="BLUE LOCK FORTEZZA - GIULIO", page_icon="🏰", layout="centered")
 
-# --- INTERFACCIA NAPOLI POWER ---
-st.title("👁️ BLUE LOCK SONAR 4.0 🛰️")
-st.markdown("## **IL SONAR CHE SCANSIONA L'ABISSO E IL WEB IN TEMPO REALE!** 🐎")
-st.write("---")
+# --- INTERFACCIA ---
+st.title("🏰 BLUE LOCK FORTEZZA 4.5 👁️")
+st.markdown("## **IL DIAMANTE DIPENDE DAL FANGO: SCANSIONE RELATIVA ATTIVA!** 💙 ☕")
 
-# AREA CREDITS
-st.sidebar.markdown("### 🛠️ CANTIERE")
-st.sidebar.write("**CREATA DA GIULIO SIMPATICO** 💙 ☕")
-st.sidebar.write("---")
-st.sidebar.info("MODALITÀ: LIVE SEARCH ATTIVA (METEO, TERRENO, NEWS).")
+st.sidebar.markdown("### 🛠️ CREATORE: GIULIO SIMPATICO")
+st.sidebar.info("MODELLO STABILE: 1.5 FLASH - SONAR LIVE ATTIVO.")
 
-# 2. CARICAMENTO DELLE PARTICELLE
-st.header("1. SGANCIATE I DATI 🕵️‍♂️")
-st.info("CARICA LE FOTO. IL SONAR FARÀ IL RESTO CERCANDO ONLINE METEO E NEWS.")
-uploaded_files = st.file_uploader("DOCUMENTI DEL CANTIERE", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
+# 2. CARICAMENTO PARTICELLE
+st.header("1. SGANCIATE I DATI DEL GIORNO 🕵️‍♂️")
+uploaded_files = st.file_uploader("FOTO QUOTE, PESI E PRESTAZIONI", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 if uploaded_files:
-    images_to_process = []
-    for file in uploaded_files:
-        image = Image.open(file)
-        st.image(image, caption=f"ACQUISITO: {file.name}", use_container_width=True)
-        images_to_process.append(image)
+    images_to_process = [Image.open(f) for f in uploaded_files]
+    for img in images_to_process:
+        st.image(img, use_container_width=True)
     
-    if st.button("🚀 ATTIVA SONAR LIVE E SCANSIONA"):
-        with st.spinner("CONNETTENDOSI AI SATELLITI E PREPARANDO IL CAFFÈ... ☕"):
+    if st.button("🔥 AVVIA SCANSIONE RELATIVA"):
+        with st.spinner("SCANSIONANDO METEO, TERRENO E CAZZIMMA... ☕"):
             try:
-                # PROTOCOLLO SONAR 4.0
-                prompt_blue_lock = """
-                SEI IL SISTEMA 'BLUE LOCK SONAR' DI GIULIO SIMPATICO. 
+                # PROTOCOLLO FORTEZZA RELATIVA
+                prompt_fortezza = """
+                SEI IL SISTEMA 'BLUE LOCK FORTEZZA' DI GIULIO SIMPATICO.
                 
-                MISSIONE:
-                1. ANALIZZA LE FOTO CARICATE (PESI, QUOTE, CAVALLI).
-                2. USA LO STRUMENTO DI RICERCA GOOGLE PER TROVARE:
-                   - METEO ATTUALE SULLA LOCALITÀ DELLA GARA (Pisa, Hereford, ecc.).
-                   - STATO DEL TERRENO (Erba, fango, sabbia, pesante/morbido).
-                   - NEWS DELL'ULTIMA ORA SUI CAVALLI IDENTIFICATI (infortuni, ritiri, cambi guida).
+                MISSIONE: IDENTIFICA IL 'SECONDO MIGLIORE' IN BASE ALLE CONDIZIONI SPECIFICHE DI OGGI.
+                1. USA GOOGLE SEARCH PER TROVARE METEO E STATO DEL TERRENO (FANGO, ERBA, SABBIA).
+                2. ANALIZZA LE FOTO: PESI, QUOTE E PRESTAZIONI.
                 
-                VALUTAZIONE (1-5):
-                1. STABILITÀ CIRCUITO (IN BASE AL TERRENO TROVATO ONLINE).
-                2. DENSITÀ TECNICA (MOTORE E PRESTAZIONI).
-                3. ZAVORRA/PESO (SE IL PESO È UN'ANCORA RISPETTO AL FANGO TROVATO ONLINE, PENALIZZA).
-                4. FORMA RECENTE.
-                5. NEWS E CAZZIMMA (USA LE NOTIZIE TROVATE ONLINE).
-                6. ABISSO QUOTA.
-                
-                REGOLE:
-                - RISPONDI SEMPRE IN MAIUSCOLO.
-                - USA: CEMENTO, MARMO, ABISSO, CAZZIMMA.
-                - SE SCORE >= 24: '💎 DIAMANTE ASSOLUTO RILEVATO. POSARE IL CEMENTO. CERTEZZA 10000% 💙.'
-                - MOSTRA TABELLA E FONTI DELLE NEWS TROVATE.
+                PROTOCOLLO RIGIDO (1-5):
+                - STABILITÀ CIRCUITO: Affinità reale al terreno di oggi (se piove, chi tiene?).
+                - DENSITÀ TECNICA: Potenza del motore relativa al campo partenti.
+                - POLMONI D'ACCIAIO: Resistenza sulla distanza specifica con la zavorra odierna.
+                - ZAVORRA/PESO: Chi è avvantaggiato dal peso in queste condizioni di terreno?
+                - FORMA RECENTE: Deve essere solida. Se non è nei primi 3 recentemente, penalizza.
+                - CAZZIMMA: News online su cambi guida o voglia di vincere.
+
+                SENTENZA:
+                - SCORE >= 26: '💎 DIAMANTE ASSOLUTO. CERTEZZA 10000% 💙.'
+                - SCORE 23-25: '⚙️ BULLONE SOLIDO. SOLO PIAZZATO. IL CEMENTO REGGE.'
+                - SCORE < 23: '❌ CANTIERE PERICOLOSO. ABISSO TROPPO PROFONDO.'
+
+                RICORDA: IL VINCENTE È QUELLO CHE TIEN' 'A CAZZIMMA NELLE CONDIZIONI DI OGGI.
                 """
                 
-                # INNESCO DEL MOTORE CON GOOGLE SEARCH ATTIVO
                 response = client.models.generate_content(
-                    model='gemini-2.0-flash',
-                    contents=[prompt_blue_lock] + images_to_process,
-                    config={
-                        'tools': [{'google_search': {}}] 
-                    }
+                    model='gemini-1.5-flash',
+                    contents=[prompt_fortezza] + images_to_process,
+                    config={'tools': [{'google_search': {}}]}
                 )
                 
-                st.markdown("### 2. LA SENTENZA DEL SONAR 💙")
+                st.markdown("### 2. VERDETTO DI GIULIO 💙")
                 st.success(response.text)
                 st.balloons()
                 
             except Exception as e:
-                st.error(f"URTO NEL SISTEMA: {e}")
-
-# FOOTER GIULIO STYLE
-st.write("---")
-st.caption("BLUE LOCK SONAR - GIULIO SIMPATICO 💙 ☕ - LIVE EDITION 2026")
+                st.error(f"URTO: {e}. ASPETTA 30 SECONDI.")
