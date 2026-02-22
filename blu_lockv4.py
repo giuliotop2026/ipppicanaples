@@ -63,27 +63,21 @@ if st.button("🔥 ATTIVA PILOTA AUTOMATICO 2.5"):
                 with st.spinner("FASE 2: PERPLEXITY CERCA IL FANGO E LA CAZZIMMA LIVE... 🛰️"):
                     # FASE 2: PERPLEXITY ANALIZZA I DATI + CERCA SUL WEB
                     prompt_pplx = f"""
-                    SEI UN ESPERTO IN FISICA APPLICATA ALLE COMPETIZIONI E ANALISI DELLA DENSITÀ TECNICA. 
+                    SEI UN ISPETTORE DI CANTIERE SPIETATO. IL TUO OBIETTIVO È L'EFFICIENZA DEI MATERIALI.
                     
-                    DATI ESTRATTI DAL CANTIERE:
+                    DATI ESTRATTI DALLE FOTO:
                     {dati_estratti}
                     
-                    MISSIONE:
-                    1. Cerca il meteo attuale e lo stato del terreno (Fango, Erba, ecc.) per la località dell'evento.
-                    2. Analizza la 'Resistenza Polmonare' e la 'Zavorra' dei soggetti indicati rispetto alle condizioni ambientali.
-                    3. APPLICA IL CRITERIO DI EFFICIENZA MASSIMA: Identifica il soggetto con la maggiore probabilità di performance superiore (il 'Secondo Migliore').
+                    PROTOCOLLO 'FORTEZZA INVIOLABILE':
+                    1. Scrivi per ogni soggetto la sequenza degli ULTIMI 3 PIAZZAMENTI letti dalle foto.
+                    2. REGOLA D'ORO: Se nella sequenza compare un numero MAGGIORE DI 3 (es. 4, 5, 6, 0, RP, FE), il soggetto è SCARTATO. Non è marmo.
+                    3. Tra i superstiti, identifica il 'Componente Superiore' (il secondo migliore) valutando Resistenza Polmonare e Zavorra.
                     
-                    PROTOCOLLO TECNICO (VOTO 1-5):
-                    - ADATTAMENTO AMBIENTALE (Terreno).
-                    - POTENZA MOTORE (Densità tecnica).
-                    - CAPACITÀ RESPIRATORIA (Distanza).
-                    - OTTIMIZZAZIONE CARICO (Zavorra/Peso).
-                    - STORICO PRESTAZIONI (Forma recente inviolabile).
+                    VERDETTO FINALE:
+                    - Se trovi un soggetto perfetto: '💎 COMPONENTE SUPERIORE INDIVIDUATO: [NOME]. MOTIVAZIONE: [Perché è marmo puro oggi].'
+                    - Se nessuno ha la forma 1-2-3 nelle ultime tre: '❌ CANTIERE CHIUSO. TROPPE IMPUREZZE NELLE SEQUENZE.'
                     
-                    VERDETTO FINALE (USA QUESTI TERMINI):
-                    '💎 COMPONENTE SUPERIORE INDIVIDUATO: [NOME]. INDICE DI AFFIDABILITÀ: MASSIMO. MOTIVAZIONE TECNICA: [Perché schiaccia la concorrenza oggi].'
-                    
-                    Usa termini come: MARMO, CEMENTO, ABISSO, CAZZIMMA.
+                    USA I TERMINI: MARMO, ABISSO, CAZZIMMA.
                     """
                     
                     messages = [
