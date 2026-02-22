@@ -62,22 +62,25 @@ if st.button("🔥 ATTIVA PILOTA AUTOMATICO 2.5"):
 
                 with st.spinner("FASE 2: PERPLEXITY CERCA IL FANGO E LA CAZZIMMA LIVE... 🛰️"):
                     # FASE 2: PERPLEXITY ANALIZZA I DATI + CERCA SUL WEB
-                    prompt_pplx = f"""
-                    SEI UN ISPETTORE DI CANTIERE SPIETATO. IL TUO OBIETTIVO È L'EFFICIENZA DEI MATERIALI.
+                 prompt_pplx = f"""
+                    ANALISI SCIENTIFICA DELLE PERFORMANCE E STABILITÀ DEI MATERIALI.
                     
-                    DATI ESTRATTI DALLE FOTO:
+                    DATI ACQUISITI DALLE SCANSIONI:
                     {dati_estratti}
                     
-                    PROTOCOLLO 'FORTEZZA INVIOLABILE':
-                    1. Scrivi per ogni soggetto la sequenza degli ULTIMI 3 PIAZZAMENTI letti dalle foto.
-                    2. REGOLA D'ORO: Se nella sequenza compare un numero MAGGIORE DI 3 (es. 4, 5, 6, 0, RP, FE), il soggetto è SCARTATO. Non è marmo.
-                    3. Tra i superstiti, identifica il 'Componente Superiore' (il secondo migliore) valutando Resistenza Polmonare e Zavorra.
+                    OBIETTIVO TECNICO:
+                    1. Verifica le condizioni ambientali (Meteo e Terreno) della località indicata.
+                    2. Valuta la 'Resistenza alla Fatica' dei componenti basandoti esclusivamente sulla sequenza dei loro ultimi 3 risultati numerici.
+                    3. FILTRO DI QUALITÀ: Escludi ogni componente che presenti un valore numerico superiore a 3 nella sequenza degli ultimi tre test. 
                     
-                    VERDETTO FINALE:
-                    - Se trovi un soggetto perfetto: '💎 COMPONENTE SUPERIORE INDIVIDUATO: [NOME]. MOTIVAZIONE: [Perché è marmo puro oggi].'
-                    - Se nessuno ha la forma 1-2-3 nelle ultime tre: '❌ CANTIERE CHIUSO. TROPPE IMPUREZZE NELLE SEQUENZE.'
+                    REFERTO TECNICO FINALE:
+                    - Identifica il 'Soggetto ad Alta Efficienza' (il secondo miglior valore rilevato che non sia il valore di picco assoluto/favorito).
+                    - Descrivi perché la sua struttura (peso/zavorra) e la regolarità dei test precedenti lo rendono il componente più stabile per le condizioni odierne.
                     
-                    USA I TERMINI: MARMO, ABISSO, CAZZIMMA.
+                    FORMATO RISPOSTA:
+                    '💎 COMPONENTE SUPERIORE INDIVIDUATO: [NOME]. MOTIVAZIONE: [Analisi tecnica della regolarità e resistenza polmonare].'
+                    
+                    TERMINI DA USARE: MARMO, CEMENTO, ABISSO, CAZZIMMA.
                     """
                     
                     messages = [
