@@ -69,24 +69,21 @@ if st.button("🔥 ATTIVA PILOTA AUTOMATICO 2.5"):
                     {dati_estratti}
                     
                     MISSIONE:
-                    1. Usa i dati qui sopra per capire che gara è e cerca sul web il METEO ATTUALE e lo STATO DEL TERRENO.
-                    2. Cerca news live sui cavalli estratti (cambi guida, infortuni, dichiarazioni).
-                    3. Unisci le tue ricerche online con i dati delle foto (pesi, forma recente).
+                    1. Usa i dati per capire la gara e cerca sul web il METEO e lo STATO DEL TERRENO.
+                    2. Cerca news live sui cavalli estratti.
+                    3. INCROCIA I DATI MA APPLICA LA REGOLA HIGHLANDER: ALLA FINE DEVI SCEGLIERE UN SOLO E UNICO CAVALLO DA PUNTARE.
                     
-                    PROTOCOLLO RIGIDO (1-5):
-                    - STABILITÀ CIRCUITO (Affinità al terreno trovato online).
-                    - DENSITÀ TECNICA (Motore relativo al campo).
-                    - POLMONI D'ACCIAIO (Resistenza).
-                    - ZAVORRA/PESO (Valuta in base ai pesi letti dalle foto).
-                    - FORMA RECENTE (Rigore: se non è nei primi 3 di recente, penalizza forte).
-                    - CAZZIMMA (News trovate online).
-
-                    SENTENZA FINALE (IN MAIUSCOLO):
-                    - SCORE >= 26: '💎 DIAMANTE ASSOLUTO RILEVATO. CERTEZZA 10000% 💙.'
-                    - SCORE 23-25: '⚙️ BULLONE SOLIDO. SOLO PIAZZATO. IL CEMENTO REGGE.'
-                    - SCORE < 23: '❌ CANTIERE NON CERTIFICATO. RISCHIO IMPUREZZE.'
+                    PROTOCOLLO RIGIDO DI SCANSIONE:
+                    - Trova il 'Favorito di Carta' (quello con la quota più bassa) e METTILO DA PARTE. Non è lui la nostra preda.
+                    - Tra i rimanenti, cerca il 'SECONDO MIGLIORE': colui che ha la Forma Recente inviolabile (sempre nei primi 3), la Zavorra giusta per il terreno di oggi e la Cazzimma per ribaltare il favorito.
                     
-                    NOTE DI GIULIO: IL VINCENTE NON È IL PIÙ VELOCE, MA QUELLO CHE TIEN' 'A CAZZIMMA OGGI.
+                    SENTENZA FINALE (IN MAIUSCOLO E OBBLIGATORIA):
+                    DEVI DICHIARARE UN SOLO CAVALLO VINCITORE DEL PROTOCOLLO. NON ASSEGNARE IL TITOLO A PIÙ DI UNA PARTICELLA.
+                    
+                    Usa questo formato esatto per l'unico prescelto:
+                    '💎 DIAMANTE ASSOLUTO RILEVATO: [NOME CAVALLO]. CERTEZZA 10000% 💙. MOTIVAZIONE: [Spiega in una riga perché lui schiaccia il favorito].'
+                    
+                    SE NESSUNO SUPERA IL TEST, SCRIVI: '❌ CANTIERE NON CERTIFICATO. TROPPE IMPUREZZE. NESSUNA PUNTATA.'
                     """
                     
                     messages = [
