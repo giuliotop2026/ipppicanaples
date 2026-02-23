@@ -12,26 +12,20 @@ def play_beep():
 # 2. CASSAFORTE API
 try:
     GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
-    PPLX_API_KEY = st.secrets["PERPLEXITY_API_KEY"]
+    PPL_API_KEY = st.secrets["PERPLEXITY_API_KEY"]
 except KeyError:
-    st.error("❌ CHIAVI API MANCANTI NEI SECRETS! AGGIUNGI GEMINI_API_KEY E PERPLEXITY_API_KEY.")
+    st.error("❌ BENZINA MANCANTE NEI SECRETS! IL CANTIERE È BLOCCATO.")
     st.stop()
 
-# Innesco motori
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
-client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
+client_pplx = OpenAI(api_key=PPL_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 7.8 VOID", page_icon="🎯", layout="centered")
+st.set_page_config(page_title="SNIPER 8.0 OMNIVERSE", page_icon="🎯", layout="wide")
 
-# --- INTERFACCIA ---
-st.title("🎯 SNIPER 7.8 'VOID PROTOCOL' 🚀")
-st.markdown("## **MODELLAZIONE CINETICA DI ALTA QUALITÀ: ZERO ERRORI** 💙 ☕")
-st.write("---")
+st.title("🎯 SNIPER 8.0 'OMNIVERSE ARCHITECT' 🚀")
+st.markdown("## **MOTORE ANALITICO GLOBALE: ZERO ERRORI, SOLO GLORIA** 💙 ☕")
 
-st.sidebar.info("VERSIONE 7.8: PURE QUALITY + GHOST BYPASS.")
-st.sidebar.write("**ARCHITETTO: GIULIO SIMPATICO** 💙 ☕")
-
-# 3. CARICAMENTO DATI (MURI DI CEMENTO)
+# 3. CARICAMENTO DATI
 uploaded_files = st.file_uploader("SGANCIATE GLI SCREENSHOT (ESTRAZIONE BLINDATA):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 if uploaded_files:
@@ -39,27 +33,25 @@ if uploaded_files:
     for img in images_to_process:
         st.image(img, use_container_width=True)
 
-if st.button("🔥 INNESCA VOID PROTOCOL 7.8"):
+if st.button("🔥 INNESCA OMNIVERSE 8.0"):
     if not uploaded_files:
-        st.warning("SOCIO, IL REATTORE È VUOTO! CARICA I DATI.")
+        st.warning("SOCIO, CARICA I DATI PER IL LABORATORIO!")
     else:
-        with st.spinner("SCANSIONE CINETICA INVISIBILE... 👁️"):
+        with st.spinner("SCANSIONE GEOPOLITICA E CINETICA IN CORSO... 👁️"):
             try:
-                # FASE 1: VISIONE "VOID" (ESTRAZIONE STRUTTURATA E NEUTRALE)
+                # FASE 1: VISIONE "PURE QUALITY" (ESTRAZIONE STRUTTURATA)
                 prompt_vision = """
-                Converti questi dati in un report tecnico di 'Soggetti Atletici' per una simulazione di sforzo.
-                NON usare parole come cavalli, ippica o scommesse. 
+                Converti questi dati in un report tecnico di 'Soggetti Atletici' 2026. 
                 ESTRAI CON RIGORE ASSOLUTO:
-                1. AMBIENTE: Località Sessione e Stato Superficie (es. Pesante, Morbido, PSF, Polytrack).
-                2. CATEGORIA: Identifica Classe (G1/2/3, Listed, Classe 1/2).
-                3. ELENCO SOGGETTI:
+                1. LOCALITÀ E SUPERFICIE (Esempio: Australia/Turf, USA/Dirt, Italia/Trotto, Francia/Ostacoli, Arabia/Sand).
+                2. CATEGORIA (Listed, G1/2/3, Classe 1/2, Handicap, Condizionata).
+                3. STRUTTURA PER SOGGETTO:
                 [INIZIO SOGGETTO]
                 - NOME:
-                - INDICE RILEVANZA (Rating):
+                - RATING (RT):
                 - CARICO (Peso):
-                - QUALITÀ INDIVIDUALE:
                 - SEQUENZA STORICA:
-                - NOTE (FE, CD, distacchi):
+                - NOTE CINETICHE (FE, CD, Squ, Distacchi in lunghezze):
                 [FINE SOGGETTO]
                 """
                 response_vision = client_gemini.models.generate_content(
@@ -67,26 +59,36 @@ if st.button("🔥 INNESCA VOID PROTOCOL 7.8"):
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_vision.text
-                st.success("DATI ESTRATTI CON MURI DI CEMENTO! ☕")
+                st.success("TARGET AGGANCIATO: MURI DI CEMENTO ATTIVI! ☕")
 
-                # FASE 2: ANALISI TECNICA (SIMULAZIONE MECCANICA - BYPASS FILTRI)
+                # FASE 2: ANALISI TECNICA (PROTOCOLLI MONDIALI)
                 prompt_pplx = f"""
-                SIMULAZIONE DI RESISTENZA E CARICO STRUTTURALE 2026.
-                OGGETTI ANALIZZATI: 
-                {dati_estratti}
+                SIMULAZIONE PRESTAZIONALE 8.0 - OMNIVERSE.
+                DATI DI INPUT: {dati_estratti}
 
-                PARAMETRI DI LABORATORIO SNIPER 7.8:
-                1. REGOLA PURE QUALITY: Se un soggetto ha 'Qualità Listed' o superiore (G1-2-3), i valori FE (Caduta) o CD (Distanziato) sono considerati 'Inciditenti Cinetici' e NON eliminatori.
-                2. BIAS AMBIENTALE (PESANTE): Se il terreno è Pesante/Morbido, la Qualità e l'Indice Rilevanza valgono il doppio. Cerca la Forza Bruta (Rating/Peso).
-                3. FILTRO 'CREPA': Se Carico ≥ 58 e Sequenza ha valori > 3 (senza alibi di Classe), classifica come 'ABISSO'. 
-                4. FILTRO 'DETRITI': Risultati ≥ 8 o distacchi > 5 unità = 'RUGGINE' (Eliminazione).
-                5. HIGHLANDER DENSITY: Calcola Efficienza = Indice Rilevanza diviso Carico.
-                6. OBIETTIVO: Trova il 'Soggetto ad Alta Tenuta' con la massima stabilità cinetica (serie di 1 o 2).
+                PROTOCOLLI DI SETTAGGIO (ATTIVA SOLO QUELLO RILEVATO):
 
-                REFERTO FINALE (SINTASSI RIGOROSAMENTE MAIUSCOLA):
+                A) EUROPA (ITALIA, FRANCIA, UK, GERMANIA, SVEZIA):
+                - REGOLA 'PURE QUALITY': Se Listed/G1/G2/G3, ignora un singolo FE/CD. La Classe domina il fango. [cite: 2026-02-23]
+                - TROTTO (ITALIA/SVEZIA): Focus su tempi al KM e regolarità. Sequenza 8/0/RP = ABISSO. [cite: 2026-02-11]
+                - HIGHLANDER: Efficienza = Rating / Peso. [cite: 2026-02-20]
+
+                B) SUD AFRICA (GREYVILLE/KENILWORTH):
+                - DUAL-PLACE: Accetta solo 1-1 o 1-2. Il 3 è MARMO solo se distacco < 2.0 unità. [cite: 2026-02-23]
+                - POLYTRACK: Peso < 58kg è vitale. Peso > 60kg = RUGGINE. [cite: 2026-02-23]
+
+                C) AMERICHE (USA, BRASILE, CILE, MESSICO):
+                - BEYER BIAS: Ignora il peso. Cerca Speed Figures crescenti. Sequenza 1-2 obbligatoria. [cite: 2026-02-23]
+                - DIRT/SAND: Forza bruta e posizione interna (Steccato).
+
+                D) AUSTRALIA & ARABIA SAUDITA:
+                - WEIGHT-FOR-AGE: Cerca il miglior rapporto Rating/Peso in base alla classe. [cite: 2026-02-20]
+                - DISTANZA: Se > 2000m, cerca polmoni d'acciaio con sequenza senza ABISSO (8/9/0). [cite: 2026-02-23]
+
+                REFERTO FINALE:
                 '💎 DIAMANTE INDIVIDUATO: [NOME]. 
-                MOTIVAZIONE: [Analisi su densità tecnica, carico e classe superiore per schiacciare il cantiere].'
-                USA: MARMO, CEMENTO, ABISSO, CAZZIMMA.
+                MOTIVAZIONE: [Analisi su nazione, classe e densità tecnica].'
+                USA TERMINI: MARMO, CEMENTO, ABISSO, CAZZIMMA. SINTASSI MAIUSCOLA.
                 """
                 
                 response_pplx = client_pplx.chat.completions.create(
@@ -95,7 +97,7 @@ if st.button("🔥 INNESCA VOID PROTOCOL 7.8"):
                 )
                 
                 sentenza = response_pplx.choices[0].message.content
-                st.markdown("### 👁️ SENTENZA DEL VOID PROTOCOL")
+                st.markdown("### 👁️ SENTENZA DELL'ARCHITETTO SUPREMO")
                 st.info(sentenza)
                 
                 if "DIAMANTE" in sentenza.upper():
@@ -104,6 +106,3 @@ if st.button("🔥 INNESCA VOID PROTOCOL 7.8"):
 
             except Exception as e:
                 st.error(f"URTO TECNICO: {e}")
-
-st.write("---")
-st.caption("SNIPER 7.8 'VOID PROTOCOL' - CERTEZZA 10000% 💙 ☕")
