@@ -72,10 +72,12 @@ if st.button("🔥 AVVIA MODELLAZIONE ANALITICA"):
                 - FOCUS: Cerca 'Speed Figures' o 'Beyer' del 2026. Cerca CAZZIMMA ESPLOSIVA (valori crescenti).
                 - FILTRO STRETTISSIMO: Richiesta sequenza 1-2 nelle ultime due gare. Il 3° posto è ABISSO.
                 
-                PROTOCOLLO 3: MODULO SUD AFRICA (CELERITAS - 2 PIAZZATI)
-                - Se Sud Africa (Kenilworth, Greyville, ecc.): Verifica se il campo è ridotto (solo 2 piazzati disponibili).
-                - REGOLA DUAL-PLACE: Forma recente obbligatoria 1-1 o 1-2. Se c'è un 3 recente, il cantiere chiude.
-                - FOCUS: 'Closing Speed' sul rettilineo lungo. Identifica il fondista veloce che non affonda nel CEMENTO.
+               PROTOCOLLO 3: SUD AFRICA 
+                1. Se località è Sud Africa (Greyville, Kenilworth, ecc.):
+                2. FILTRO 'LUNGHEZZE DI MARMO': Non guardare solo il piazzamento numerico. 
+                   - Se un soggetto è arrivato 4° o 5° ma con un distacco INFERIORE a 2.5 lunghezze dal primo, consideralo MARMO (Affidabile).
+                   - Se il distacco è SUPERIORE a 5 lunghezze, è ABISSO (Bullone), a prescindere dal piazzamento.
+                3. OBIETTIVO: Trova il 'Soggetto ad Alta Efficienza' con il miglior distacco minimo/peso e costanza nel 2026.
                 
                 REFERTO FINALE (LINGUAGGIO ANALITICO):
                 '💎 SOGGETTO AD ALTA EFFICIENZA INDIVIDUATO: [NOME]. 
