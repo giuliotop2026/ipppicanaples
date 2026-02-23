@@ -14,31 +14,36 @@ try:
     GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
     PPLX_API_KEY = st.secrets["PERPLEXITY_API_KEY"]
 except KeyError:
-    st.error("❌ BENZINA MANCANTE NEI SECRETS!")
+    st.error("❌ BENZINA MANCANTE NEI SECRETS! IL CANTIERE È FERMO.")
     st.stop()
 
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 15.3 HYBRID ARCHITECT", page_icon="🎯", layout="wide")
+st.set_page_config(page_title="SNIPER 15.3 GLOBAL HYBRID", page_icon="🎯", layout="wide")
 
-st.title("🎯 SNIPER 15.3 'HYBRID ARCHITECT' 🚀")
-st.markdown("## **LOGICA DOPPIA: MARKET LAW (USA) & BULLONE SERRATO (EU)** 💙 ☕")
+st.title("🎯 SNIPER 15.3 'GLOBAL HYBRID' 🚀")
+st.markdown("## **LOGICA SEPARATA: MARKET LAW (USA) & DENSITÀ REALE (EU/ROW)** 💙 ☕")
 
-# 3. MATRICE DI SELEZIONE
+# 3. SISTEMA DI SELEZIONE A MATRICE TOTALE
 col1, col2 = st.columns(2)
+
 with col1:
     nazione = st.selectbox("🌍 IDENTIFICA LA NAZIONE:", [
-        "USA", "UK", "SVEZIA", "FRANCIA", "ITALIA", "SUD AFRICA", "AUSTRALIA"
+        "USA", "ITALIA", "FRANCIA", "SVEZIA", "UK", "SUD AFRICA", 
+        "AUSTRALIA", "GERMANIA", "ARABIA SAUDITA", "BRASILE/CILE/MESSICO"
     ])
+
 with col2:
     if nazione == "USA":
         tipologia = st.selectbox("🏇 MODULO:", ["DIRT/SPEED (MARKET LAW)"])
+    elif nazione in ["ITALIA", "FRANCIA", "SVEZIA"]:
+        tipologia = st.selectbox("🏇 MODULO:", ["TROTTO (BULLONE SERRATO)", "GALOPPO PIANO", "HANDICAP/NASTRI"])
     else:
-        tipologia = st.selectbox("🏇 MODULO:", ["TROTTO (BULLONE SERRATO)", "GALOPPO PIANO"])
+        tipologia = st.selectbox("🏇 MODULO:", ["FLAT/PIANO", "HANDICAP/ZAVORRA", "DIRT/SPEED"])
 
 # 4. CARICAMENTO DATI
-uploaded_files = st.file_uploader("SGANCIATE GLI SCREENSHOT:", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
+uploaded_files = st.file_uploader("SGANCIATE GLI SCREENSHOT (ESTRAZIONE BLINDATA):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 if uploaded_files:
     images_to_process = [Image.open(f) for f in uploaded_files]
@@ -47,36 +52,39 @@ if uploaded_files:
 
 if st.button("🔥 INNESCA MODULO ARCHITECT 15.3"):
     if not uploaded_files:
-        st.warning("SOCIO, CARICA I DATI!")
+        st.warning("SOCIO, IL CANTIERE È VUOTO! CARICA I DATI.")
     else:
         with st.spinner(f"CALIBRAZIONE {nazione} CON GEMINI 2.5 FLASH... 👁️"):
             try:
-                # FASE 1: ESTRAZIONE CON GEMINI 2.5 FLASH
+                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
                 prompt_vision = f"""
-                Converti questi dati in un report tecnico per {nazione}. 
+                Converti questi dati in un report tecnico per {nazione}.
                 NON CERCARE SUL WEB. LEGGI SOLO QUESTE IMMAGINI.
-                ESTRAI: NOME, QUOTA (Odds), RATING, PESO, SEQUENZA, NOTE (RP, RI, DAI, FE, T).
+                ESTRAI: NOME, QUOTA (Odds), RATING, PESO, SEQUENZA, NOTE (FE, T, CD, RP, RI).
                 """
                 response_vision = client_gemini.models.generate_content(
                     model='gemini-2.5-flash', 
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_vision.text
+                st.success(f"TARGET AGGANCIATO IN {nazione} CON GEMINI 2.5! ☕")
 
-                # FASE 2: ANALISI CON LOGICA DIFFERENZIATA
+                # FASE 2: ANALISI SPECIALIZZATA (OFFLINE)
                 prompt_pplx = f"""
-                SISTEMA: ANALIZZATORE OFFLINE. USA SOLO: {dati_estratti}
+                SISTEMA: SEI UN ANALIZZATORE OFFLINE. NON USARE LA RICERCA WEB.
+                USA ESCLUSIVAMENTE QUESTI DATI: {dati_estratti}
 
-                PARAMETRI 15.3:
-                - SE NAZIONE == 'USA': Applica MARKET LAW. Identifica i 2-3 con quota più bassa (i favoriti). Tra loro, il migliore deve avere almeno un '1' recente. Scarta i favoriti senza vittorie. Il DIAMANTE deve essere tra questi.
-                - SE NAZIONE != 'USA': IGNORA LE QUOTE. Cerca il migliore per densità tecnica reale.
-                - REGOLA UNIVERSALE: BULLONE SERRATO. RP, RI, DAI, 0, Squal, FE, T = ABISSO immediato.
-                - HIGHLANDER: Efficienza = Rating / (Carico * Distanza).
+                PARAMETRI DI PERFEZIONE 15.3:
+                1. SE NAZIONE == 'USA': Applica MARKET LAW. Identifica i cavalli con le QUOTE PIÙ BASSE. Confrontali e scegli il migliore tra i favoriti. Deve avere almeno un '1' recente.
+                2. SE NAZIONE != 'USA': IGNORA LE QUOTE. Cerca il secondo migliore per densità tecnica reale, regolarità e polmoni d'acciaio. [cite: 2026-02-20]
+                3. BULLONE SERRATO (UNIVERSALE): RP, RI, DAI, 0, Squalificato, FE o T = ABISSO MECCANICO immediato. [cite: 2026-02-23]
+                4. HIGHLANDER: Efficienza = Rating / (Carico * Distanza). [cite: 2026-02-20]
+                5. NO 4° POSTI: Chi arriva spesso 4° è RUGGINE. [cite: 2026-02-23]
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '💎 DIAMANTE INDIVIDUATO: [NOME]. 
-                MOTIVAZIONE: [Perché questo soggetto schiaccia gli altri secondo la logica specifica di {nazione}].'
-                TERMINI: MARMO, CEMENTO, ABISSO, CAZZIMMA, BULLONE SERRATO.
+                MOTIVAZIONE: [Analisi specifica per {nazione} basata sulla logica corretta].'
+                TERMINI OBBLIGATORI: MARMO, CEMENTO, ABISSO, CAZZIMMA, BULLONE SERRATO.
                 """
                 
                 response_pplx = client_pplx.chat.completions.create(
@@ -89,5 +97,6 @@ if st.button("🔥 INNESCA MODULO ARCHITECT 15.3"):
                 if "DIAMANTE" in sentenza.upper():
                     play_beep()
                     st.balloons()
+
             except Exception as e:
-                st.error(f"URTO TECNICO: {e}")
+                st.error(f"URTO TECNICO NEL REATTORE: {e}")
