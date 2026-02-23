@@ -2,8 +2,18 @@ import streamlit as st
 from google import genai
 from openai import OpenAI
 from PIL import Image
+import streamlit.components.v1 as components
 
-# 1. CASSAFORTE - DOPPIA BENZINA
+# 1. NOTIFICA SONORA - PROTOCOLLO SONIC
+def play_beep():
+    beep_html = """
+    <audio autoplay>
+      <source src="https://www.soundjay.com/buttons/beep-01a.mp3" type="audio/mpeg">
+    </audio>
+    """
+    components.html(beep_html, height=0, width=0)
+
+# 2. CASSAFORTE - DOPPIA BENZINA
 try:
     GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
     PPLX_API_KEY = st.secrets["PERPLEXITY_API_KEY"]
@@ -11,21 +21,21 @@ except KeyError:
     st.error("❌ CHIAVI MANCANTI NEI SECRETS! AGGIUNGI GEMINI_API_KEY E PERPLEXITY_API_KEY.")
     st.stop()
 
-# Innesco dei motori - 2.5 FLASH PER IL MASSIMO RIGORE
+# Innesco motori
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="PERFORMANCE ANALYTICS 6.6", page_icon="📈", layout="centered")
+st.set_page_config(page_title="PERFORMANCE ANALYTICS 6.7", page_icon="📈", layout="centered")
 
-# --- INTERFACCIA IN ALTO —--
-st.title("📈 PERFORMANCE ANALYTICS 6.6 🚀")
-st.markdown("## **MODELLAZIONE ANALITICA GLOBALE E STABILITÀ** 💙 ☕")
+# --- INTERFACCIA ---
+st.title("📈 PERFORMANCE ANALYTICS 6.7 🚀")
+st.markdown("## **MODELLAZIONE ANALITICA: PROTOCOLLO LUNGHEZZE** 💙 ☕")
 st.write("---")
 
-st.sidebar.info("VERSIONE 6.6: PROTOCOLLO INTEGRATO EUROPA-USA-SUD AFRICA.")
+st.sidebar.info("VERSIONE 6.7: PATCH LUNGHEZZE SUD AFRICA + USA BEYER.")
 
-# 2. CARICAMENTO DATI
-uploaded_files = st.file_uploader("SGANCIATE GLI SCREENSHOT DELLE PRESTAZIONI:", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
+# 3. CARICAMENTO DATI
+uploaded_files = st.file_uploader("SGANCIATE GLI SCREENSHOT:", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 if uploaded_files:
     images_to_process = [Image.open(f) for f in uploaded_files]
@@ -34,60 +44,51 @@ if uploaded_files:
 
 if st.button("🔥 AVVIA MODELLAZIONE ANALITICA"):
     if not uploaded_files:
-        st.warning("SOCIO, CARICA LE FOTO PER INIZIARE LA SCANSIONE!")
+        st.warning("CARICA LE FOTO PER INIZIARE!")
     else:
-        with st.spinner("ELABORAZIONE MODELLO GLOBALE... 👁️"):
+        with st.spinner("SCANSIONE ABISSO IN CORSO... 👁️"):
             try:
-                # FASE 1: GEMINI 2.5 FLASH ESTRAE I DATI PROFESSIONALI
+                # FASE 1: VISIONE
                 prompt_vision = """
-                Analizza questi dati di performance atletica e convertili in formato testuale professionale.
+                Analizza questi dati e convertili in formato testuale professionale.
                 ESTRAI CON RIGORE: 
-                1. Località e data della sessione sportiva (Cerca riferimenti 2026).
-                2. Elenco dei partecipanti con: Indice di Mercato (Quota), Carico (Peso/Zavorra), e Sequenza Risultati Recenti (numeri esatti).
-                Sii estremamente preciso, ogni numero è marmo.
+                1. Località e data (Cerca riferimenti 2026).
+                2. Numero di partenti e piazzati totali (es. 1-2 o 1-3).
+                3. Elenco partecipanti con: Quota, Peso/Zavorra, e Sequenza Risultati Recenti (numeri E distacchi in lunghezze se presenti).
                 """
                 response_gemini = client_gemini.models.generate_content(
                     model='gemini-2.5-flash', 
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_gemini.text
-                st.success("DATI ACQUISITI! INNESCAMENTO SONAR PERPLEXITY... ☕")
+                st.success("DATI ACQUISITI! INNESCAMENTO SONAR 6.7... ☕")
 
-                # FASE 2: PERPLEXITY - ANALISI TECNICA INTEGRATA
+                # FASE 2: ANALISI PERPLEXITY 6.7
                 prompt_pplx = f"""
-                VALUTAZIONE TECNICA GLOBALE SULLA STABILITÀ DELLE PERFORMANCE ATLETICHE PROFESSIONALI.
-                
-                DATI DI INPUT:
-                {dati_estratti}
-                
-                REQUISITO TEMPORALE: Usa esclusivamente dati del 2026. Ignora i dati storici precedenti.
-                
-                PROTOCOLLO 1: ANALISI UNIVERSALE (EUROPA/TURF)
-                1. Identifica Meteo e Tipologia Superficie (ERBA/TURF o SABBIA/DIRT).
-                2. FILTRO 'FORMA INVIOLABILE': Analizza gli ultimi 3 test. Se un soggetto ha un valore > 3 (4, 5, RP, Squalifica), è ABISSO.
-                3. REGOLA HIGHLANDER: Identifica il 'Secondo Migliore' per densità tecnica (Rating/Peso). Deve schiacciare il favorito di carta.
-                
-                PROTOCOLLO 2: MODULO USA/DIRT (SABBIA AMERICANA)
-                - Se la superficie è DIRT USA: Ignora la zavorra (peso) come fattore primario.
-                - FOCUS: Cerca 'Speed Figures' o 'Beyer' del 2026. Cerca CAZZIMMA ESPLOSIVA (valori crescenti).
-                - FILTRO STRETTISSIMO: Richiesta sequenza 1-2 nelle ultime due gare. Il 3° posto è ABISSO.
-                
-               PROTOCOLLO 3: SUD AFRICA 
-                1. Se località è Sud Africa (Greyville, Kenilworth, ecc.):
-                2. FILTRO 'LUNGHEZZE DI MARMO': Non guardare solo il piazzamento numerico. 
-                   - Se un soggetto è arrivato 4° o 5° ma con un distacco INFERIORE a 2.5 lunghezze dal primo, consideralo MARMO (Affidabile).
-                   - Se il distacco è SUPERIORE a 5 lunghezze, è ABISSO (Bullone), a prescindere dal piazzamento.
-                3. OBIETTIVO: Trova il 'Soggetto ad Alta Efficienza' con il miglior distacco minimo/peso e costanza nel 2026.
-                
-                REFERTO FINALE (LINGUAGGIO ANALITICO):
-                '💎 SOGGETTO AD ALTA EFFICIENZA INDIVIDUATO: [NOME]. 
-                MOTIVAZIONE TECNICA: [Analisi del rapporto carico/zavorra o esplosività Beyer e costanza 1-2 per garantire il MARMO oggi].'
-                
-                Usa i termini tecnici: MARMO, CEMENTO, ABISSO, CAZZIMMA. SINTASSI TUTTO IN MAIUSCOLO.
+                VALUTAZIONE TECNICA SULLA STABILITÀ DELLE PERFORMANCE 2026.
+                DATI DI INPUT: {dati_estratti}
+
+                PROTOCOLLO SUD AFRICA (PATCH 6.7 - LUNGHEZZE):
+                1. Se località Sud Africa (Greyville, Kenilworth, ecc.):
+                2. REGOLA LUNGHEZZE: Un 4° o 5° posto è MARMO solo se il distacco è < 2.5 lunghezze. Se distacco > 5 lunghezze, il soggetto è ABISSO (anche se è arrivato 1° o 2° in passato).
+                3. DUAL-PLACE (2 PIAZZATI): Se la gara ha solo 2 piazzati, accetta solo 1-1, 1-2 o un '4° lunghezze marmo'. Ogni altra sequenza è RUGGINE.
+
+                PROTOCOLLO USA (DIRT/BEYER):
+                - Se USA DIRT: Ignora peso. Cerca Beyer Speed Figures crescenti nel 2026. 
+                - Requisito: Sequenza 1-2 nelle ultime due gare. Il 3° è ABISSO.
+
+                PROTOCOLLO EUROPA (TURF):
+                - FILTRO FORMA: Qualsiasi valore > 3 è ABISSO.
+                - REGOLA HIGHLANDER: Identifica il 'Secondo Migliore' per densità tecnica (Rating/Peso).
+
+                REFERTO FINALE:
+                '💎 SOGGETTO AD ALTA EFFICIENZA: [NOME]. 
+                MOTIVAZIONE: [Analisi distacchi e densità per garantire il MARMO oggi].'
+                USA: MARMO, CEMENTO, ABISSO, CAZZIMMA. SINTASSI MAIUSCOLA.
                 """
                 
                 messages = [
-                    {"role": "system", "content": "Sei un analista senior esperto in modellazione statistica applicata allo sport professionistico."},
+                    {"role": "system", "content": "Sei un analista senior esperto in modellazione statistica sportiva."},
                     {"role": "user", "content": prompt_pplx}
                 ]
                 
@@ -96,9 +97,13 @@ if st.button("🔥 AVVIA MODELLAZIONE ANALITICA"):
                     messages=messages,
                 )
                 
+                sentenza = response_pplx.choices[0].message.content
                 st.markdown("### 2. SENTENZA TECNICA 💙")
-                st.info(response_pplx.choices[0].message.content)
-                st.balloons()
+                st.info(sentenza)
+                
+                if "DIAMANTE" in sentenza.upper() or "SOGGETTO" in sentenza.upper():
+                    play_beep()
+                    st.balloons()
 
             except Exception as e:
                 st.error(f"URTO TECNICO: {e}")
