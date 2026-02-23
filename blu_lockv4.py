@@ -14,77 +14,68 @@ try:
     GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
     PPLX_API_KEY = st.secrets["PERPLEXITY_API_KEY"]
 except KeyError:
-    st.error("❌ BENZINA MANCANTE NEI SECRETS! AGGIUNGI LE CHIAVI API.")
+    st.error("❌ CHIAVI API MANCANTI! IL CANTIERE È BLOCCATO.")
     st.stop()
 
-# Innesco motori
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 7.5 NEUTRAL LAB", page_icon="🎯", layout="centered")
+st.set_page_config(page_title="SNIPER 7.6 MUD HUNTER", page_icon="🎯", layout="centered")
 
-# --- INTERFACCIA ---
-st.title("🎯 SNIPER 7.5 'NEUTRAL LAB' 🚀")
-st.markdown("## **MODELLAZIONE ANALITICA DI EFFICIENZA CINETICA** 💙 ☕")
-st.write("---")
-
-st.sidebar.info("VERSIONE 7.5: FILTRO NEUTRALE ANTI-ABISSO.")
-st.sidebar.write("**ARCHITETTO: GIULIO SIMPATICO** 💙 ☕")
+st.title("🎯 SNIPER 7.6 'MUD HUNTER' 🚀")
+st.markdown("## **ARCHITETTURA DINAMICA: CLASSE > FANGO** 💙 ☕")
 
 # 3. CARICAMENTO DATI
-uploaded_files = st.file_uploader("SGANCIATE GLI SCREENSHOT (ESTRAZIONE BLINDATA):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
+uploaded_files = st.file_uploader("SGANCIATE GLI SCREENSHOT (OSTACOLI/TURF):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 if uploaded_files:
     images_to_process = [Image.open(f) for f in uploaded_files]
     for img in images_to_process:
         st.image(img, use_container_width=True)
 
-if st.button("🔥 INNESCA NEUTRAL LAB 7.5"):
+if st.button("🔥 INNESCA MUD HUNTER 7.6"):
     if not uploaded_files:
-        st.warning("SOCIO, CARICA I DATI PER IL LABORATORIO!")
+        st.warning("CARICA I DATI PER IL LABORATORIO!")
     else:
-        with st.spinner("SCANSIONE STRUTTURALE IN CORSO... 👁️"):
+        with st.spinner("PUNTAMENTO LASER NEL FANGO... 👁️"):
             try:
-                # FASE 1: VISIONE "VISION CLEAR" (ESTRAZIONE NEUTRA)
+                # FASE 1: VISIONE "MUD HUNTER" (ESTRAZIONE DI QUALITÀ)
                 prompt_vision = """
-                Converti questi dati in un report tecnico di 'Soggetti Atletici' per una simulazione di sforzo. 
-                NON usare parole come cavalli, ippica o scommesse. 
-                ESTRAI CON RIGORE:
-                1. Località e Data Sessione (Cerca 2026).
-                2. STRUTTURA DATI PER OGNI OGGETTO:
+                Report tecnico per simulazione di resistenza idraulica 2026.
+                ESTRAI CON RIGORE PER OGNI SOGGETTO:
                 [INIZIO SOGGETTO]
                 - NOME:
+                - QUALITÀ SESSIONE (Cerca: Listed, G1/2/3, Classe 1/2, Condizionata).
+                - CARICO (Peso):
                 - INDICE RILEVANZA (Rating):
-                - CARICO STRUTTURALE (Peso):
-                - SEQUENZA STORICA PERFORMANCE:
-                - ANOMALIE (FE/CD/Lunghezze distacco):
+                - SEQUENZA STORICA:
+                - NOTE (FE, CD, distacchi):
                 [FINE SOGGETTO]
+                IDENTIFICA: Località e Condizioni Terreno (es. Pesante, Morbido, PSF).
                 """
                 response_vision = client_gemini.models.generate_content(
                     model='gemini-2.5-flash', 
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_vision.text
-                st.success("DATI ESTRATTI CON MURI DI CEMENTO! ☕")
+                st.success("DATI ESTRATTI: OCCHIO ALLA CLASSE! ☕")
 
-                # FASE 2: ANALISI TECNICA (LABORATORIO NEUTRO PERPLEXITY)
+                # FASE 2: ANALISI TECNICA (PATCH 7.6 MUD HUNTER)
                 prompt_pplx = f"""
-                SIMULAZIONE DI RESISTENZA E CARICO STRUTTURALE 2026.
-                DATI DI INPUT: 
-                {dati_estratti}
+                SIMULAZIONE PRESTAZIONALE 7.6 - MUD HUNTER.
+                DATI DI INPUT: {dati_estratti}
 
-                PARAMETRI DI LABORATORIO SNIPER 7.5:
-                1. IDENTIFICAZIONE: Rileva l'ambiente di test (Località).
-                2. FILTRO 'CREPA': Se Carico Strutturale (Peso) ≥ 58 e la Sequenza Storica presenta valori > 3, l'oggetto è 'ABISSO'. [cite: 2026-02-23]
-                3. FILTRO 'DETRITI': Diciture FE (Caduta), CD (Distanziato), o risultati ≥ 8 = 'RUGGINE' (Eliminazione istantanea per instabilità materiale). [cite: 2026-02-21, 2026-02-23]
-                4. FORMULA DENSITÀ HIGHLANDER: Efficienza = Indice Rilevanza (Rating) / Carico Strutturale. [cite: 2026-02-20]
-                5. PATCH LUNGHEZZE: Se un soggetto ha valore 4 ma distacco < 2.5 unità, CLASSIFICA COME 'MARMO'. [cite: 2026-02-23]
-                6. OBIETTIVO: Trova il 'Soggetto ad Alta Tenuta' con la massima costanza (serie di 1 o 2) che non presenta anomalie. [cite: 2026-02-20]
+                PARAMETRI DI LABORATORIO SNIPER 7.6:
+                1. BIAS TERRENO: Se terreno è 'PESANTE' o 'MORBIDO', la Classe e il Rating valgono il doppio della forma recente.
+                2. ECCEZIONE FE (CADUTA): Se un soggetto ha 'Qualità Listed/G1-2-3/Classe 1' e Terreno Pesante, un solo 'FE' (Caduta) NON è eliminatorio. È un incidente cinetico.
+                3. FILTRO 'CREPA': Se Carico ≥ 58 e Sequenza ha risultati > 3 (senza alibi di Classe), è 'ABISSO'. 
+                4. FORMULA DENSITÀ: $Efficienza = \\frac{Rating}{Peso}$.
+                5. OBIETTIVO: Trova il 'Diamante di Fango' (Alta Qualità + Carico sostenibile) che gli altri scartano per un FE.
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
-                '💎 SOGGETTO AD ALTA EFFICIENZA: [NOME]. 
-                MOTIVAZIONE: [Analisi su densità tecnica, carico e stabilità cinetica].'
-                USA TERMINI: MARMO, CEMENTO, ABISSO, CAZZIMMA. 
+                '💎 DIAMANTE INDIVIDUATO: [NOME]. 
+                MOTIVAZIONE: [Perché la sua Classe schiaccerà il fango e il peso oggi].'
+                USA TERMINI: MARMO, CEMENTO, ABISSO, CAZZIMMA.
                 """
                 
                 response_pplx = client_pplx.chat.completions.create(
@@ -93,15 +84,12 @@ if st.button("🔥 INNESCA NEUTRAL LAB 7.5"):
                 )
                 
                 sentenza = response_pplx.choices[0].message.content
-                st.markdown("### 👁️ REFERTO DEL LABORATORIO NEUTRO")
+                st.markdown("### 🎯 SENTENZA DEL MUD HUNTER")
                 st.info(sentenza)
                 
-                if "DIAMANTE" in sentenza.upper() or "SOGGETTO" in sentenza.upper():
+                if "DIAMANTE" in sentenza.upper():
                     play_beep()
                     st.balloons()
 
             except Exception as e:
                 st.error(f"URTO TECNICO: {e}")
-
-st.write("---")
-st.caption("SNIPER 7.5 'NEUTRAL LAB' - GIULIO SIMPATICO 💙 ☕")
