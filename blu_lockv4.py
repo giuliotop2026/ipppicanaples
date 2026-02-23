@@ -14,77 +14,90 @@ try:
     GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
     PPLX_API_KEY = st.secrets["PERPLEXITY_API_KEY"]
 except KeyError:
-    st.error("❌ BENZINA MANCANTE NEI SECRETS! IL CANTIERE È BLOCCATO.")
+    st.error("❌ BENZINA MANCANTE NEI SECRETS! IL CANTIERE È FERMO.")
     st.stop()
 
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 11.0 SPECIALIZED", page_icon="🎯", layout="wide")
+st.set_page_config(page_title="SNIPER 12.0 STRUCTURAL", page_icon="🎯", layout="wide")
 
-st.title("🎯 SNIPER 11.0 'SPECIALIZED ARCHITECT' 🚀")
-st.markdown("## **MODELLAZIONE A COMPARTIMENTI STAGNI: PERFEZIONE TOTALE** 💙 ☕")
+st.title("🎯 SNIPER 12.0 'STRUCTURAL ARCHITECT' 🚀")
+st.markdown("## **MODELLAZIONE A MATRICE NAZIONALE: PERFEZIONE TOTALE** 💙 ☕")
 
-# 3. SELETTORE DEL MODULO (LA CHIAVE PER LA PRECISIONE)
-tipologia = st.selectbox("IDENTIFICA IL TIPO DI CANTIERE:", [
-    "TROTTO LUNGO / CLASSICO (ITALIA, FRANCIA, SVEZIA)", 
-    "OSTACOLI & FANGO (AUTEUIL, OSTACOLI EUROPA)", 
-    "HANDICAP & ZAVORRA (UK, AUSTRALIA, SUD AFRICA)",
-    "VELOCITÀ & DIRT (USA, ARABIA, POLYTRACK)"
-])
+# 3. SISTEMA DI SELEZIONE A COMPARTIMENTI STAGNI
+col1, col2 = st.columns(2)
 
-uploaded_files = st.file_uploader("SGANCIATE GLI SCREENSHOT (VISION CLEAR):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
+with col1:
+    nazione = st.selectbox("🌍 IDENTIFICA LA NAZIONE:", [
+        "ITALIA", "FRANCIA", "SUD AFRICA", "USA", "AUSTRALIA", 
+        "UK", "GERMANIA", "SVEZIA", "ARABIA SAUDITA", "BRASILE/CILE/MESSICO"
+    ])
+
+with col2:
+    # Tipologie dinamiche in base alla nazione
+    if nazione == "ITALIA" or nazione == "SVEZIA":
+        tipologia = st.selectbox("🏇 TIPOLOGIA SCONTRO:", ["TROTTO", "GALOPPO PIANO", "HANDICAP NASTRI/PESO"])
+    elif nazione == "FRANCIA":
+        tipologia = st.selectbox("🏇 TIPOLOGIA SCONTRO:", ["OSTACOLI/AUTEUIL", "GALOPPO PIANO", "TROTTO LUNGO METRAGGIO"])
+    else:
+        tipologia = st.selectbox("🏇 TIPOLOGIA SCONTRO:", ["FLAT/PIANO", "HANDICAP/ZAVORRA", "DIRT/SPEED"])
+
+# 4. CARICAMENTO DATI
+uploaded_files = st.file_uploader("SGANCIATE GLI SCREENSHOT (ESTRAZIONE BLINDATA):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 if uploaded_files:
     images_to_process = [Image.open(f) for f in uploaded_files]
     for img in images_to_process:
         st.image(img, use_container_width=True)
 
-if st.button("🔥 INNESCA MODULO SPECIALIZZATO 11.0"):
+if st.button("🔥 INNESCA MODULO ARCHITECT 12.0"):
     if not uploaded_files:
-        st.warning("CARICA I DATI, ARCHITETTO!")
+        st.warning("SOCIO, IL CANTIERE È VUOTO! CARICA I DATI.")
     else:
-        with st.spinner(f"CALIBRAZIONE MODULO {tipologia}... 👁️"):
+        with st.spinner(f"CALIBRAZIONE MATRICE {nazione} - {tipologia}... 👁️"):
             try:
-                # FASE 1: ESTRAZIONE CINETICA (GEMINI)
-                prompt_vision = """
-                Converti questi dati in un report tecnico di 'Soggetti Atletici'.
-                NON usare termini ippici. ESTRAI CON RIGORE:
+                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
+                prompt_vision = f"""
+                Converti questi dati in un report tecnico di 'Soggetti Atletici' per {nazione}.
+                NON usare termini ippici. ESTRAI CON RIGORE ASSOLUTO:
                 [INIZIO SOGGETTO]
                 - NOME:
-                - QUALITÀ (Listed, G1/2/3, Classe):
-                - CARICO (Peso):
+                - CATEGORIA (G1, Listed, Classe, Handicap):
+                - CARICO/PESO/HANDICAP (Meters or Kg):
                 - INDICE RILEVANZA (Rating):
                 - SEQUENZA STORICA:
-                - NOTE CINETICHE (RP, FE, CD, Distacchi):
+                - NOTE CINETICHE (RP, FE, CD, Distacchi reali):
                 [FINE SOGGETTO]
-                IDENTIFICA: Superficie e Distanza della sessione.
+                IDENTIFICA: Superficie e Distanza totale.
                 """
                 response_vision = client_gemini.models.generate_content(
                     model='gemini-2.5-flash', 
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_vision.text
+                st.success(f"TARGET AGGANCIATO IN {nazione}! ☕")
 
                 # FASE 2: ANALISI SPECIALIZZATA (PERPLEXITY SONAR)
                 prompt_pplx = f"""
-                SIMULAZIONE OMNIVERSE 11.0. MODULO ATTIVO: {tipologia}.
+                SIMULAZIONE STRUTTURALE 12.0. NAZIONE: {nazione} | MODULO: {tipologia}.
                 DATI: {dati_estratti}
 
-                PROTOCOLLI DI PERFEZIONE SPECIFICI:
-                - MODULO TROTTO: Focus su 'Ragguaglio al KM'. Sotto 1:14 = MARMO. Elimina soggetti con RP/0/8 o più di un 4° posto (RUGGINE).
-                - MODULO OSTACOLI: 'PURE QUALITY' ACTIVE. Se Listed/G1/G2, ignora FE/CD. Su FANGO, Classe > Forma recente. 
-                - MODULO HANDICAP: Focus su VANTAGGIO CINETICO (Carico < 56kg). Se Peso >= 60kg e non è Classe Listed, classifica come CREPA.
-                - MODULO VELOCITÀ: Beyer/Speed figures crescenti. Sequenza 1-2 obbligatoria.
+                PARAMETRI DI PERFEZIONE SPECIFICI:
+                - SE {nazione} == 'ITALIA' AND {tipologia} == 'HANDICAP': Analizza distacco nastri o peso. Il vantaggio cinetico (<55kg o +0 metri) schiaccia il rating.
+                - SE {nazione} == 'ITALIA' AND {tipologia} == 'TROTTO': Ragguaglio KM < 1:14 = MARMO. Elimina soggetti con RP/0/8 o più di un 4° posto.
+                - SE {nazione} == 'FRANCIA' AND {tipologia} == 'OSTACOLI': PURE QUALITY. Se G1/Listed, ignora FE. Su FANGO, Classe > Forma.
+                - SE {tipologia} == 'TROTTO LUNGO METRAGGIO': Priorità assoluta ai POLMONI D'ACCIAIO (Sequenza finale senza crolli).
+                - SE {nazione} == 'SUD AFRICA': DUAL-PLACE 1-1/1-2. Polytrack: Carico < 58kg è MARMO.
 
-                FILTRO GENERALE 'WINNER EDGE':
+                PROTOCOLLO WINNER EDGE:
                 1. IGNORA LE QUOTE. [cite: 2026-02-20]
-                2. ELIMINAZIONE 4° POSTO: Chi arriva spesso 4° manca di CAZZIMMA. [cite: 2026-02-23]
+                2. NO 4° POSTI: Chi non vince o non arriva 2° regolarmente è RUGGINE. [cite: 2026-02-23]
                 3. HIGHLANDER: Efficienza = Rating / (Carico * Fattore Distanza). [cite: 2026-02-20]
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '💎 DIAMANTE INDIVIDUATO: [NOME]. 
-                MOTIVAZIONE: [Perché questo specifico modulo conferma la superiorità].'
+                MOTIVAZIONE: [Perché questo specifico modulo {nazione}/{tipologia} conferma la superiorità].'
                 USA: MARMO, CEMENTO, ABISSO, CAZZIMMA.
                 """
                 
