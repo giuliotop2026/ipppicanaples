@@ -12,21 +12,30 @@ def play_beep():
 # 2. CASSAFORTE API
 try:
     GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
-    PPL_API_KEY = st.secrets["PERPLEXITY_API_KEY"]
+    PPLX_API_KEY = st.secrets["PERPLEXITY_API_KEY"]
 except KeyError:
-    st.error("❌ BENZINA MANCANTE NEI SECRETS! IL CANTIERE È BLOCCATO.")
+    st.error("❌ MANCA BENZINA NEI SECRETS! IL CANTIERE È BLOCCATO.")
     st.stop()
 
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
-client_pplx = OpenAI(api_key=PPL_API_KEY, base_url="https://api.perplexity.ai")
+client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
 st.set_page_config(page_title="SNIPER 8.0 OMNIVERSE", page_icon="🎯", layout="wide")
 
 st.title("🎯 SNIPER 8.0 'OMNIVERSE ARCHITECT' 🚀")
 st.markdown("## **MOTORE ANALITICO GLOBALE: ZERO ERRORI, SOLO GLORIA** 💙 ☕")
 
-# 3. CARICAMENTO DATI
-uploaded_files = st.file_uploader("SGANCIATE GLI SCREENSHOT (ESTRAZIONE BLINDATA):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
+# 3. SELETTORE DI PROTOCOLLO NAZIONALE
+nazione = st.selectbox("IDENTIFICA IL CAMPO DI BATTAGLIA:", [
+    "ITALIA & SVEZIA (TROTTO/ARCOVEGGIO/NAPOLI)", 
+    "FRANCIA & GERMANIA (OSTACOLI/MUD HUNTER)", 
+    "USA, MESSICO, BRASILE, CILE (DIRT SPEED)", 
+    "UK & AUSTRALIA (PURE CLASS/SECTIONALS)", 
+    "SUD AFRICA (POLYTRACK/DUAL-PLACE)",
+    "ARABIA SAUDITA (SAND FORCE)"
+])
+
+uploaded_files = st.file_uploader("SGANCIATE GLI SCREENSHOT (ESTRAZIONE BLINDATA):", type=["jpg", "png", "jpeg"], accept_multiple_files=Accept_True)
 
 if uploaded_files:
     images_to_process = [Image.open(f) for f in uploaded_files]
@@ -35,23 +44,22 @@ if uploaded_files:
 
 if st.button("🔥 INNESCA OMNIVERSE 8.0"):
     if not uploaded_files:
-        st.warning("SOCIO, CARICA I DATI PER IL LABORATORIO!")
+        st.warning("CARICA I DATI, ARCHITETTO!")
     else:
-        with st.spinner("SCANSIONE GEOPOLITICA E CINETICA IN CORSO... 👁️"):
+        with st.spinner(f"CALIBRAZIONE PROTOCOLLO {nazione}... 👁️"):
             try:
-                # FASE 1: VISIONE "PURE QUALITY" (ESTRAZIONE STRUTTURATA)
+                # FASE 1: VISIONE "PURE QUALITY" (ESTRAZIONE)
                 prompt_vision = """
                 Converti questi dati in un report tecnico di 'Soggetti Atletici' 2026. 
                 ESTRAI CON RIGORE ASSOLUTO:
-                1. LOCALITÀ E SUPERFICIE (Esempio: Australia/Turf, USA/Dirt, Italia/Trotto, Francia/Ostacoli, Arabia/Sand).
+                1. LOCALITÀ E SUPERFICIE.
                 2. CATEGORIA (Listed, G1/2/3, Classe 1/2, Handicap, Condizionata).
-                3. STRUTTURA PER SOGGETTO:
                 [INIZIO SOGGETTO]
                 - NOME:
                 - RATING (RT):
-                - CARICO (Peso):
+                - CARICO (Peso/Distanza):
                 - SEQUENZA STORICA:
-                - NOTE CINETICHE (FE, CD, Squ, Distacchi in lunghezze):
+                - NOTE CINETICHE (FE, CD, Squ, Distacchi in lunghezze o tempo):
                 [FINE SOGGETTO]
                 """
                 response_vision = client_gemini.models.generate_content(
@@ -59,36 +67,31 @@ if st.button("🔥 INNESCA OMNIVERSE 8.0"):
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_vision.text
-                st.success("TARGET AGGANCIATO: MURI DI CEMENTO ATTIVI! ☕")
+                st.success("DATI ESTRATTI: MURI DI CEMENTO ATTIVI! ☕")
 
-                # FASE 2: ANALISI TECNICA (PROTOCOLLI MONDIALI)
+                # FASE 2: ANALISI TECNICA PER NAZIONE (PROTOCOLLI SPECIFICI)
                 prompt_pplx = f"""
-                SIMULAZIONE PRESTAZIONALE 8.0 - OMNIVERSE.
+                SIMULAZIONE PRESTAZIONALE 8.0 - OMNIVERSE. 
+                NAZIONE RILEVATA: {nazione}
                 DATI DI INPUT: {dati_estratti}
 
-                PROTOCOLLI DI SETTAGGIO (ATTIVA SOLO QUELLO RILEVATO):
+                PARAMETRI DI PERFEZIONE PER {nazione}:
+                - ITALIA/SVEZIA (TROTTO): Cerca 'Tempo al KM' (1:14 o migliore è MARMO). Ignora il favorito se ha RP o 0 recenti. La 'Cazzimma' è del guidatore e della regolarità.
+                - FRANCIA/GERMANIA: 'PURE QUALITY'. Se G1/Listed, ignora un FE. Su fango, la densità tecnico-polmonare schiaccia la forma.
+                - USA/AMERICHE: 'SPEED FIGURES'. Cerca incrementi di velocità (Beyer). Sequenza 1-2 obbligatoria per il marmo.
+                - UK/AUSTRALIA: 'SECTIONALS'. Cerca chi ha spinto negli ultimi 400m. WFA (Weight-for-age) è la chiave.
+                - ARABIA: 'SAND FORCE'. Forza bruta su sabbia. Peso secondario rispetto al Rating.
 
-                A) EUROPA (ITALIA, FRANCIA, UK, GERMANIA, SVEZIA):
-                - REGOLA 'PURE QUALITY': Se Listed/G1/G2/G3, ignora un singolo FE/CD. La Classe domina il fango. [cite: 2026-02-23]
-                - TROTTO (ITALIA/SVEZIA): Focus su tempi al KM e regolarità. Sequenza 8/0/RP = ABISSO. [cite: 2026-02-11]
-                - HIGHLANDER: Efficienza = Rating / Peso. [cite: 2026-02-20]
-
-                B) SUD AFRICA (GREYVILLE/KENILWORTH):
-                - DUAL-PLACE: Accetta solo 1-1 o 1-2. Il 3 è MARMO solo se distacco < 2.0 unità. [cite: 2026-02-23]
-                - POLYTRACK: Peso < 58kg è vitale. Peso > 60kg = RUGGINE. [cite: 2026-02-23]
-
-                C) AMERICHE (USA, BRASILE, CILE, MESSICO):
-                - BEYER BIAS: Ignora il peso. Cerca Speed Figures crescenti. Sequenza 1-2 obbligatoria. [cite: 2026-02-23]
-                - DIRT/SAND: Forza bruta e posizione interna (Steccato).
-
-                D) AUSTRALIA & ARABIA SAUDITA:
-                - WEIGHT-FOR-AGE: Cerca il miglior rapporto Rating/Peso in base alla classe. [cite: 2026-02-20]
-                - DISTANZA: Se > 2000m, cerca polmoni d'acciaio con sequenza senza ABISSO (8/9/0). [cite: 2026-02-23]
+                PROTOCOLLO GENERALE:
+                1. IGNORA LE QUOTE. [cite: 2026-02-20]
+                2. TROVA IL SECONDO MIGLIORE per densità tecnica se il favorito è instabile. [cite: 2026-02-20]
+                3. FILTRO ABISSO: Sequenza 8/9/0 = ELIMINAZIONE. [cite: 2026-02-23]
+                4. HIGHLANDER: $Efficienza = \\frac{Rating}{Carico}$. [cite: 2026-02-20]
 
                 REFERTO FINALE:
                 '💎 DIAMANTE INDIVIDUATO: [NOME]. 
-                MOTIVAZIONE: [Analisi su nazione, classe e densità tecnica].'
-                USA TERMINI: MARMO, CEMENTO, ABISSO, CAZZIMMA. SINTASSI MAIUSCOLA.
+                MOTIVAZIONE: [Perché la sua Cazzimma o Densità schiaccerà il cantiere oggi].'
+                USA: MARMO, CEMENTO, ABISSO, CAZZIMMA.
                 """
                 
                 response_pplx = client_pplx.chat.completions.create(
