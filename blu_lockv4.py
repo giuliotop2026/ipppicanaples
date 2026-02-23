@@ -68,7 +68,7 @@ if st.button("🔥 AVVIA MODELLAZIONE ANALITICA"):
 VALUTAZIONE TECNICA SULLA STABILITÀ DELLE PERFORMANCE 2026.
 DATI DI INPUT: {dati_estratti}
 
-REQUISITO TEMPORALE: Usa esclusivamente dati del 2026.
+
 
 PROTOCOLLO FRANCIA (PSF/TURF - PATCH 6.9):
 1. FILTRO ZAVORRA CRITICA: Se il peso è ≥ 58kg, la forma recente deve essere 1-1 o 1-2. Se compare un 3 o un 4, è ABISSO (il peso schiaccia il motore).
