@@ -20,10 +20,10 @@ except KeyError:
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 12.0 STRUCTURAL", page_icon="🎯", layout="wide")
+st.set_page_config(page_title="SNIPER 14.0 AMERICA UNLEASHED", page_icon="🎯", layout="wide")
 
-st.title("🎯 SNIPER 12.0 'STRUCTURAL ARCHITECT' 🚀")
-st.markdown("## **MODELLAZIONE A MATRICE NAZIONALE: PERFEZIONE TOTALE** 💙 ☕")
+st.title("🎯 SNIPER 14.0 'AMERICA UNLEASHED' 🚀")
+st.markdown("## **MODELLAZIONE A MATRICE: IL SANGUE AGLI OCCHI** 💙 ☕")
 
 # 3. SISTEMA DI SELEZIONE A COMPARTIMENTI STAGNI
 col1, col2 = st.columns(2)
@@ -35,11 +35,12 @@ with col1:
     ])
 
 with col2:
-    # Tipologie dinamiche in base alla nazione
     if nazione == "ITALIA" or nazione == "SVEZIA":
         tipologia = st.selectbox("🏇 TIPOLOGIA SCONTRO:", ["TROTTO", "GALOPPO PIANO", "HANDICAP NASTRI/PESO"])
     elif nazione == "FRANCIA":
         tipologia = st.selectbox("🏇 TIPOLOGIA SCONTRO:", ["OSTACOLI/AUTEUIL", "GALOPPO PIANO", "TROTTO LUNGO METRAGGIO"])
+    elif nazione == "USA":
+        tipologia = st.selectbox("🏇 TIPOLOGIA SCONTRO:", ["DIRT/SPEED", "FLAT/TURF", "CLAIMING/HANDICAP"])
     else:
         tipologia = st.selectbox("🏇 TIPOLOGIA SCONTRO:", ["FLAT/PIANO", "HANDICAP/ZAVORRA", "DIRT/SPEED"])
 
@@ -51,7 +52,7 @@ if uploaded_files:
     for img in images_to_process:
         st.image(img, use_container_width=True)
 
-if st.button("🔥 INNESCA MODULO ARCHITECT 12.0"):
+if st.button("🔥 INNESCA MODULO ARCHITECT 14.0"):
     if not uploaded_files:
         st.warning("SOCIO, IL CANTIERE È VUOTO! CARICA I DATI.")
     else:
@@ -80,10 +81,11 @@ if st.button("🔥 INNESCA MODULO ARCHITECT 12.0"):
 
                 # FASE 2: ANALISI SPECIALIZZATA (PERPLEXITY SONAR)
                 prompt_pplx = f"""
-                SIMULAZIONE STRUTTURALE 12.0. NAZIONE: {nazione} | MODULO: {tipologia}.
+                SIMULAZIONE STRUTTURALE 14.0. NAZIONE: {nazione} | MODULO: {tipologia}.
                 DATI: {dati_estratti}
 
                 PARAMETRI DI PERFEZIONE SPECIFICI:
+                - SE {nazione} == 'USA': PROTOCOLLO 'WINNER ONLY'. Solo chi ha un '1' (vittoria) nelle ultime 2 uscite è MARMO. La regolarità senza vittorie (solo 2-3-4-5) è ABISSO, anche con Rating alto. Cerca chi ha il sangue agli occhi.
                 - SE {nazione} == 'ITALIA' AND {tipologia} == 'HANDICAP': Analizza distacco nastri o peso. Il vantaggio cinetico (<55kg o +0 metri) schiaccia il rating.
                 - SE {nazione} == 'ITALIA' AND {tipologia} == 'TROTTO': Ragguaglio KM < 1:14 = MARMO. Elimina soggetti con RP/0/8 o più di un 4° posto.
                 - SE {nazione} == 'FRANCIA' AND {tipologia} == 'OSTACOLI': PURE QUALITY. Se G1/Listed, ignora FE. Su FANGO, Classe > Forma.
