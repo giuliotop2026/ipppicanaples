@@ -101,4 +101,4 @@ if st.button("🔥 INNESCA MODULO ARCHITECT 15.3"):
                     st.balloons()
 
             except Exception as e:
-                st.error(f"URTO TECNICO NEL REATTORE: {e}")a
+                st.error(f"URTO TECNICO NEL REATTORE: {e}")
