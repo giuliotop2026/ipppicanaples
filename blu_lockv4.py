@@ -20,27 +20,25 @@ except KeyError:
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 14.0 AMERICA UNLEASHED", page_icon="🎯", layout="wide")
+st.set_page_config(page_title="SNIPER 15.0 MECHANICAL PERFECTION", page_icon="🎯", layout="wide")
 
-st.title("🎯 SNIPER 14.0 'AMERICA UNLEASHED' 🚀")
-st.markdown("## **MODELLAZIONE A MATRICE: IL SANGUE AGLI OCCHI** 💙 ☕")
+st.title("🎯 SNIPER 15.0 'MECHANICAL PERFECTION' 🚀")
+st.markdown("## **PROTOCOLLO ANTI-SQUALIFICA: ZERO ERRORI MECCANICI** 💙 ☕")
 
-# 3. SISTEMA DI SELEZIONE A COMPARTIMENTI STAGNI
+# 3. SISTEMA DI SELEZIONE A MATRICE EVOLUTA
 col1, col2 = st.columns(2)
 
 with col1:
     nazione = st.selectbox("🌍 IDENTIFICA LA NAZIONE:", [
-        "ITALIA", "FRANCIA", "SUD AFRICA", "USA", "AUSTRALIA", 
-        "UK", "GERMANIA", "SVEZIA", "ARABIA SAUDITA", "BRASILE/CILE/MESSICO"
+        "ITALIA", "FRANCIA", "SVEZIA", "USA", "UK", "SUD AFRICA", 
+        "AUSTRALIA", "GERMANIA", "ARABIA SAUDITA", "BRASILE/CILE/MESSICO"
     ])
 
 with col2:
-    if nazione == "ITALIA" or nazione == "SVEZIA":
-        tipologia = st.selectbox("🏇 TIPOLOGIA SCONTRO:", ["TROTTO", "GALOPPO PIANO", "HANDICAP NASTRI/PESO"])
-    elif nazione == "FRANCIA":
-        tipologia = st.selectbox("🏇 TIPOLOGIA SCONTRO:", ["OSTACOLI/AUTEUIL", "GALOPPO PIANO", "TROTTO LUNGO METRAGGIO"])
-    elif nazione == "USA":
-        tipologia = st.selectbox("🏇 TIPOLOGIA SCONTRO:", ["DIRT/SPEED", "FLAT/TURF", "CLAIMING/HANDICAP"])
+    if nazione in ["ITALIA", "SVEZIA", "FRANCIA"]:
+        tipologia = st.selectbox("🏇 MODULO STABILITÀ:", ["TROTTO (BULLONE SERRATO)", "GALOPPO PIANO", "HANDICAP NASTRI/PESO"])
+    elif nazione == "USA" or nazione == "UK":
+        tipologia = st.selectbox("🏇 MODULO AGGRESSIVITÀ:", ["DIRT/SPEED (WINNER ONLY)", "HANDICAP/ZAVORRA", "FLAT/TURF"])
     else:
         tipologia = st.selectbox("🏇 TIPOLOGIA SCONTRO:", ["FLAT/PIANO", "HANDICAP/ZAVORRA", "DIRT/SPEED"])
 
@@ -52,23 +50,23 @@ if uploaded_files:
     for img in images_to_process:
         st.image(img, use_container_width=True)
 
-if st.button("🔥 INNESCA MODULO ARCHITECT 14.0"):
+if st.button("🔥 INNESCA MODULO ARCHITECT 15.0"):
     if not uploaded_files:
         st.warning("SOCIO, IL CANTIERE È VUOTO! CARICA I DATI.")
     else:
         with st.spinner(f"CALIBRAZIONE MATRICE {nazione} - {tipologia}... 👁️"):
             try:
-                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
+                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH RIPRISTINATO)
                 prompt_vision = f"""
                 Converti questi dati in un report tecnico di 'Soggetti Atletici' per {nazione}.
-                NON usare termini ippici. ESTRAI CON RIGORE ASSOLUTO:
+                NON usare termini ippici. ESTRAI CON RIGORE ASSOLUTO OGNI DETTAGLIO SU ERRORI MECCANICI:
                 [INIZIO SOGGETTO]
                 - NOME:
-                - CATEGORIA (G1, Listed, Classe, Handicap):
-                - CARICO/PESO/HANDICAP (Meters or Kg):
+                - CATEGORIA:
+                - CARICO/PESO/HANDICAP:
                 - INDICE RILEVANZA (Rating):
-                - SEQUENZA STORICA:
-                - NOTE CINETICHE (RP, FE, CD, Distacchi reali):
+                - SEQUENZA STORICA (Cerca numeri 1-12):
+                - ERRORI MECCANICI (RP, RI, DAI, Squalifiche, Rotture, 0):
                 [FINE SOGGETTO]
                 IDENTIFICA: Superficie e Distanza totale.
                 """
@@ -77,30 +75,24 @@ if st.button("🔥 INNESCA MODULO ARCHITECT 14.0"):
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_vision.text
-                st.success(f"TARGET AGGANCIATO IN {nazione}! ☕")
+                st.success(f"TARGET AGGANCIATO IN {nazione} CON GEMINI 2.5! ☕")
 
                 # FASE 2: ANALISI SPECIALIZZATA (PERPLEXITY SONAR)
                 prompt_pplx = f"""
-                SIMULAZIONE STRUTTURALE 14.0. NAZIONE: {nazione} | MODULO: {tipologia}.
-                DATI: {dati_estratti}
+                SIMULAZIONE STRUTTURALE 15.0. NAZIONE: {nazione} | MODULO: {tipologia}.
+                DATI ESTRATTI: {dati_estratti}
 
-                PARAMETRI DI PERFEZIONE SPECIFICI:
-                - SE {nazione} == 'USA': PROTOCOLLO 'WINNER ONLY'. Solo chi ha un '1' (vittoria) nelle ultime 2 uscite è MARMO. La regolarità senza vittorie (solo 2-3-4-5) è ABISSO, anche con Rating alto. Cerca chi ha il sangue agli occhi.
-                - SE {nazione} == 'ITALIA' AND {tipologia} == 'HANDICAP': Analizza distacco nastri o peso. Il vantaggio cinetico (<55kg o +0 metri) schiaccia il rating.
-                - SE {nazione} == 'ITALIA' AND {tipologia} == 'TROTTO': Ragguaglio KM < 1:14 = MARMO. Elimina soggetti con RP/0/8 o più di un 4° posto.
-                - SE {nazione} == 'FRANCIA' AND {tipologia} == 'OSTACOLI': PURE QUALITY. Se G1/Listed, ignora FE. Su FANGO, Classe > Forma.
-                - SE {tipologia} == 'TROTTO LUNGO METRAGGIO': Priorità assoluta ai POLMONI D'ACCIAIO (Sequenza finale senza crolli).
-                - SE {nazione} == 'SUD AFRICA': DUAL-PLACE 1-1/1-2. Polytrack: Carico < 58kg è MARMO.
-
-                PROTOCOLLO WINNER EDGE:
-                1. IGNORA LE QUOTE. [cite: 2026-02-20]
-                2. NO 4° POSTI: Chi non vince o non arriva 2° regolarmente è RUGGINE. [cite: 2026-02-23]
-                3. HIGHLANDER: Efficienza = Rating / (Carico * Fattore Distanza). [cite: 2026-02-20]
+                PARAMETRI DI PERFEZIONE MECCANICA:
+                1. PROTOCOLLO 'BULLONE SERRATO' (TROTTO): Parametro ELIMINATORIO. Se un soggetto ha anche una sola segnalazione di 'RP', 'RI', 'DAI', 'Squalificato' o '0' nelle ultime 5 uscite, deve essere classificato come ABISSO. Il MARMO deve essere meccanicamente perfetto.
+                2. PROTOCOLLO 'WINNER ONLY' (USA/UK): Ignora i piazzati (2-3-4). Solo chi ha un '1' nelle ultime 2 uscite è MARMO. La regolarità senza vittorie è ABISSO.
+                3. NO 4° POSTI: Chi arriva spesso 4° è ruggine cronica. [cite: 2026-02-23]
+                4. HIGHLANDER: Efficienza = Rating / (Carico * Fattore Distanza). [cite: 2026-02-20]
+                5. POLMONI D'ACCIAIO: Nelle corse lunghe (>2500m), la sequenza finale deve essere senza crolli.
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '💎 DIAMANTE INDIVIDUATO: [NOME]. 
-                MOTIVAZIONE: [Perché questo specifico modulo {nazione}/{tipologia} conferma la superiorità].'
-                USA: MARMO, CEMENTO, ABISSO, CAZZIMMA.
+                MOTIVAZIONE: [Perché {nazione}/{tipologia} conferma la perfezione meccanica e la superiorità Highlander].'
+                TERMINI OBBLIGATORI: MARMO, CEMENTO, ABISSO, CAZZIMMA, BULLONE SERRATO.
                 """
                 
                 response_pplx = client_pplx.chat.completions.create(
@@ -115,4 +107,4 @@ if st.button("🔥 INNESCA MODULO ARCHITECT 14.0"):
                     st.balloons()
 
             except Exception as e:
-                st.error(f"URTO TECNICO: {e}")
+                st.error(f"URTO TECNICO NEL REATTORE: {e}")
