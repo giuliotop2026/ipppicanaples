@@ -71,7 +71,7 @@ if st.button("🔥 AVVIA MODELLAZIONE ANALITICA"):
                 
                 Usa i termini tecnici: MARMO, CEMENTO, ABISSO, CAZZIMMA.
                 
-                ANALISI TECNICA PRESTAZIONALE - MODULO USA/DIRT.
+                Solo se sono gare USA usa questo sistema : ANALISI TECNICA PRESTAZIONALE - MODULO USA/DIRT.
                 
                 PROTOCOLLO AGGIUNTIVO PER GARE AMERICANE:
                 1. Se la superficie è DIRT/SABBIA USA, ignora la zavorra (peso) come fattore primario.
