@@ -53,34 +53,34 @@ if st.button("🔥 AVVIA MODELLAZIONE ANALITICA"):
 
                 # FASE 2: PERPLEXITY - ANALISI TECNICA PROFESSIONALE
                 # NOTA: Rimosso ogni riferimento a 'Blue Lock' per evitare confusione con l'anime
-                prompt_pplx = f"""
-                VALUTAZIONE TECNICA SULLA STABILITÀ DELLE PERFORMANCE ATLETICHE PROFESSIONALI.
+            prompt_pplx = f"""
+                VALUTAZIONE TECNICA GLOBALE SULLA STABILITÀ DELLE PERFORMANCE ATLETICHE PROFESSIONALI.
                 
                 DATI DI INPUT:
                 {dati_estratti}
                 
-                PROTOCOLLO DI ANALISI DATA-SCIENCE:
-                1. Identifica le variabili ambientali (Meteo e Tipologia Superficie) per la località indicata.
-                2. FILTRO DI AFFIDABILITÀ: Esamina la sequenza degli ultimi 3 test numerici. 
-                   Qualsiasi partecipante con un valore numerico superiore a 3 (es. 4, 5, 0, RP, squalifica) deve essere classificato come 'Soggetto Instabile' ed escluso dall'analisi di affidabilità.
-                3. Identifica il 'Soggetto con Efficienza Ottimale': deve essere il valore più competitivo che rispetti rigorosamente il filtro di stabilità (piazzamenti 1, 2 o 3) e che NON sia il leader assoluto del mercato (favorito di carta).
+                REQUISITO TEMPORALE: Usa esclusivamente dati del 2026. Ignora i dati storici precedenti.
+                
+                PROTOCOLLO 1: ANALISI UNIVERSALE (EUROPA/TURF)
+                1. Identifica Meteo e Tipologia Superficie (ERBA/TURF o SABBIA/DIRT).
+                2. FILTRO 'FORMA INVIOLABILE': Analizza gli ultimi 3 test. Se un soggetto ha un valore > 3 (4, 5, RP, Squalifica), è ABISSO.
+                3. REGOLA HIGHLANDER: Identifica il 'Secondo Migliore' per densità tecnica (Rating/Peso). Deve schiacciare il favorito di carta.
+                
+                PROTOCOLLO 2: MODULO USA/DIRT (SABBIA AMERICANA)
+                - Se la superficie è DIRT USA: Ignora la zavorra (peso) come fattore primario.
+                - FOCUS: Cerca 'Speed Figures' o 'Beyer' del 2026. Cerca CAZZIMMA ESPLOSIVA (valori crescenti).
+                - FILTRO STRETTISSIMO: Richiesta sequenza 1-2 nelle ultime due gare. Il 3° posto è ABISSO.
+                
+                PROTOCOLLO 3: MODULO SUD AFRICA (CELERITAS - 2 PIAZZATI)
+                - Se Sud Africa (Kenilworth, Greyville, ecc.): Verifica se il campo è ridotto (solo 2 piazzati disponibili).
+                - REGOLA DUAL-PLACE: Forma recente obbligatoria 1-1 o 1-2. Se c'è un 3 recente, il cantiere chiude.
+                - FOCUS: 'Closing Speed' sul rettilineo lungo. Identifica il fondista veloce che non affonda nel CEMENTO.
                 
                 REFERTO FINALE (LINGUAGGIO ANALITICO):
                 '💎 SOGGETTO AD ALTA EFFICIENZA INDIVIDUATO: [NOME]. 
-                MOTIVAZIONE TECNICA: [Analisi del rapporto tra carico/zavorra e costanza 1-2-3 per garantire la tenuta sulle condizioni odierne].'
+                MOTIVAZIONE TECNICA: [Analisi del rapporto carico/zavorra o esplosività Beyer e costanza 1-2 per garantire il MARMO oggi].'
                 
                 Usa i termini tecnici: MARMO, CEMENTO, ABISSO, CAZZIMMA.
-                
-                Solo se sono gare USA usa questo sistema : ANALISI TECNICA PRESTAZIONALE - MODULO USA/DIRT.
-                
-                PROTOCOLLO AGGIUNTIVO PER GARE AMERICANE:
-                1. Se la superficie è DIRT/SABBIA USA, ignora la zavorra (peso) come fattore primario.
-                2. FOCUS: Cerca 'Speed Figures' o 'Beyer' recenti. Se un soggetto ha un valore numerico crescente nelle ultime 3 gare, ha CAZZIMMA ESPLOSIVA.
-                3. FILTRO STRETTISSIMO: Nelle gare USA, il 'Secondo Migliore' deve avere una sequenza 1-2 nelle ultime due, o il cantiere si chiude. Il 3° posto in America è spesso ABISSO.
-                
-                REFERTO:
-                '💎 DIAMANTE AMERICANO INDIVIDUATO: [NOME]. 
-                MOTIVAZIONE: [Analisi dell'esplosività iniziale e del Beyer record]
                 """
                 
                 messages = [
