@@ -8,20 +8,21 @@ try:
     GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
     PPLX_API_KEY = st.secrets["PERPLEXITY_API_KEY"]
 except KeyError:
-    st.error("❌ CHIAVI MANCANTI NEI SECRETS!")
+    st.error("❌ CHIAVI MANCANTI NEI SECRETS! AGGIUNGI GEMINI_API_KEY E PERPLEXITY_API_KEY.")
     st.stop()
 
+# Innesco dei motori - 2.5 FLASH PER IL MASSIMO RIGORE
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="PERFORMANCE ANALYTICS 6.0", page_icon="📈", layout="centered")
+st.set_page_config(page_title="PERFORMANCE ANALYTICS 6.6", page_icon="📈", layout="centered")
 
 # --- INTERFACCIA IN ALTO —--
-st.title("📈 PERFORMANCE ANALYTICS 6.0 🚀")
-st.markdown("## **MODELLAZIONE ANALITICA E STABILITÀ TECNICA** 💙 ☕")
+st.title("📈 PERFORMANCE ANALYTICS 6.6 🚀")
+st.markdown("## **MODELLAZIONE ANALITICA GLOBALE E STABILITÀ** 💙 ☕")
 st.write("---")
 
-st.sidebar.info("VERSIONE 6.0: PROTOCOLLO PROFESSIONALE DATA-SCIENCE.")
+st.sidebar.info("VERSIONE 6.6: PROTOCOLLO INTEGRATO EUROPA-USA-SUD AFRICA.")
 
 # 2. CARICAMENTO DATI
 uploaded_files = st.file_uploader("SGANCIATE GLI SCREENSHOT DELLE PRESTAZIONI:", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
@@ -33,27 +34,27 @@ if uploaded_files:
 
 if st.button("🔥 AVVIA MODELLAZIONE ANALITICA"):
     if not uploaded_files:
-        st.warning("CARICA LE FOTO PER INIZIARE!")
+        st.warning("SOCIO, CARICA LE FOTO PER INIZIARE LA SCANSIONE!")
     else:
-        with st.spinner("ELABORAZIONE MODELLO STOCASTICO... 👁️"):
+        with st.spinner("ELABORAZIONE MODELLO GLOBALE... 👁️"):
             try:
                 # FASE 1: GEMINI 2.5 FLASH ESTRAE I DATI PROFESSIONALI
                 prompt_vision = """
-                Analizza questi dati di performance atletica e convertili in formato testuale.
+                Analizza questi dati di performance atletica e convertili in formato testuale professionale.
                 ESTRAI CON RIGORE: 
-                1. Località e data della sessione sportiva.
+                1. Località e data della sessione sportiva (Cerca riferimenti 2026).
                 2. Elenco dei partecipanti con: Indice di Mercato (Quota), Carico (Peso/Zavorra), e Sequenza Risultati Recenti (numeri esatti).
-                Sii estremamente preciso, non omettere nulla.
+                Sii estremamente preciso, ogni numero è marmo.
                 """
                 response_gemini = client_gemini.models.generate_content(
                     model='gemini-2.5-flash', 
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_gemini.text
+                st.success("DATI ACQUISITI! INNESCAMENTO SONAR PERPLEXITY... ☕")
 
-                # FASE 2: PERPLEXITY - ANALISI TECNICA PROFESSIONALE
-                # NOTA: Rimosso ogni riferimento a 'Blue Lock' per evitare confusione con l'anime
-            prompt_pplx = f"""
+                # FASE 2: PERPLEXITY - ANALISI TECNICA INTEGRATA
+                prompt_pplx = f"""
                 VALUTAZIONE TECNICA GLOBALE SULLA STABILITÀ DELLE PERFORMANCE ATLETICHE PROFESSIONALI.
                 
                 DATI DI INPUT:
@@ -80,7 +81,7 @@ if st.button("🔥 AVVIA MODELLAZIONE ANALITICA"):
                 '💎 SOGGETTO AD ALTA EFFICIENZA INDIVIDUATO: [NOME]. 
                 MOTIVAZIONE TECNICA: [Analisi del rapporto carico/zavorra o esplosività Beyer e costanza 1-2 per garantire il MARMO oggi].'
                 
-                Usa i termini tecnici: MARMO, CEMENTO, ABISSO, CAZZIMMA.
+                Usa i termini tecnici: MARMO, CEMENTO, ABISSO, CAZZIMMA. SINTASSI TUTTO IN MAIUSCOLO.
                 """
                 
                 messages = [
