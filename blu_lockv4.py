@@ -23,20 +23,22 @@ client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 st.set_page_config(page_title="SNIPER 15.3 GLOBAL HYBRID", page_icon="🎯", layout="wide")
 
 st.title("🎯 SNIPER 15.3 'GLOBAL HYBRID' 🚀")
-st.markdown("## **LOGICA SEPARATA: MARKET LAW (USA) & DENSITÀ REALE (EU/ROW)** 💙 ☕")
+st.markdown("## **LOGICA SEPARATA: MARKET LAW (USA) & DENSITÀ REALE (EU/ARG/ROW)** 💙 ☕")
 
 # 3. SISTEMA DI SELEZIONE A MATRICE TOTALE
 col1, col2 = st.columns(2)
 
 with col1:
     nazione = st.selectbox("🌍 IDENTIFICA LA NAZIONE:", [
-        "USA", "ITALIA", "FRANCIA", "SVEZIA", "UK", "SUD AFRICA", 
+        "USA", "ARGENTINA", "ITALIA", "FRANCIA", "SVEZIA", "UK", "SUD AFRICA", 
         "AUSTRALIA", "GERMANIA", "ARABIA SAUDITA", "BRASILE/CILE/MESSICO"
     ])
 
 with col2:
     if nazione == "USA":
         tipologia = st.selectbox("🏇 MODULO:", ["DIRT/SPEED (MARKET LAW)"])
+    elif nazione == "ARGENTINA":
+        tipologia = st.selectbox("🏇 MODULO:", ["DIRT/SPEED (DENSITÀ REALE)", "HANDICAP/ZAVORRA"])
     elif nazione in ["ITALIA", "FRANCIA", "SVEZIA"]:
         tipologia = st.selectbox("🏇 MODULO:", ["TROTTO (BULLONE SERRATO)", "GALOPPO PIANO", "HANDICAP/NASTRI"])
     else:
@@ -99,4 +101,4 @@ if st.button("🔥 INNESCA MODULO ARCHITECT 15.3"):
                     st.balloons()
 
             except Exception as e:
-                st.error(f"URTO TECNICO NEL REATTORE: {e}")
+                st.error(f"URTO TECNICO NEL REATTORE: {e}")a
