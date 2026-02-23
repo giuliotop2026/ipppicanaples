@@ -65,32 +65,37 @@ if st.button("🔥 AVVIA MODELLAZIONE ANALITICA"):
 
                 # FASE 2: ANALISI PERPLEXITY 6.7
                 prompt_pplx = f"""
-                VALUTAZIONE TECNICA SULLA STABILITÀ DELLE PERFORMANCE 2026.
-                DATI DI INPUT: {dati_estratti}
+VALUTAZIONE TECNICA SULLA STABILITÀ DELLE PERFORMANCE 2026.
+DATI DI INPUT: {dati_estratti}
 
-              PROTOCOLLO SUD AFRICA :
-                1. ANALISI DISTANZA REALE: Ignora la posizione se isolata.
-                   - Se un partecipante è 4° o 5° ma dista MENO di 2.0 lunghezze dal primo: CLASSIFICAZIONE 'MARMO'.
-                   - Se un partecipante è 2° o 3° ma dista OLTRE 5.0 lunghezze dal primo: CLASSIFICAZIONE 'BULLONE ARRUGINITO' (Abisso).
-                2. FILTRO DUAL-PLACE (2 PIAZZATI): 
-                   - Accetta solo chi ha una sequenza 1-1, 1-2 o 'MARMO 4/5' (entro 2 lunghezze).
-                   - Ogni 8°, 9° o 0 recente è ABISSO ISTANTANEO (Zero tolleranza).
-                3. VERIFICA INCROCIATA DATA 2026:
-                   - Controlla i risultati specifici del 2026. Se il sonar rileva un 8° posto (come Next of Kin il 02/01/26), il soggetto deve essere rimosso.
+REQUISITO TEMPORALE: Usa esclusivamente dati del 2026.
 
-                PROTOCOLLO USA (DIRT/BEYER):
-                - Se USA DIRT: Ignora peso. Cerca Beyer Speed Figures crescenti nel 2026. 
-                - Requisito: Sequenza 1-2 nelle ultime due gare. Il 3° è ABISSO.
+PROTOCOLLO FRANCIA (PSF/TURF - PATCH 6.9):
+1. FILTRO ZAVORRA CRITICA: Se il peso è ≥ 58kg, la forma recente deve essere 1-1 o 1-2. Se compare un 3 o un 4, è ABISSO (il peso schiaccia il motore).
+2. REGOLA LUNGHEZZE FRANCIA: Un 4° posto è MARMO solo se il distacco è < 2.5 lunghezze. Se distacco > 5 lunghezze, è RUGGINE totale, a prescindere dal nome.
+3. PREFERENZA LEGGEREZZA: Identifica soggetti con peso < 56kg e almeno un piazzamento 1-2-3 recente (Alta densità tecnica).
 
-                PROTOCOLLO EUROPA (TURF):
-                - FILTRO FORMA: Qualsiasi valore > 3 è ABISSO.
-                - REGOLA HIGHLANDER: Identifica il 'Secondo Migliore' per densità tecnica (Rating/Peso).
+PROTOCOLLO SUD AFRICA (LUNGHEZZE & DUAL-PLACE):
+1. ANALISI DISTANZA REALE: 
+   - 4° o 5° con distacco < 2.0 lunghezze: CLASSIFICAZIONE 'MARMO'.
+   - 2° o 3° con distacco > 5.0 lunghezze: CLASSIFICAZIONE 'BULLONE ARRUGINITO' (Abisso).
+2. FILTRO DUAL-PLACE (2 PIAZZATI): 
+   - Accetta solo 1-1, 1-2 o 'MARMO 4/5'. Ogni 8°, 9° o 0 recente è ABISSO ISTANTANEO.
 
-                REFERTO FINALE:
-                '💎 SOGGETTO AD ALTA EFFICIENZA: [NOME]. 
-                MOTIVAZIONE: [Analisi distacchi e densità per garantire il MARMO oggi].'
-                USA: MARMO, CEMENTO, ABISSO, CAZZIMMA. SINTASSI MAIUSCOLA.
-                """
+PROTOCOLLO USA (DIRT/BEYER):
+- Se USA DIRT: Ignora peso. Cerca Beyer Speed Figures crescenti nel 2026. 
+- Requisito: Sequenza 1-2 nelle ultime due gare. Il 3° è ABISSO.
+
+PROTOCOLLO EUROPA GENERALE (TURF):
+- FILTRO FORMA: Qualsiasi valore > 3 è ABISSO.
+- REGOLA HIGHLANDER: Identifica il 'Secondo Migliore' per densità tecnica (Rating/Peso).
+
+REFERTO FINALE:
+'💎 SOGGETTO AD ALTA EFFICIENZA: [NOME]. 
+MOTIVAZIONE: [Analisi distacchi, zavorra e densità per garantire il MARMO oggi].'
+
+TERMINI OBBLIGATORI: MARMO, CEMENTO, ABISSO, CAZZIMMA. SINTASSI MAIUSCOLA.
+"""
                 
                 messages = [
                     {"role": "system", "content": "Sei un analista senior esperto in modellazione statistica sportiva."},
