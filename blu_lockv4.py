@@ -68,10 +68,15 @@ if st.button("🔥 AVVIA MODELLAZIONE ANALITICA"):
                 VALUTAZIONE TECNICA SULLA STABILITÀ DELLE PERFORMANCE 2026.
                 DATI DI INPUT: {dati_estratti}
 
-                PROTOCOLLO SUD AFRICA (PATCH 6.7 - LUNGHEZZE):
-                1. Se località Sud Africa (Greyville, Kenilworth, ecc.):
-                2. REGOLA LUNGHEZZE: Un 4° o 5° posto è MARMO solo se il distacco è < 2.5 lunghezze. Se distacco > 5 lunghezze, il soggetto è ABISSO (anche se è arrivato 1° o 2° in passato).
-                3. DUAL-PLACE (2 PIAZZATI): Se la gara ha solo 2 piazzati, accetta solo 1-1, 1-2 o un '4° lunghezze marmo'. Ogni altra sequenza è RUGGINE.
+              PROTOCOLLO SUD AFRICA :
+                1. ANALISI DISTANZA REALE: Ignora la posizione se isolata.
+                   - Se un partecipante è 4° o 5° ma dista MENO di 2.0 lunghezze dal primo: CLASSIFICAZIONE 'MARMO'.
+                   - Se un partecipante è 2° o 3° ma dista OLTRE 5.0 lunghezze dal primo: CLASSIFICAZIONE 'BULLONE ARRUGINITO' (Abisso).
+                2. FILTRO DUAL-PLACE (2 PIAZZATI): 
+                   - Accetta solo chi ha una sequenza 1-1, 1-2 o 'MARMO 4/5' (entro 2 lunghezze).
+                   - Ogni 8°, 9° o 0 recente è ABISSO ISTANTANEO (Zero tolleranza).
+                3. VERIFICA INCROCIATA DATA 2026:
+                   - Controlla i risultati specifici del 2026. Se il sonar rileva un 8° posto (come Next of Kin il 02/01/26), il soggetto deve essere rimosso.
 
                 PROTOCOLLO USA (DIRT/BEYER):
                 - Se USA DIRT: Ignora peso. Cerca Beyer Speed Figures crescenti nel 2026. 
