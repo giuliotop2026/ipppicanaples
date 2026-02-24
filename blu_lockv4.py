@@ -4,38 +4,14 @@ from openai import OpenAI
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- GRAFICA DA SALOON CON SFONDO CAVALLO (CSS CUSTOM) ---
-# Ho aggiornato la sezione .stApp per includere l'immagine di sfondo
+# --- GRAFICA DA SALOON (CSS CUSTOM) ---
 st.markdown("""
     <style>
-    /* QUI È AVVENUTA LA MAGIA:
-       Abbiamo sostituito il colore di sfondo piatto con un'immagine.
-       Uso un 'linear-gradient' semi-trasparente sopra l'immagine per farla sembrare
-       una vecchia foto sbiadita e far leggere bene il testo.
-    */
-    .stApp {
-        /* URL dell'immagine: Puoi cambiarlo con qualsiasi link tu voglia */
-        background-image: linear-gradient(rgba(244, 236, 207, 0.85), rgba(244, 236, 207, 0.85)), url('https://images.unsplash.com/photo-1528563351349-3397da0533d1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-        background-size: cover;      /* L'immagine copre tutto lo schermo */
-        background-position: center; /* Centra l'immagine */
-        background-repeat: no-repeat;/* Non ripete l'immagine a piastrelle */
-        background-attachment: fixed;/* Lo sfondo resta fermo quando scorri */
-        
-        color: #5d4037; /* Colore del testo principale (marrone scuro) */
-        font-family: 'Georgia', serif;
-    }
-    
-    /* Stile dei Titoli */
+    .stApp { background-color: #f4eccf; color: #5d4037; font-family: 'Georgia', serif; }
     h1, h2, h3 { color: #8b4513 !important; text-transform: uppercase; text-shadow: 2px 2px 4px #cdaa7d; }
-    
-    /* Stile dei Bottoni */
     .stButton>button { background-color: #8b4513 !important; color: #f4eccf !important; border: 2px solid #3e2723 !important; font-weight: bold; width: 100%; height: 3.5em; text-transform: uppercase; }
-    
-    /* Stile delle Etichette */
     .stSelectbox label, .stFileUploader label, .stTextInput label { color: #3e2723 !important; font-weight: bold; font-size: 1.1em; }
-    
-    /* Stile dei Box di Avviso/Risultato */
-    .stAlert { background-color: rgba(224, 197, 160, 0.95); border: 2px solid #8b4513; }
+    .stAlert { background-color: #e0c5a0; border: 2px solid #8b4513; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -54,22 +30,22 @@ except KeyError:
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 15.14 HORSE EDITION", page_icon="🤠", layout="wide")
+st.set_page_config(page_title="SNIPER 15.12 LEPRE HUNTER", page_icon="🤠", layout="wide")
 
-st.title("🌵 SNIPER 15.14: 'LA LEGGE DEL WEST' 🤠")
-st.markdown("### *'Con un Mustang alle spalle e il Marmo nel mirino, non sbagliamo un colpo.'* 🔫 🥃")
+st.title("🌵 SNIPER 15.12: 'LA LEGGE DEL WEST' 🤠")
+st.markdown("### *'Se la Lepre scappa davanti, il Cacciatore deve avere il fuoco agli occhi.'* 🔫 🥃")
 
-# 3. MATRICE GLOBALE (TOTAL WORLD)
+# 3. MATRICE GLOBALE (TUTTE LE NAZIONI RIPRISTINATE)
 col1, col2, col3 = st.columns(3)
 
 with col1:
     nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
-        "USA", "SVEZIA", "CILE", "BRASILE", "MESSICO", "GERMANIA", "SPAGNA", 
-        "UK", "ITALIA", "FRANCIA", "ARGENTINA", "SUD AFRICA", "AUSTRALIA"
+        "SVEZIA", "CILE", "BRASILE", "MESSICO", "GERMANIA", "SPAGNA", 
+        "UK", "USA", "ITALIA", "FRANCIA", "ARGENTINA", "SUD AFRICA", "AUSTRALIA"
     ])
 
 with col2:
-    ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Identifica il Cantiere):")
+    ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Es: Bollnäs, Concepcion, Southwell):")
 
 with col3:
     if nazione == "USA":
@@ -93,33 +69,32 @@ if st.button("💥 PREMI IL GRILLETTO (ANALISI CHIRURGICA)"):
     if not uploaded_files or not ippodromo:
         st.warning("EHI COWBOY! CARICA I DATI E IL NOME DEL CANTIERE.")
     else:
-        with st.spinner(f"LO SCERIFFO STA SCANSIONANDO LA POLVERE DI {ippodromo}... 🚬"):
+        with st.spinner(f"LO SCERIFFO STA RICALIBRANDO IL MIRINO PER {ippodromo}... 🚬"):
             try:
                 # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.0 FLASH)
-                prompt_vision = f"ESTRAI DALLE IMMAGINI PER {ippodromo} ({nazione}): NOME, QUOTA, RATING, PESO, DISTANZA, GG (GIORNI), SEQUENZA, NOTE."
+                prompt_vision = f"ESTRAI: NOME, QUOTA, RATING, PESO, DISTANZA, SEQUENZA, NOTE PER {ippodromo} ({nazione})."
                 response_vision = client_gemini.models.generate_content(
-                    model='gemini-2.0-flash', 
+                    model='gemini-2.5-flash', 
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_vision.text
-                st.success(f"INDIZI RACCOLTI CON GEMINI 2.0 FLASH! 🥃")
 
-                # FASE 2: ANALISI CON TUTTE LE PATCH ATTIVE (15.14)
+                # FASE 2: ANALISI CON PROTOCOLLO 15.12 (LEPRE BIAS)
                 prompt_pplx = f"""
                 SISTEMA: ANALIZZATORE OFFLINE. PARLA COME UN COWBOY DURO.
                 IPPODROMO: {ippodromo}. NAZIONE: {nazione}. DATI: {dati_estratti}
 
-                PARAMETRI DI PERFEZIONE 15.14 (ALL PATCHES ACTIVE):
-                1. FRESHNESS FILTER (USA/GLOBALE): GG > 60 = Ruggine (no favorito). GG > 150 = Abisso. [cite: 2026-02-24]
-                2. BOLLNÄS/SVEZIA LEPRE BIAS: Primo nastro con sequenza pulita = Marmo prioritario. [cite: 2026-02-24]
-                3. ZERO TOLLERANZA SVEZIA: No RP, RI, DI, DAI nelle ultime 2 uscite. [cite: 2026-02-24]
-                4. CHILE PRECISION: Sprint < 1200m richiede un '1' recente. [cite: 2026-02-24]
-                5. SOUTHWELL KEY: Ignora favorito sotto quota 3.00. [cite: 2026-02-24]
-                6. UNIVERSALI: BULLONE SERRATO & HIGHLANDER EFFICIENCY. [cite: 2026-02-23]
+                PARAMETRI DI PERFEZIONE 15.12:
+                1. BOLLNÄS/SVEZIA LEPRE BIAS: Nelle corse a nastri, se un cavallo nel PRIMO NASTRO (Base) ha una SEQUENZA PULITA (No RP/RI/0) e il favorito a +20m ha l'ultimo esito > 3, la LEPRE è il MARMO PRIORITARIO, anche con QUOTA > 20.00. Ignora la quota in Svezia se il bullone è serrato davanti.
+                2. CHILE PRECISION: Distanza < 1200m richiede PRIORITÀ ASSOLUTA a chi ha un '1' recente. Scarta piazzati cronici.
+                3. SOUTHWELL KEY: Ignora favorito sotto quota 3.00. Cerca il secondo marmo con storia su sintetico.
+                4. ZERO TOLLERANZA SVEZIA: No RP, RI, DI, DAI nelle ultime 3 uscite.
+                5. HIGHLANDER: Efficienza = Rating / (Carico * Distanza).
+                6. UNIVERSALI: BULLONE SERRATO (No FE, T, 0).
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '💰 PEPITA D'ORO INDIVIDUATA: [NOME]. 
-                LA SCOMMESSA DEL PISTOLERO: [Analisi specifica basata sui bias del tracciato].'
+                LA SCOMMESSA DEL PISTOLERO: [Analisi chirurgica basata sul Lepre Bias e sulla rincorsa dei cacciatori].'
                 """
                 
                 response_pplx = client_pplx.chat.completions.create(
