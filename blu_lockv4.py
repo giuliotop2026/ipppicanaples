@@ -78,14 +78,15 @@ if st.button("🔥 INNESCA MODULO ARCHITECT 15.3"):
 
                 PARAMETRI DI PERFEZIONE 15.3:
                 1. SE NAZIONE == 'USA': Applica MARKET LAW. Identifica i cavalli con le QUOTE PIÙ BASSE. Confrontali e scegli il migliore tra i favoriti. Deve avere almeno un '1' recente.
-                2. SE NAZIONE != 'USA': IGNORA LE QUOTE. Cerca il secondo migliore per densità tecnica reale, regolarità e polmoni d'acciaio. [cite: 2026-02-20]
-                3. BULLONE SERRATO (UNIVERSALE): RP, RI, DAI, 0, Squalificato, FE o T = ABISSO MECCANICO immediato. [cite: 2026-02-23]
-                4. HIGHLANDER: Efficienza = Rating / (Carico * Distanza). [cite: 2026-02-20]
-                5. NO 4° POSTI: Chi arriva spesso 4° è RUGGINE. [cite: 2026-02-23]
+                2. SE NAZIONE == 'FRANCIA': IGNORA LE QUOTE, ma applica la PATCH ERBA PESANTE. Se il terreno è pesante/erba e la quota è superiore a 12.00, declassa il soggetto anche con rating alto (troppa instabilità). Il diamante nel fango francese deve avere un minimo di consenso del mercato (quota < 12.00). [cite: 2026-02-24]
+                3. SE NAZIONE != 'USA' E NAZIONE != 'FRANCIA': IGNORA LE QUOTE. Cerca il secondo migliore per densità tecnica reale, regolarità e polmoni d'acciaio. [cite: 2026-02-20]
+                4. BULLONE SERRATO (UNIVERSALE): RP, RI, DAI, 0, Squalificato, FE o T = ABISSO MECCANICO immediato. [cite: 2026-02-23]
+                5. HIGHLANDER: Efficienza = Rating / (Carico * Distanza). [cite: 2026-02-20]
+                6. NO 4° POSTI: Chi arriva spesso 4° è RUGGINE. [cite: 2026-02-23]
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '💎 DIAMANTE INDIVIDUATO: [NOME]. 
-                MOTIVAZIONE: [Analisi specifica per {nazione} basata sulla logica corretta].'
+                MOTIVAZIONE: [Analisi specifica per {nazione} basata sulla logica corretta, includendo nota sul terreno se FRANCIA].'
                 TERMINI OBBLIGATORI: MARMO, CEMENTO, ABISSO, CAZZIMMA, BULLONE SERRATO.
                 """
                 
