@@ -3,146 +3,91 @@ from google import genai
 from openai import OpenAI
 from PIL import Image
 import streamlit.components.v1 as components
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
-# --- STILE WESTERN CUSTOM (CSS DEL SALOON) ---
-st.markdown("""
-    <style>
-    .stApp {
-        background-color: #f0e6d2; 
-        color: #5c4033; 
-        font-family: 'Georgia', serif;
-    }
-    h1, h2, h3 {
-        color: #8b4513 !important; 
-        text-transform: uppercase;
-        text-shadow: 2px 2px 4px #cdaa7d;
-    }
-    .stButton>button {
-        background-color: #8b4513 !important;
-        color: #f0e6d2 !important;
-        border: 2px solid #5c4033 !important;
-        font-weight: bold;
-        width: 100%;
-        height: 3.5em;
-    }
-    .stSelectbox label, .stFileUploader label {
-        color: #8b4513 !important;
-        font-weight: bold;
-        font-size: 1.2em;
-    }
-    .stAlert {
-        background-color: #f8f0e3;
-        border: 2px solid #8b4513;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+# 1. NOTIFICA SONORA (PROTOCOLLO SONIC)
+def play_beep():
+    beep_html = '<audio autoplay><source src="https://www.soundjay.com/buttons/beep-01a.mp3" type="audio/mpeg"></audio>'
+    components.html(beep_html, height=0, width=0)
 
-# 1. MUNIZIONI AUDIO
-def play_shot():
-    # Suono di un ricochet western
-    shot_html = '<audio autoplay><source src="https://www.myinstants.com/media/sounds/ricochet-sound.mp3" type="audio/mpeg"></audio>'
-    components.html(shot_html, height=0, width=0)
-
-# 2. CASSAFORTE DELLO SCERIFFO E PROTOCOLLO TENACITY (ANTI-503)
+# 2. CASSAFORTE API
 try:
     GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
     PPLX_API_KEY = st.secrets["PERPLEXITY_API_KEY"]
 except KeyError:
-    st.error("☠️ PORCA PALETTA! MANCANO LE MUNIZIONI NEI SECRETS! LA DILIGENZA È FERMA.")
+    st.error("❌ BENZINA MANCANTE NEI SECRETS! IL CANTIERE È FERMO.")
     st.stop()
 
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-# Il sistema proverà a sparare fino a 5 volte se il server di Google scotta (errore 503)
-@retry(
-    stop=stop_after_attempt(5), 
-    wait=wait_exponential(multiplier=1, min=4, max=10),
-    retry=retry_if_exception_type(Exception) 
-)
-def fiuta_tracce_gemini(prompt, images):
-    return client_gemini.models.generate_content(
-        model='gemini-2.0-flash', # Potenza cinetica Gemini 2.5/2.0
-        contents=[prompt] + images
-    )
+st.set_page_config(page_title="SNIPER 15.3 GLOBAL HYBRID", page_icon="🎯", layout="wide")
 
-st.set_page_config(page_title="SNIPER 15.3: WESTERN GOLD", page_icon="🤠", layout="wide")
+st.title("🎯 SNIPER 15.3 'GLOBAL HYBRID' 🚀")
+st.markdown("## **LOGICA SEPARATA: MARKET LAW (USA) & DENSITÀ REALE (EU/ARG/ROW)** 💙 ☕")
 
-# --- INTERFACCIA DEL SALOON ---
-st.title("🌵 SNIPER 15.3: 'LA LEGGE DEL WEST' 🤠")
-st.markdown("### **BENVENUTO PARTNER! SCHIACCIA PLAY E CARICA I WANTED POSTERS!** 🥃")
-
-# PULSANTE PLAY PER IL PIANO DEL SALOON
-st.audio("https://www.soundjay.com/ambient/sounds/saloon-piano-1.mp3", format="audio/mp3")
-
-st.markdown("---")
-
-# 3. MAPPA DEI TERRITORI (TUTTE LE NAZIONI)
+# 3. SISTEMA DI SELEZIONE A MATRICE TOTALE
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("#### 🗺️ SCEGLI DOVE SPARARE:")
-    nazione = st.selectbox("", [
-        "USA 🇺🇸", "ARGENTINA 🇦🇷", "ITALIA 🇮🇹", "FRANCIA 🇫🇷", "SVEZIA 🇸🇪", "UK 🇬🇧", 
-        "SUD AFRICA 🇿🇦", "AUSTRALIA 🇦🇺", "GERMANIA 🇩🇪", "ARABIA SAUDITA 🇸🇦", "BRASILE/CILE/MESSICO 🌎"
+    nazione = st.selectbox("🌍 IDENTIFICA LA NAZIONE:", [
+        "USA", "ARGENTINA", "ITALIA", "FRANCIA", "SVEZIA", "UK", "SUD AFRICA", 
+        "AUSTRALIA", "GERMANIA", "ARABIA SAUDITA", "BRASILE/CILE/MESSICO"
     ])
-    nazione_clean = nazione.split(" ")[0]
 
 with col2:
-    st.markdown("#### 🐎 TIPO DI DUELLO (MODULO):")
-    if nazione_clean == "USA":
-        tipologia = st.selectbox("", ["DIRT/SPEED (MARKET LAW) 💰"])
-    elif nazione_clean == "ARGENTINA":
-        tipologia = st.selectbox("", ["DIRT/SPEED (DENSITÀ REALE) 💪"])
-    elif nazione_clean in ["ITALIA", "FRANCIA", "SVEZIA"]:
-        tipologia = st.selectbox("", ["TROTTO (FERRO BEN BATTUTO) 🔨", "GALOPPO PIANO 🏇", "HANDICAP/NASTRI ⚖️"])
+    if nazione == "USA":
+        tipologia = st.selectbox("🏇 MODULO:", ["DIRT/SPEED (MARKET LAW)"])
+    elif nazione == "ARGENTINA":
+        tipologia = st.selectbox("🏇 MODULO:", ["DIRT/SPEED (DENSITÀ REALE)", "HANDICAP/ZAVORRA"])
+    elif nazione in ["ITALIA", "FRANCIA", "SVEZIA"]:
+        tipologia = st.selectbox("🏇 MODULO:", ["TROTTO (BULLONE SERRATO)", "GALOPPO PIANO", "HANDICAP/NASTRI"])
     else:
-        tipologia = st.selectbox("", ["FLAT/PIANO 🏇", "HANDICAP/ZAVORRA ⚖️", "DIRT/SPEED 💨"])
+        tipologia = st.selectbox("🏇 MODULO:", ["FLAT/PIANO", "HANDICAP/ZAVORRA", "DIRT/SPEED"])
 
-# 4. CARICO IDENTIKIT
-st.markdown("#### 📜 APPICCICA QUI I 'WANTED POSTERS' (GLI SCREENSHOT):")
-uploaded_files = st.file_uploader("", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
+# 4. CARICAMENTO DATI
+uploaded_files = st.file_uploader("SGANCIATE GLI SCREENSHOT (ESTRAZIONE BLINDATA):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 if uploaded_files:
     images_to_process = [Image.open(f) for f in uploaded_files]
-    cols = st.columns(len(images_to_process))
-    for i, img in enumerate(images_to_process):
-        cols[i].image(img, use_container_width=True)
+    for img in images_to_process:
+        st.image(img, use_container_width=True)
 
-if st.button("🔥 PREMI IL GRILLETTO (ANALIZZA I DATI)"):
+if st.button("🔥 INNESCA MODULO ARCHITECT 15.3"):
     if not uploaded_files:
-        st.warning("EHI COWBOY! IL CARICATORE È VUOTO! CARICA I DATI.")
+        st.warning("SOCIO, IL CANTIERE È VUOTO! CARICA I DATI.")
     else:
-        with st.spinner(f"LO SCERIFFO STA FIUTANDO LA PISTA IN {nazione_clean}... 🔭"):
+        with st.spinner(f"CALIBRAZIONE {nazione} CON GEMINI 2.5 FLASH... 👁️"):
             try:
-                # FASE 1: ESTRAZIONE CINETICA (CON TENACITY ANTI-503)
+                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
                 prompt_vision = f"""
-                Analizza questi documenti per {nazione_clean}. NON CERCARE SUL WEB. LEGGI SOLO LE IMMAGINI.
-                ESTRAI: NOME, QUOTA (Odds), RATING, PESO, SEQUENZA STORICA (numeri), NOTE (FE, T, CD, RP, RI).
+                Converti questi dati in un report tecnico per {nazione}.
+                NON CERCARE SUL WEB. LEGGI SOLO QUESTE IMMAGINI.
+                ESTRAI: NOME, QUOTA (Odds), RATING, PESO, SEQUENZA, NOTE (FE, T, CD, RP, RI).
                 """
-                response_vision = fiuta_tracce_gemini(prompt_vision, images_to_process)
+                response_vision = client_gemini.models.generate_content(
+                    model='gemini-2.5-flash', 
+                    contents=[prompt_vision] + images_to_process
+                )
                 dati_estratti = response_vision.text
-                st.success(f"INDIDZI RACCOLTI CON GEMINI! 🥃")
+                st.success(f"TARGET AGGANCIATO IN {nazione} CON GEMINI 2.5! ☕")
 
-                # FASE 2: ANALISI DINAMICA DELLO SCERIFFO (SONAR-PRO)
+                # FASE 2: ANALISI SPECIALIZZATA (OFFLINE)
                 prompt_pplx = f"""
-                SISTEMA: SEI UN VECCHIO SCERIFFO DEL WEST. PARLA COME UN COWBOY DURU E USA FRASI ICONICHE DAI FILM DI SERGIO LEONE O CLINT EASTWOOD.
-                USA SOLO QUESTI DATI: {dati_estratti}
+                SISTEMA: SEI UN ANALIZZATORE OFFLINE. NON USARE LA RICERCA WEB.
+                USA ESCLUSIVAMENTE QUESTI DATI: {dati_estratti}
 
-                LE LEGGI DELLO SCERIFFO 15.3:
-                1. USA: MARKET LAW. Confronta i favoriti (quote basse). Il migliore deve avere almeno un '1' recente.
-                2. FRANCIA (LEGGE LOHENGREEN): Se la quota è superiore a 12.00, quel ronzino finisce nel BURRONE anche se ha un rating alto. Nel fango francese, il mercato deve confermare il cemento (Quota < 12.00). [cite: 2026-02-24]
-                3. ROW/ARG: IGNORA LE QUOTE. Cerca il secondo cavallo migliore per densità tecnica e polmoni d'acciaio. [cite: 2026-02-20]
-                4. FERRO BEN BATTUTO (Universale): RP, RI, DAI, 0, Squalificato, FE o T = BURRONE immediato. [cite: 2026-02-23]
+                PARAMETRI DI PERFEZIONE 15.3:
+                1. SE NAZIONE == 'USA': Applica MARKET LAW. Identifica i cavalli con le QUOTE PIÙ BASSE. Confrontali e scegli il migliore tra i favoriti. Deve avere almeno un '1' recente. [cite: 2026-02-23]
+                2. SE NAZIONE == 'FRANCIA': IGNORA LE QUOTE, MA APPLICA LA PATCH FANGO (CAGNES/ANGERS). SE LA QUOTA È SUPERIORE A 12.00, IL SOGGETTO È BURRONE IMMEDIATO ANCHE CON RATING ALTO. IL MARMO DEVE AVERE UN MINIMO DI CONSENSO (QUOTA < 12.00). [cite: 2026-02-24]
+                3. SE NAZIONE != 'USA' E NAZIONE != 'FRANCIA': IGNORA LE QUOTE. Cerca il secondo migliore per densità tecnica reale, regolarità e polmoni d'acciaio. [cite: 2026-02-20]
+                4. BULLONE SERRATO (UNIVERSALE): RP, RI, DAI, 0, Squalificato, FE o T = ABISSO MECCANICO immediato. [cite: 2026-02-23]
                 5. HIGHLANDER: Efficienza = Rating / (Carico * Distanza). [cite: 2026-02-20]
-                6. NO 4° POSTI: Il '4' è ruggine cronica. [cite: 2026-02-23]
+                6. NO 4° POSTI: Chi arriva spesso 4° è RUGGINE. [cite: 2026-02-23]
 
-                RAPPORTO FINALE (SINTASSI MAIUSCOLA E DINAMICA):
-                '💰 PEPITA D'ORO TROVATA: [NOME].'
-                'LA SCOMMESSA DEL PISTOLERO (MOTIVAZIONE): [Spiega con CAZZIMMA perché questo purosangue ha le palle quadrate e cita una frase western iconica adattata alla situazione. Spiega perché rispetta la legge locale di {nazione_clean}].'
-                
-                TERMINI OBBLIGATORI: ORO PURO, BURRONE, FERRO BEN BATTUTO, CAZZIMMA, MARKET LAW.
+                REFERTO FINALE (SINTASSI MAIUSCOLA):
+                '💎 DIAMANTE INDIVIDUATO: [NOME]. 
+                MOTIVAZIONE: [Analisi specifica per {nazione} basata sulla logica corretta].'
+                TERMINI OBBLIGATORI: MARMO, CEMENTO, ABISSO, CAZZIMMA, BULLONE SERRATO.
                 """
                 
                 response_pplx = client_pplx.chat.completions.create(
@@ -151,17 +96,10 @@ if st.button("🔥 PREMI IL GRILLETTO (ANALIZZA I DATI)"):
                 )
                 
                 sentenza = response_pplx.choices[0].message.content
-                
-                # Visualizzazione Verdetto
-                st.markdown("""<div style='background-color: #f8f0e3; border: 3px dashed #8b4513; padding: 20px; border-radius: 10px;'>
-                                <h3 style='text-align: center;'>📜 IL VERDETTO DELLO SCERIFFO 📜</h3>""", unsafe_allow_html=True)
                 st.info(sentenza)
-                st.markdown("</div>", unsafe_allow_html=True)
-
-                if "PEPITA" in sentenza.upper():
-                    play_shot()
+                if "DIAMANTE" in sentenza.upper():
+                    play_beep()
                     st.balloons()
-                    st.success("CENTRO PERFETTO, PARTNER! ANDIAMO A INCASSARE L'ORO! 💰")
 
             except Exception as e:
-                st.error(f"☠️ SERPENTE NELLO STIVALE! URTO TECNICO: {e}")
+                st.error(f"URTO TECNICO NEL REATTORE: {e}")
