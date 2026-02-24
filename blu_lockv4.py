@@ -30,26 +30,27 @@ except KeyError:
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 15.7 PATCH SVEZIA", page_icon="🤠", layout="wide")
+st.set_page_config(page_title="SNIPER 15.8 WORLD DOMINATION", page_icon="🤠", layout="wide")
 
-st.title("🌵 SNIPER 15.7: 'LA LEGGE DEL WEST' 🤠")
+st.title("🌵 SNIPER 15.8: 'LA LEGGE DEL WEST' 🤠")
 st.markdown("### *'In Svezia il Marmo non deve avere crepe. Zero RP, solo gloria.'* 🔫 🥃")
 
-# 3. SISTEMA DI SELEZIONE A MATRICE TOTALE (CON MIRINO MANUALE)
+# 3. SISTEMA DI SELEZIONE A MATRICE TOTALE (MIRINO MONDIALE)
 col1, col2, col3 = st.columns(3)
 
 with col1:
     nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
-        "SVEZIA", "UK", "USA", "ITALIA", "FRANCIA", "ARGENTINA", "SUD AFRICA", "AUSTRALIA"
+        "SVEZIA", "UK", "USA", "ITALIA", "FRANCIA", "GERMANIA", "SPAGNA", 
+        "CILE", "BRASILE", "MESSICO", "ARGENTINA", "SUD AFRICA", "AUSTRALIA"
     ])
 
 with col2:
-    ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Identifica il Tracciato):", help="Esempio: Bollnäs, Southwell, Napoli")
+    ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Identifica il Tracciato):", help="Esempio: Bollnäs, Southwell, Napoli, Santiago")
 
 with col3:
     if nazione == "USA":
         tipologia = st.selectbox("🏇 MODULO:", ["DIRT/SPEED (MARKET LAW)"])
-    elif nazione in ["UK", "ITALIA", "FRANCIA", "SVEZIA"]:
+    elif nazione in ["UK", "ITALIA", "FRANCIA", "SVEZIA", "GERMANIA", "SPAGNA"]:
         tipologia = st.selectbox("🏇 MODULO:", ["TROTTO (BULLONE SERRATO)", "GALOPPO PIANO", "HANDICAP/NASTRI"])
     else:
         tipologia = st.selectbox("🏇 MODULO:", ["FLAT/PIANO", "HANDICAP/ZAVORRA"])
@@ -77,12 +78,12 @@ if st.button("💥 PREMI IL GRILLETTO (ANALISI CHIRURGICA)"):
                 dati_estratti = response_vision.text
                 st.success(f"INDIZI RACCOLTI CON GEMINI 2.5 FLASH! 🥃")
 
-                # FASE 2: ANALISI DELLO SCERIFFO CON PATCH SVEZIA
+                # FASE 2: ANALISI DELLO SCERIFFO CON PATCH SVEZIA E LATAM
                 prompt_pplx = f"""
                 SISTEMA: ANALIZZATORE OFFLINE. PARLA COME UN COWBOY DURO.
                 IPPODROMO: {ippodromo}. NAZIONE: {nazione}. DATI: {dati_estratti}
 
-                PARAMETRI DI PERFEZIONE 15.7:
+                PARAMETRI DI PERFEZIONE 15.7/15.8:
                 1. PATCH SVEZIA (ZERO TOLLERANZA): Se nazione == 'SVEZIA':
                    - Se un cavallo ha ANCHE SOLO UN 'RP', 'RI', 'DI', 'DAI' nelle ultime 3 uscite, è ABISSO MECCANICO immediato. Scartalo senza pietà. [cite: 2026-02-24]
                    - In Svezia non si usa la frusta: cerca il MARMO con rating alto che corre di pura cazzimma propria. [cite: 2026-02-24]
@@ -95,7 +96,7 @@ if st.button("💥 PREMI IL GRILLETTO (ANALISI CHIRURGICA)"):
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '💰 PEPITA D'ORO INDIVIDUATA: [NOME]. 
-                LA SCOMMESSA DEL PISTOLERO: [Analisi specifica per {ippodromo} con Patch Svezia].'
+                LA SCOMMESSA DEL PISTOLERO: [Analisi specifica per {ippodromo} basata sulla nazione e sul tracciato].'
                 TERMINI: MARMO, CEMENTO, ABISSO, CAZZIMMA, BULLONE SERRATO, TRACK ANALYTICS.
                 """
                 
