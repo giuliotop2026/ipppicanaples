@@ -74,7 +74,7 @@ if st.button("💥 PREMI IL GRILLETTO (ANALISI CHIRURGICA)"):
                 # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
                 prompt_vision = f"ESTRAI: NOME, QUOTA, RATING, PESO, DISTANZA, SEQUENZA, NOTE PER {ippodromo} ({nazione})."
                 response_vision = client_gemini.models.generate_content(
-                    model='gemini-2.0-flash', 
+                    model='gemini-2.5-flash', 
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_vision.text
