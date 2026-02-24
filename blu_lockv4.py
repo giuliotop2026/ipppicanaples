@@ -77,11 +77,12 @@ if st.button("🔥 INNESCA MODULO ARCHITECT 15.3"):
                 USA ESCLUSIVAMENTE QUESTI DATI: {dati_estratti}
 
                 PARAMETRI DI PERFEZIONE 15.3:
-                1. SE NAZIONE == 'USA': Applica MARKET LAW. Identifica i cavalli con le QUOTE PIÙ BASSE. Confrontali e scegli il migliore tra i favoriti. Deve avere almeno un '1' recente.
-                2. SE NAZIONE != 'USA': IGNORA LE QUOTE. Cerca il secondo migliore per densità tecnica reale, regolarità e polmoni d'acciaio. [cite: 2026-02-20]
-                3. BULLONE SERRATO (UNIVERSALE): RP, RI, DAI, 0, Squalificato, FE o T = ABISSO MECCANICO immediato. [cite: 2026-02-23]
-                4. HIGHLANDER: Efficienza = Rating / (Carico * Distanza). [cite: 2026-02-20]
-                5. NO 4° POSTI: Chi arriva spesso 4° è RUGGINE. [cite: 2026-02-23]
+                1. SE NAZIONE == 'USA': Applica MARKET LAW. Identifica i cavalli con le QUOTE PIÙ BASSE. Confrontali e scegli il migliore tra i favoriti. Deve avere almeno un '1' recente. [cite: 2026-02-23]
+                2. SE NAZIONE == 'FRANCIA': IGNORA LE QUOTE, MA APPLICA LA PATCH FANGO (CAGNES/ANGERS). SE LA QUOTA È SUPERIORE A 12.00, IL SOGGETTO È BURRONE IMMEDIATO ANCHE CON RATING ALTO. IL MARMO DEVE AVERE UN MINIMO DI CONSENSO (QUOTA < 12.00). [cite: 2026-02-24]
+                3. SE NAZIONE != 'USA' E NAZIONE != 'FRANCIA': IGNORA LE QUOTE. Cerca il secondo migliore per densità tecnica reale, regolarità e polmoni d'acciaio. [cite: 2026-02-20]
+                4. BULLONE SERRATO (UNIVERSALE): RP, RI, DAI, 0, Squalificato, FE o T = ABISSO MECCANICO immediato. [cite: 2026-02-23]
+                5. HIGHLANDER: Efficienza = Rating / (Carico * Distanza). [cite: 2026-02-20]
+                6. NO 4° POSTI: Chi arriva spesso 4° è RUGGINE. [cite: 2026-02-23]
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '💎 DIAMANTE INDIVIDUATO: [NOME]. 
