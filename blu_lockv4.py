@@ -10,7 +10,7 @@ st.markdown("""
     .stApp { background-color: #f4eccf; color: #5d4037; font-family: 'Georgia', serif; }
     h1, h2, h3 { color: #8b4513 !important; text-transform: uppercase; text-shadow: 2px 2px 4px #cdaa7d; }
     .stButton>button { background-color: #8b4513 !important; color: #f4eccf !important; border: 2px solid #3e2723 !important; font-weight: bold; width: 100%; height: 3.5em; text-transform: uppercase; }
-    .stSelectbox label, .stFileUploader label { color: #3e2723 !important; font-weight: bold; font-size: 1.1em; }
+    .stSelectbox label, .stFileUploader label, .stTextInput label { color: #3e2723 !important; font-weight: bold; font-size: 1.1em; }
     .stAlert { background-color: #e0c5a0; border: 2px solid #8b4513; }
     </style>
     """, unsafe_allow_html=True)
@@ -30,35 +30,27 @@ except KeyError:
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 15.4 TRACK ANALYTICS", page_icon="🤠", layout="wide")
+st.set_page_config(page_title="SNIPER 15.6 SOUTHWELL KEY", page_icon="🤠", layout="wide")
 
-st.title("🌵 SNIPER 15.4: 'LA LEGGE DEL WEST' 🤠")
-st.markdown("### *'Ogni ippodromo ha la sua polvere, ogni polvere ha il suo Marmo.'* 🔫 🥃")
+st.title("🌵 SNIPER 15.6: 'LA LEGGE DEL WEST' 🤠")
+st.markdown("### *'Il favorito a Southwell è solo carta, il secondo migliore è il Marmo.'* 🔫 🥃")
 
-# 3. SISTEMA DI SELEZIONE A MATRICE TOTALE (CON AGGIUNTA IPPODROMO)
+# 3. SISTEMA DI SELEZIONE A MATRICE TOTALE (CON MIRINO MANUALE)
 col1, col2, col3 = st.columns(3)
 
 with col1:
     nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
-        "USA", "ITALIA", "FRANCIA", "ARGENTINA", "UK", "SVEZIA", "SUD AFRICA", "AUSTRALIA"
+        "UK", "USA", "ITALIA", "FRANCIA", "ARGENTINA", "SVEZIA", "SUD AFRICA", "AUSTRALIA"
     ])
 
 with col2:
-    # DOSE AGGIUNTIVA: BIAS IPPODROMO
-    if nazione == "ITALIA":
-        ippodromo = st.selectbox("🏟️ IPPODROMO (BIAS PISTA):", [
-            "NAPOLI (PISTA GRANDE)", "FIRENZE (TECNICA)", "ROMA CAPANNELLE", "MILANO SAN SIRO", "ALTRO"
-        ])
-    elif nazione == "USA":
-        ippodromo = st.selectbox("🏟️ IPPODROMO (MARKET LAW):", ["MAHONING VALLEY", "SUNLAND PARK", "THISTLEDOWN", "GULFSTREAM", "ALTRO"])
-    else:
-        ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Es: Vincennes, Catterick):")
+    ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Identifica il Tracciato):", help="Esempio: Southwell, Napoli, Firenze")
 
 with col3:
     if nazione == "USA":
         tipologia = st.selectbox("🏇 MODULO:", ["DIRT/SPEED (MARKET LAW)"])
-    elif nazione in ["ITALIA", "FRANCIA", "SVEZIA"]:
-        tipologia = st.selectbox("🏇 MODULO:", ["TROTTO (BULLONE SERRATO)", "GALOPPO PIANO", "HANDICAP/NASTRI"])
+    elif nazione in ["UK", "ITALIA", "FRANCIA", "SVEZIA"]:
+        tipologia = st.selectbox("🏇 MODULO:", ["GALOPPO PIANO", "TROTTO (BULLONE SERRATO)", "HANDICAP/NASTRI"])
     else:
         tipologia = st.selectbox("🏇 MODULO:", ["FLAT/PIANO", "HANDICAP/ZAVORRA"])
 
@@ -70,36 +62,40 @@ if uploaded_files:
     for img in images_to_process:
         st.image(img, use_container_width=True)
 
-if st.button("💥 PREMI IL GRILLETTO (ANALISI IPPODROMO)"):
-    if not uploaded_files:
-        st.warning("EHI COWBOY! CARICA I DATI.")
+if st.button("💥 PREMI IL GRILLETTO (ANALISI CHIRURGICA)"):
+    if not uploaded_files or not ippodromo:
+        st.warning("EHI COWBOY! CARICA I DATI E IL NOME DELL'IPPODROMO.")
     else:
-        with st.spinner(f"LO SCERIFFO STA ANALIZZANDO {ippodromo}... 🚬"):
+        with st.spinner(f"LO SCERIFFO STA ANALIZZANDO LA SABBIA DI {ippodromo}... 🚬"):
             try:
-                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
-                prompt_vision = f"ESTRAI: NOME, QUOTA, RATING, PESO, SEQUENZA, NOTE PER {ippodromo} ({nazione})."
+                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.0 FLASH)
+                prompt_vision = f"ESTRAI DALLE IMMAGINI PER {ippodromo} ({nazione}): NOME, QUOTA, RATING, PESO, SEQUENZA, NOTE (FE, T, CD, RP, RI)."
                 response_vision = client_gemini.models.generate_content(
-                    model='gemini-2.5-flash', 
+                    model='gemini-2.0-flash', 
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_vision.text
-                st.success(f"INDIZI RACCOLTI CON GEMINI 2.5 FLASH! 🥃")
+                st.success(f"INDIZI RACCOLTI CON GEMINI 2.0 FLASH! 🥃")
 
-                # FASE 2: ANALISI DELLO SCERIFFO CON DOSE 'TRACK ANALYTICS'
+                # FASE 2: ANALISI DELLO SCERIFFO CON CHIAVE SOUTHWELL
                 prompt_pplx = f"""
                 SISTEMA: ANALIZZATORE OFFLINE. PARLA COME UN COWBOY DURO.
                 IPPODROMO: {ippodromo}. NAZIONE: {nazione}. DATI: {dati_estratti}
 
-                PARAMETRI 15.4 (LE DOSI MANCANTI):
-                1. BIAS NAPOLI (PISTA GRANDE): Se l'ippodromo è Napoli, TOLLERA UN '4' RECENTE. La dirittura è lunga, chi arriva 4° spesso ha POLMONI D'ACCIAIO per il finale. [cite: 2026-02-24]
-                2. BIAS FIRENZE/PISTE CORTE: Il BULLONE SERRATO deve essere perfetto al via. Se un cavallo perde terreno in partenza, è ABISSO. [cite: 2026-02-24]
-                3. MARKET LAW (USA): Identifica i cavalli con le QUOTE PIÙ BASSE. Il MARMO deve essere tra i favoriti. [cite: 2026-02-23]
-                4. PATCH FANGO (FRANCIA): Se quota > 12.00 in Francia, scartalo (BURRONE). [cite: 2026-02-24]
-                5. UNIVERSALI: BULLONE SERRATO (No RP, RI, DAI, FE, T, 0), HIGHLANDER (Rating/Peso), NO 4° POSTI CRONICI. [cite: 2026-02-20, 2026-02-23]
+                PARAMETRI DI PERFEZIONE 15.6:
+                1. CHIAVE SOUTHWELL (UK): Se ippodromo == 'SOUTHWELL':
+                   - Se QUOTA < 3.00, il favorito è MARMO INSTABILE. Ignoralo. [cite: 2026-02-24]
+                   - Cerca il SECONDO MIGLIORE per densità tecnica (Rating alto) e POLMONI D'ACCIAIO. [cite: 2026-02-24]
+                   - La pepita deve avere quota tra 5.00 e 10.00. [cite: 2026-02-24]
+                   - Deve aver corso su All Weather (A.W.) o Tapeta negli ultimi 30 giorni. [cite: 2026-02-24]
+                2. BIAS NAPOLI (PISTA GRANDE): Se Napoli, TOLLERA UN '4' RECENTE per polmoni d'acciaio. [cite: 2026-02-24]
+                3. BIAS FIRENZE/TREVISO: BULLONE SERRATO perfetto al via, zero errori meccanici. [cite: 2026-02-24]
+                4. HIGHLANDER: Efficienza = Rating / (Carico * Distanza) [cite: 2026-02-20].
+                5. UNIVERSALI: No RP, RI, DAI, FE, T, 0 [cite: 2026-02-23].
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '💰 PEPITA D'ORO INDIVIDUATA: [NOME]. 
-                LA SCOMMESSA DEL PISTOLERO: [Analisi specifica per {ippodromo} con citazione western].'
+                LA SCOMMESSA DEL PISTOLERO: [Analisi specifica per {ippodromo} basata sulla logica corretta].'
                 TERMINI: MARMO, CEMENTO, ABISSO, CAZZIMMA, BULLONE SERRATO, TRACK ANALYTICS.
                 """
                 
