@@ -36,31 +36,28 @@ st.markdown("""
 
 # 1. MUSICA E SUONI DELLA FRONTIERA
 def play_western_music():
-    # Musica ambient da Saloon (Piano) - Esegue in loop
+    # Nuovo link musica saloon (Piano Blues/Western)
     music_html = """
-    <audio autoplay loop>
-        <source src="https://www.soundjay.com/ambient/sounds/saloon-piano-1.mp3" type="audio/mpeg">
-    </audio>
+    <iframe src="https://www.youtube.com/embed/f_rE-vR2GIs?autoplay=1&loop=1&playlist=f_rE-vR2GIs" 
+    width="0" height="0" frameborder="0" allow="autoplay"></iframe>
     """
     components.html(music_html, height=0, width=0)
 
 def play_shot():
-    # Suono del colpo di pistola per la vittoria
     shot_html = '<audio autoplay><source src="https://www.myinstants.com/media/sounds/ricochet-sound.mp3" type="audio/mpeg"></audio>'
     components.html(shot_html, height=0, width=0)
 
-# 2. CASSAFORTE E PROTOCOLLO TENACITY
+# 2. CASSAFORTE E PROTOCOLLO TENACITY (ANTINFORTUNISTICA 503)
 try:
     GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
     PPLX_API_KEY = st.secrets["PERPLEXITY_API_KEY"]
 except KeyError:
-    st.error("☠️ MANCANO LE MUNIZIONI NEI SECRETS! LA DILIGENZA È BLOCCATA.")
+    st.error("☠️ MANCANO LE MUNIZIONI NEI SECRETS! IL CANTIERE È FERMO.")
     st.stop()
 
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-# Funzione con Cazzimma per battere l'errore 503
 @retry(
     stop=stop_after_attempt(5), 
     wait=wait_exponential(multiplier=1, min=4, max=10),
@@ -72,27 +69,30 @@ def fiuta_tracce_gemini(prompt, images):
         contents=[prompt] + images
     )
 
-st.set_page_config(page_title="SNIPER 15.3: WESTERN GOLD", page_icon="🤠", layout="wide")
-play_western_music() # Innesca la musica all'avvio
+st.set_page_config(page_title="SNIPER 15.3: WESTERN GLOBAL", page_icon="🤠", layout="wide")
+play_western_music()
 
 st.title("🌵 SNIPER 15.3: 'LA LEGGE DEL WEST' 🤠")
-st.markdown("### **BENVENUTO AL SALOON, PARTNER! QUI COMANDA LA CAZZIMMA!** 🔫")
+st.markdown("### **TUTTE LE NAZIONI, PURA CAZZIMMA E PIANO BAR!** 🔫 🥃")
 
-# 3. MAPPA DEL TERRITORIO
+# 3. MAPPA DEL TERRITORIO COMPLETA
 col1, col2 = st.columns(2)
 with col1:
-    nazione = st.selectbox("🌍 SCEGLI DOVE SPARARE:", [
-        "USA 🇺🇸", "ARGENTINA 🇦🇷", "ITALIA 🇮🇹", "FRANCIA 🇫🇷", "SVEZIA 🇸🇪", "UK 🇬🇧"
+    nazione = st.selectbox("🌍 SCEGLI IL TERRITORIO DI CACCIA:", [
+        "USA 🇺🇸", "ARGENTINA 🇦🇷", "ITALIA 🇮🇹", "FRANCIA 🇫🇷", "SVEZIA 🇸🇪", "UK 🇬🇧", 
+        "SUD AFRICA 🇿🇦", "AUSTRALIA 🇦🇺", "GERMANIA 🇩🇪", "ARABIA SAUDITA 🇸🇦", "BRASILE/CILE/MESSICO 🌎"
     ])
     nazione_clean = nazione.split(" ")[0]
 
 with col2:
     if nazione_clean == "USA":
         tipologia = st.selectbox("🏇 MODULO:", ["DIRT/SPEED (MARKET LAW) 💰"])
-    elif nazione_clean == "FRANCIA":
-        tipologia = st.selectbox("🏇 MODULO:", ["GALOPPO (PATCH FANGO) 🌧️", "TROTTO"])
+    elif nazione_clean == "ARGENTINA":
+        tipologia = st.selectbox("🏇 MODULO:", ["DIRT/SPEED (DENSITÀ REALE) 💪"])
+    elif nazione_clean in ["ITALIA", "FRANCIA", "SVEZIA"]:
+        tipologia = st.selectbox("🏇 MODULO:", ["TROTTO (FERRO BEN BATTUTO) 🔨", "GALOPPO PIANO 🏇", "HANDICAP/NASTRI ⚖️"])
     else:
-        tipologia = st.selectbox("🏇 MODULO:", ["DENSITÀ REALE 💪"])
+        tipologia = st.selectbox("🏇 MODULO:", ["FLAT/PIANO 🏇", "HANDICAP/ZAVORRA ⚖️", "DIRT/SPEED 💨"])
 
 # 4. CARICO DATI
 uploaded_files = st.file_uploader("📜 APPICCICA I 'WANTED POSTERS' (SCREENSHOT):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
@@ -103,28 +103,21 @@ if uploaded_files:
 
 if st.button("💥 PREMI IL GRILLETTO!"):
     if not uploaded_files:
-        st.warning("EHI PISTOLERO! IL CARICATORE È VUOTO.")
+        st.warning("EHI COWBOY! IL CARICATORE È VUOTO.")
     else:
         with st.spinner(f"LO SCERIFFO STA SCANSIONANDO IL RANCH... 🔭"):
             try:
-                # FASE 1: ESTRAZIONE CON TENACITY (TENEREZZA ZERO VERSO IL 503)
-                prompt_vision = f"Estrai dati tecnici per {nazione_clean}: NOME, QUOTA, RATING, PESO, SEQUENZA, NOTE."
+                prompt_vision = f"Estrai dati per {nazione_clean}: NOME, QUOTA, RATING, PESO, SEQUENZA, NOTE."
                 response_vision = fiuta_tracce_gemini(prompt_vision, images_to_process)
                 dati = response_vision.text
 
-                # FASE 2: ANALISI OFFLINE
                 prompt_pplx = f"""
                 SISTEMA: ANALIZZATORE WESTERN OFFLINE. USA SOLO: {dati}
-                LEGGI:
-                1. USA: MARKET LAW (Favoriti con quote basse e '1' recente).
-                2. FRANCIA: PATCH FANGO. Quota > 12.00 = BURRONE (anche con rating alto). [cite: 2026-02-24]
-                3. ROW: IGNORA QUOTE. Cerca il MARMO per densità tecnica.
-                4. FERRO BEN BATTUTO: RP/RI/FE/T = BURRONE immediato.
-                
-                REFERTO (SINTASSI WESTERN):
-                '💰 PEPITA D'ORO TROVATA: [NOME].'
-                'MOTIVAZIONE: [Spiega con CAZZIMMA perché questo cavallo ha le palle quadrate].'
-                TERMINI: ORO PURO, BURRONE, FERRO BEN BATTUTO, CAZZIMMA.
+                1. USA: MARKET LAW (Quota bassa + vittoria recente).
+                2. FRANCIA: PATCH FANGO. Quota > 12.00 = BURRONE.
+                3. ROW/ARG: IGNORA QUOTE. Cerca il MARMO per densità tecnica.
+                4. FERRO BEN BATTUTO: RP/RI/FE/T = BURRONE.
+                REFERTO (SINTASSI WESTERN): PEPITA D'ORO, ORO PURO, BURRONE, FERRO BEN BATTUTO, CAZZIMMA.
                 """
                 
                 resp = client_pplx.chat.completions.create(model="sonar-pro", messages=[{"role": "user", "content": prompt_pplx}])
@@ -134,4 +127,4 @@ if st.button("💥 PREMI IL GRILLETTO!"):
                     play_shot()
                     st.balloons()
             except Exception as e:
-                st.error(f"☠️ URTO NEL REATTORE: {e}. Il server è più duro del previsto, riprova tra poco!")
+                st.error(f"☠️ URTO NEL REATTORE: {e}. Riprova tra poco!")
