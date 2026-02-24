@@ -4,14 +4,22 @@ from openai import OpenAI
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- GRAFICA DA SALOON (CSS CUSTOM) ---
+# --- GRAFICA DA SALOON CON SFONDO MUSTANG (CSS CUSTOM) ---
 st.markdown("""
     <style>
-    .stApp { background-color: #f4eccf; color: #5d4037; font-family: 'Georgia', serif; }
+    .stApp {
+        background-image: linear-gradient(rgba(244, 236, 207, 0.85), rgba(244, 236, 207, 0.85)), 
+        url('https://images.unsplash.com/photo-1528563351349-3397da0533d1?q=80&w=2070&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #5d4037;
+        font-family: 'Georgia', serif;
+    }
     h1, h2, h3 { color: #8b4513 !important; text-transform: uppercase; text-shadow: 2px 2px 4px #cdaa7d; }
     .stButton>button { background-color: #8b4513 !important; color: #f4eccf !important; border: 2px solid #3e2723 !important; font-weight: bold; width: 100%; height: 3.5em; text-transform: uppercase; }
     .stSelectbox label, .stFileUploader label, .stTextInput label { color: #3e2723 !important; font-weight: bold; font-size: 1.1em; }
-    .stAlert { background-color: #e0c5a0; border: 2px solid #8b4513; }
+    .stAlert { background-color: rgba(224, 197, 160, 0.95); border: 2px solid #8b4513; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -30,22 +38,22 @@ except KeyError:
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 15.12 LEPRE HUNTER", page_icon="🤠", layout="wide")
+st.set_page_config(page_title="SNIPER 15.15 FINISHER DRIVE", page_icon="🤠", layout="wide")
 
-st.title("🌵 SNIPER 15.12: 'LA LEGGE DEL WEST' 🤠")
-st.markdown("### *'Se la Lepre scappa davanti, il Cacciatore deve avere il fuoco agli occhi.'* 🔫 🥃")
+st.title("🌵 SNIPER 15.15: 'FINISHER DRIVE' 🤠")
+st.markdown("### *'In America cerchiamo chi azzanna il traguardo, non chi arriva terzo.'* 🔫 🥃")
 
-# 3. MATRICE GLOBALE (TUTTE LE NAZIONI RIPRISTINATE)
+# 3. MATRICE GLOBALE
 col1, col2, col3 = st.columns(3)
 
 with col1:
     nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
-        "SVEZIA", "CILE", "BRASILE", "MESSICO", "GERMANIA", "SPAGNA", 
-        "UK", "USA", "ITALIA", "FRANCIA", "ARGENTINA", "SUD AFRICA", "AUSTRALIA"
+        "USA", "SVEZIA", "CILE", "BRASILE", "MESSICO", "GERMANIA", "SPAGNA", 
+        "UK", "ITALIA", "FRANCIA", "ARGENTINA", "SUD AFRICA", "AUSTRALIA"
     ])
 
 with col2:
-    ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Es: Bollnäs, Concepcion, Southwell):")
+    ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Identifica il Cantiere):")
 
 with col3:
     if nazione == "USA":
@@ -69,32 +77,34 @@ if st.button("💥 PREMI IL GRILLETTO (ANALISI CHIRURGICA)"):
     if not uploaded_files or not ippodromo:
         st.warning("EHI COWBOY! CARICA I DATI E IL NOME DEL CANTIERE.")
     else:
-        with st.spinner(f"LO SCERIFFO STA RICALIBRANDO IL MIRINO PER {ippodromo}... 🚬"):
+        with st.spinner(f"LO SCERIFFO STA SCANSIONANDO LA RUGGINE DI {ippodromo}... 🚬"):
             try:
-                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.0 FLASH)
-                prompt_vision = f"ESTRAI: NOME, QUOTA, RATING, PESO, DISTANZA, SEQUENZA, NOTE PER {ippodromo} ({nazione})."
+                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
+                prompt_vision = f"ESTRAI: NOME, QUOTA, RATING, PESO, DISTANZA, GG (GIORNI), SEQUENZA, NOTE PER {ippodromo} ({nazione})."
                 response_vision = client_gemini.models.generate_content(
                     model='gemini-2.5-flash', 
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_vision.text
+                st.success(f"INDIZI RACCOLTI CON GEMINI 2.5 FLASH! 🥃")
 
-                # FASE 2: ANALISI CON PROTOCOLLO 15.12 (LEPRE BIAS)
+                # FASE 2: ANALISI CON PATCH USA 15.15
                 prompt_pplx = f"""
                 SISTEMA: ANALIZZATORE OFFLINE. PARLA COME UN COWBOY DURO.
                 IPPODROMO: {ippodromo}. NAZIONE: {nazione}. DATI: {dati_estratti}
 
-                PARAMETRI DI PERFEZIONE 15.12:
-                1. BOLLNÄS/SVEZIA LEPRE BIAS: Nelle corse a nastri, se un cavallo nel PRIMO NASTRO (Base) ha una SEQUENZA PULITA (No RP/RI/0) e il favorito a +20m ha l'ultimo esito > 3, la LEPRE è il MARMO PRIORITARIO, anche con QUOTA > 20.00. Ignora la quota in Svezia se il bullone è serrato davanti.
-                2. CHILE PRECISION: Distanza < 1200m richiede PRIORITÀ ASSOLUTA a chi ha un '1' recente. Scarta piazzati cronici.
-                3. SOUTHWELL KEY: Ignora favorito sotto quota 3.00. Cerca il secondo marmo con storia su sintetico.
-                4. ZERO TOLLERANZA SVEZIA: No RP, RI, DI, DAI nelle ultime 3 uscite.
-                5. HIGHLANDER: Efficienza = Rating / (Carico * Distanza).
-                6. UNIVERSALI: BULLONE SERRATO (No FE, T, 0).
+                PARAMETRI DI PERFEZIONE 15.15 (USA FOCUS):
+                1. FINISHER DRIVE (USA): Scarta i 'Piazzati Cronici'. Se un mustang ha >= 2 volte '3' o '4' negli ultimi 5 esiti, è ABISSO. Cerca chi ha il vizio del '1' recente con quota tra 2.50 e 4.50. [cite: 2026-02-24]
+                2. FRESHNESS FILTER (USA): Se GG > 45, è ruggine. Se GG > 60, scartalo come favorito. Se GG > 150, abisso totale nel tratto finale. [cite: 2026-02-24]
+                3. BOLLNÄS/SVEZIA LEPRE BIAS: Primo nastro pulito = Marmo prioritario indipendentemente dalla quota. [cite: 2026-02-24]
+                4. CHILE PRECISION: Sprint < 1200m richiede un '1' recente. [cite: 2026-02-24]
+                5. SOUTHWELL KEY: Quota < 3.00 = Marmo Instabile. [cite: 2026-02-24]
+                6. ZERO TOLLERANZA SVEZIA: No RP, RI, DI, DAI nelle ultime 2 uscite. [cite: 2026-02-24]
+                7. UNIVERSALI: BULLONE SERRATO & HIGHLANDER EFFICIENCY. [cite: 2026-02-20]
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '💰 PEPITA D'ORO INDIVIDUATA: [NOME]. 
-                LA SCOMMESSA DEL PISTOLERO: [Analisi chirurgica basata sul Lepre Bias e sulla rincorsa dei cacciatori].'
+                LA SCOMMESSA DEL PISTOLERO: [Analisi chirurgica basata sulla cazzimma finale e sulla freschezza].'
                 """
                 
                 response_pplx = client_pplx.chat.completions.create(
