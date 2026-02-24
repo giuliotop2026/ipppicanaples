@@ -30,33 +30,35 @@ except KeyError:
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 15.8 WORLD DOMINATION", page_icon="🤠", layout="wide")
+st.set_page_config(page_title="SNIPER 15.9 SABBIA CALIENTE", page_icon="🤠", layout="wide")
 
-st.title("🌵 SNIPER 15.8: 'LA LEGGE DEL WEST' 🤠")
-st.markdown("### *'In Svezia il Marmo non deve avere crepe. Zero RP, solo gloria.'* 🔫 🥃")
+st.title("🌵 SNIPER 15.9: 'LA LEGGE DEL WEST' 🤠")
+st.markdown("### *'Dalla Svezia al Cile, ogni mustang ha il suo modulo di fuoco.'* 🔫 🥃")
 
 # 3. SISTEMA DI SELEZIONE A MATRICE TOTALE (MIRINO MONDIALE)
 col1, col2, col3 = st.columns(3)
 
 with col1:
     nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
-        "SVEZIA", "UK", "USA", "ITALIA", "FRANCIA", "GERMANIA", "SPAGNA", 
-        "CILE", "BRASILE", "MESSICO", "ARGENTINA", "SUD AFRICA", "AUSTRALIA"
+        "CILE", "BRASILE", "MESSICO", "SVEZIA", "UK", "USA", "ITALIA", "FRANCIA", "GERMANIA", "SPAGNA", "ARGENTINA", "SUD AFRICA", "AUSTRALIA"
     ])
 
 with col2:
-    ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Identifica il Tracciato):", help="Esempio: Bollnäs, Southwell, Napoli, Santiago")
+    ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Identifica il Tracciato):", help="Esempio: Club Hipico, Santiago, Bollnäs, Southwell")
 
 with col3:
     if nazione == "USA":
         tipologia = st.selectbox("🏇 MODULO:", ["DIRT/SPEED (MARKET LAW)"])
     elif nazione in ["UK", "ITALIA", "FRANCIA", "SVEZIA", "GERMANIA", "SPAGNA"]:
-        tipologia = st.selectbox("🏇 MODULO:", ["TROTTO (BULLONE SERRATO)", "GALOPPO PIANO", "HANDICAP/NASTRI"])
+        tipologia = st.selectbox("🏇 MODULO:", ["GALOPPO PIANO", "TROTTO (BULLONE SERRATO)", "HANDICAP/NASTRI"])
+    elif nazione in ["CILE", "BRASILE", "MESSICO", "ARGENTINA"]:
+        # AGGIUNTO MODULO SABBIA PER SUD AMERICA
+        tipologia = st.selectbox("🏇 MODULO:", ["SABBIA/DIRT (CEMENTO LATAM)", "GALOPPO PIANO", "HANDICAP/ZAVORRA"])
     else:
         tipologia = st.selectbox("🏇 MODULO:", ["FLAT/PIANO", "HANDICAP/ZAVORRA"])
 
 # 4. CARICAMENTO IDENTIKIT
-uploaded_files = st.file_uploader("📜 APPICICA I 'WANTED POSTERS':", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
+uploaded_files = st.file_uploader("📜 APPICICA I 'WANTED POSTERS' (SCREENSHOT):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 if uploaded_files:
     images_to_process = [Image.open(f) for f in uploaded_files]
@@ -65,38 +67,35 @@ if uploaded_files:
 
 if st.button("💥 PREMI IL GRILLETTO (ANALISI CHIRURGICA)"):
     if not uploaded_files or not ippodromo:
-        st.warning("EHI COWBOY! CARICA I DATI E IL NOME DELL'IPPODROMO.")
+        st.warning("EHI COWBOY! CARICA I DATI E IL NOME DEL CANTIERE.")
     else:
-        with st.spinner(f"LO SCERIFFO STA ANALIZZANDO LA POLVERE DI {ippodromo}... 🚬"):
+        with st.spinner(f"LO SCERIFFO STA SCANSIONANDO LA SABBIA DI {ippodromo}... 🚬"):
             try:
-                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
+                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.0 FLASH)
                 prompt_vision = f"ESTRAI DALLE IMMAGINI PER {ippodromo} ({nazione}): NOME, QUOTA, RATING, PESO, SEQUENZA, NOTE (FE, T, CD, RP, RI, DI, DAI)."
                 response_vision = client_gemini.models.generate_content(
-                    model='gemini-2.5-flash', 
+                    model='gemini-2.0-flash', 
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_vision.text
-                st.success(f"INDIZI RACCOLTI CON GEMINI 2.5 FLASH! 🥃")
+                st.success(f"INDIZI RACCOLTI CON GEMINI 2.0 FLASH! 🥃")
 
-                # FASE 2: ANALISI DELLO SCERIFFO CON PATCH SVEZIA E LATAM
+                # FASE 2: ANALISI DELLO SCERIFFO CON PATCH MONDIALI
                 prompt_pplx = f"""
                 SISTEMA: ANALIZZATORE OFFLINE. PARLA COME UN COWBOY DURO.
                 IPPODROMO: {ippodromo}. NAZIONE: {nazione}. DATI: {dati_estratti}
 
-                PARAMETRI DI PERFEZIONE 15.7/15.8:
-                1. PATCH SVEZIA (ZERO TOLLERANZA): Se nazione == 'SVEZIA':
-                   - Se un cavallo ha ANCHE SOLO UN 'RP', 'RI', 'DI', 'DAI' nelle ultime 3 uscite, è ABISSO MECCANICO immediato. Scartalo senza pietà. [cite: 2026-02-24]
-                   - In Svezia non si usa la frusta: cerca il MARMO con rating alto che corre di pura cazzimma propria. [cite: 2026-02-24]
-                2. CHIAVE SOUTHWELL (UK): Se ippodromo == 'SOUTHWELL':
-                   - Se QUOTA < 3.00, ignora il favorito (MARMO INSTABILE). Cerca il secondo migliore con quota 5-10. [cite: 2026-02-24]
-                3. BIAS NAPOLI (PISTA GRANDE): Se Napoli, TOLLERA UN '4' RECENTE per polmoni d'acciaio. [cite: 2026-02-24]
-                4. BIAS FIRENZE/TREVISO: BULLONE SERRATO perfetto al via. [cite: 2026-02-24]
-                5. HIGHLANDER: Efficienza = Rating / (Carico * Distanza) [cite: 2026-02-20].
-                6. UNIVERSALI: No RP, RI, DAI, FE, T, 0 [cite: 2026-02-23].
+                PARAMETRI DI PERFEZIONE 15.9:
+                1. LATAM LOGIC (CILE/BRASILE/MESSICO): Se modulo == 'SABBIA/DIRT', cerca il mustang con i POLMONI D'ACCIAIO [cite: 2026-02-20]. La sabbia sudamericana è pesante: scarta chi ha una sequenza di ruggine (oltre il 5° posto) nelle ultime uscite. [cite: 2026-02-24]
+                2. PATCH SVEZIA: ZERO TOLLERANZA per RP, RI, DI, DAI. Se il cavallo rompe, è ABISSO immediato. [cite: 2026-02-24]
+                3. CHIAVE SOUTHWELL (UK): Se ippodromo == 'SOUTHWELL', ignora il favorito sotto quota 3.00. [cite: 2026-02-24]
+                4. BIAS NAPOLI: Tolleranza per il 4° posto su pista grande per polmoni d'acciaio. [cite: 2026-02-24]
+                5. HIGHLANDER: Efficienza = Rating / (Carico * Distanza). [cite: 2026-02-20]
+                6. UNIVERSALI: BULLONE SERRATO (No RP, RI, DAI, FE, T, 0). [cite: 2026-02-23]
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '💰 PEPITA D'ORO INDIVIDUATA: [NOME]. 
-                LA SCOMMESSA DEL PISTOLERO: [Analisi specifica per {ippodromo} basata sulla nazione e sul tracciato].'
+                LA SCOMMESSA DEL PISTOLERO: [Analisi specifica basata sul terreno e sulla cazzimma].'
                 TERMINI: MARMO, CEMENTO, ABISSO, CAZZIMMA, BULLONE SERRATO, TRACK ANALYTICS.
                 """
                 
