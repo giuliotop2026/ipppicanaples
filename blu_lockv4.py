@@ -30,22 +30,22 @@ except KeyError:
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 15.11 CHILE PRECISION", page_icon="🤠", layout="wide")
+st.set_page_config(page_title="SNIPER 15.12 LEPRE HUNTER", page_icon="🤠", layout="wide")
 
-st.title("🌵 SNIPER 15.11: 'LA LEGGE DEL WEST' 🤠")
-st.markdown("### *'In Cile non cerchiamo chi arriva vicino, cerchiamo chi ruba l'Oro.'* 🔫 🥃")
+st.title("🌵 SNIPER 15.12: 'LA LEGGE DEL WEST' 🤠")
+st.markdown("### *'Se la Lepre scappa davanti, il Cacciatore deve avere il fuoco agli occhi.'* 🔫 🥃")
 
-# 3. SISTEMA DI SELEZIONE A MATRICE GLOBALE (INALTERATA)
+# 3. MATRICE GLOBALE (TUTTE LE NAZIONI RIPRISTINATE)
 col1, col2, col3 = st.columns(3)
 
 with col1:
     nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
-        "CILE", "BRASILE", "MESSICO", "GERMANIA", "SPAGNA", 
-        "SVEZIA", "UK", "USA", "ITALIA", "FRANCIA", "ARGENTINA", "SUD AFRICA", "AUSTRALIA"
+        "SVEZIA", "CILE", "BRASILE", "MESSICO", "GERMANIA", "SPAGNA", 
+        "UK", "USA", "ITALIA", "FRANCIA", "ARGENTINA", "SUD AFRICA", "AUSTRALIA"
     ])
 
 with col2:
-    ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Es: Concepcion, Valparaiso, Southwell):")
+    ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Es: Bollnäs, Concepcion, Southwell):")
 
 with col3:
     if nazione == "USA":
@@ -69,9 +69,9 @@ if st.button("💥 PREMI IL GRILLETTO (ANALISI CHIRURGICA)"):
     if not uploaded_files or not ippodromo:
         st.warning("EHI COWBOY! CARICA I DATI E IL NOME DEL CANTIERE.")
     else:
-        with st.spinner(f"LO SCERIFFO STA SCANSIONANDO IL MONDO... 🚬"):
+        with st.spinner(f"LO SCERIFFO STA RICALIBRANDO IL MIRINO PER {ippodromo}... 🚬"):
             try:
-                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
+                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.0 FLASH)
                 prompt_vision = f"ESTRAI: NOME, QUOTA, RATING, PESO, DISTANZA, SEQUENZA, NOTE PER {ippodromo} ({nazione})."
                 response_vision = client_gemini.models.generate_content(
                     model='gemini-2.5-flash', 
@@ -79,25 +79,22 @@ if st.button("💥 PREMI IL GRILLETTO (ANALISI CHIRURGICA)"):
                 )
                 dati_estratti = response_vision.text
 
-                # FASE 2: ANALISI CON LOGICA CHILE PRECISION
+                # FASE 2: ANALISI CON PROTOCOLLO 15.12 (LEPRE BIAS)
                 prompt_pplx = f"""
                 SISTEMA: ANALIZZATORE OFFLINE. PARLA COME UN COWBOY DURO.
                 IPPODROMO: {ippodromo}. NAZIONE: {nazione}. DATI: {dati_estratti}
 
-                PARAMETRI DI PERFEZIONE 15.11:
-                1. CHILE PRECISION (SPRINT): Se nazione == 'CILE' e distanza < 1200m:
-                   - PRIORITÀ ASSOLUTA A CHI HA UN '1' RECENTE. [cite: 2026-02-24]
-                   - Ignora chi ha solo piazzamenti (2, 3) se c'è un vincitore con quota > 10.00. [cite: 2026-02-20, 2026-02-24]
-                   - La cazzimma del vincente batte la regolarità del mulo. [cite: 2026-02-18]
-                2. PATCH SVEZIA: ZERO TOLLERANZA per RP, RI, DI, DAI nelle ultime 3 uscite. [cite: 2026-02-24]
-                3. CHIAVE SOUTHWELL (UK): Ignora favorito sotto quota 3.00. [cite: 2026-02-24]
-                4. BIAS NAPOLI: Tolleranza per il 4° posto su pista grande (polmoni d'acciaio). [cite: 2026-02-24]
-                5. HIGHLANDER: Efficienza = Rating / (Carico * Distanza). [cite: 2026-02-20]
-                6. UNIVERSALI: BULLONE SERRATO (No RP, RI, DAI, FE, T, 0). [cite: 2026-02-23]
+                PARAMETRI DI PERFEZIONE 15.12:
+                1. BOLLNÄS/SVEZIA LEPRE BIAS: Nelle corse a nastri, se un cavallo nel PRIMO NASTRO (Base) ha una SEQUENZA PULITA (No RP/RI/0) e il favorito a +20m ha l'ultimo esito > 3, la LEPRE è il MARMO PRIORITARIO, anche con QUOTA > 20.00. Ignora la quota in Svezia se il bullone è serrato davanti.
+                2. CHILE PRECISION: Distanza < 1200m richiede PRIORITÀ ASSOLUTA a chi ha un '1' recente. Scarta piazzati cronici.
+                3. SOUTHWELL KEY: Ignora favorito sotto quota 3.00. Cerca il secondo marmo con storia su sintetico.
+                4. ZERO TOLLERANZA SVEZIA: No RP, RI, DI, DAI nelle ultime 3 uscite.
+                5. HIGHLANDER: Efficienza = Rating / (Carico * Distanza).
+                6. UNIVERSALI: BULLONE SERRATO (No FE, T, 0).
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '💰 PEPITA D'ORO INDIVIDUATA: [NOME]. 
-                LA SCOMMESSA DEL PISTOLERO: [Analisi chirurgica basata sulla cazzimma vincente e sulla quota di valore].'
+                LA SCOMMESSA DEL PISTOLERO: [Analisi chirurgica basata sul Lepre Bias e sulla rincorsa dei cacciatori].'
                 """
                 
                 response_pplx = client_pplx.chat.completions.create(
