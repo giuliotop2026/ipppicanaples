@@ -4,14 +4,38 @@ from openai import OpenAI
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- GRAFICA DA SALOON (CSS CUSTOM) ---
+# --- GRAFICA DA SALOON CON SFONDO CAVALLO (CSS CUSTOM) ---
+# Ho aggiornato la sezione .stApp per includere l'immagine di sfondo
 st.markdown("""
     <style>
-    .stApp { background-color: #f4eccf; color: #5d4037; font-family: 'Georgia', serif; }
+    /* QUI È AVVENUTA LA MAGIA:
+       Abbiamo sostituito il colore di sfondo piatto con un'immagine.
+       Uso un 'linear-gradient' semi-trasparente sopra l'immagine per farla sembrare
+       una vecchia foto sbiadita e far leggere bene il testo.
+    */
+    .stApp {
+        /* URL dell'immagine: Puoi cambiarlo con qualsiasi link tu voglia */
+        background-image: linear-gradient(rgba(244, 236, 207, 0.85), rgba(244, 236, 207, 0.85)), url('https://images.unsplash.com/photo-1528563351349-3397da0533d1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        background-size: cover;      /* L'immagine copre tutto lo schermo */
+        background-position: center; /* Centra l'immagine */
+        background-repeat: no-repeat;/* Non ripete l'immagine a piastrelle */
+        background-attachment: fixed;/* Lo sfondo resta fermo quando scorri */
+        
+        color: #5d4037; /* Colore del testo principale (marrone scuro) */
+        font-family: 'Georgia', serif;
+    }
+    
+    /* Stile dei Titoli */
     h1, h2, h3 { color: #8b4513 !important; text-transform: uppercase; text-shadow: 2px 2px 4px #cdaa7d; }
+    
+    /* Stile dei Bottoni */
     .stButton>button { background-color: #8b4513 !important; color: #f4eccf !important; border: 2px solid #3e2723 !important; font-weight: bold; width: 100%; height: 3.5em; text-transform: uppercase; }
+    
+    /* Stile delle Etichette */
     .stSelectbox label, .stFileUploader label, .stTextInput label { color: #3e2723 !important; font-weight: bold; font-size: 1.1em; }
-    .stAlert { background-color: #e0c5a0; border: 2px solid #8b4513; }
+    
+    /* Stile dei Box di Avviso/Risultato */
+    .stAlert { background-color: rgba(224, 197, 160, 0.95); border: 2px solid #8b4513; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -30,10 +54,10 @@ except KeyError:
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 15.14 FRESHNESS FILTER", page_icon="🤠", layout="wide")
+st.set_page_config(page_title="SNIPER 15.14 HORSE EDITION", page_icon="🤠", layout="wide")
 
 st.title("🌵 SNIPER 15.14: 'LA LEGGE DEL WEST' 🤠")
-st.markdown("### *'Se il mustang ha la ruggine addosso, il tratto finale sarà un abisso.'* 🔫 🥃")
+st.markdown("### *'Con un Mustang alle spalle e il Marmo nel mirino, non sbagliamo un colpo.'* 🔫 🥃")
 
 # 3. MATRICE GLOBALE (TOTAL WORLD)
 col1, col2, col3 = st.columns(3)
@@ -69,34 +93,33 @@ if st.button("💥 PREMI IL GRILLETTO (ANALISI CHIRURGICA)"):
     if not uploaded_files or not ippodromo:
         st.warning("EHI COWBOY! CARICA I DATI E IL NOME DEL CANTIERE.")
     else:
-        with st.spinner(f"LO SCERIFFO STA SCANSIONANDO LA RUGGINE DI {ippodromo}... 🚬"):
+        with st.spinner(f"LO SCERIFFO STA SCANSIONANDO LA POLVERE DI {ippodromo}... 🚬"):
             try:
                 # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.0 FLASH)
                 prompt_vision = f"ESTRAI DALLE IMMAGINI PER {ippodromo} ({nazione}): NOME, QUOTA, RATING, PESO, DISTANZA, GG (GIORNI), SEQUENZA, NOTE."
                 response_vision = client_gemini.models.generate_content(
-                    model='gemini-2.5-flash', 
+                    model='gemini-2.0-flash', 
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_vision.text
                 st.success(f"INDIZI RACCOLTI CON GEMINI 2.0 FLASH! 🥃")
 
-                # FASE 2: ANALISI CON FRESHNESS FILTER 15.14
+                # FASE 2: ANALISI CON TUTTE LE PATCH ATTIVE (15.14)
                 prompt_pplx = f"""
                 SISTEMA: ANALIZZATORE OFFLINE. PARLA COME UN COWBOY DURO.
                 IPPODROMO: {ippodromo}. NAZIONE: {nazione}. DATI: {dati_estratti}
 
-                PARAMETRI DI PERFEZIONE 15.14:
-                1. FRESHNESS FILTER (USA/GLOBALE): Se GG > 45, il cavallo non è MARMO ma PARTICELLA INSTABILE. Se GG > 60, scartalo come favorito. Se GG > 150, è ABISSO TOTALE: non resisterà nel finale. [cite: 2026-02-23, 2026-02-24]
-                2. MARKET LAW (USA): Il MARMO deve avere GG < 30 per essere CEMENTO. [cite: 2026-02-24]
-                3. BOLLNÄS/SVEZIA LEPRE BIAS: Nel primo nastro, SEQUENZA PULITA = MARMO PRIORITARIO anche con quota > 20.00. [cite: 2026-02-24]
-                4. CHILE PRECISION: Distanza < 1200m richiede PRIORITÀ ASSOLUTA a chi ha un '1' recente. [cite: 2026-02-24]
+                PARAMETRI DI PERFEZIONE 15.14 (ALL PATCHES ACTIVE):
+                1. FRESHNESS FILTER (USA/GLOBALE): GG > 60 = Ruggine (no favorito). GG > 150 = Abisso. [cite: 2026-02-24]
+                2. BOLLNÄS/SVEZIA LEPRE BIAS: Primo nastro con sequenza pulita = Marmo prioritario. [cite: 2026-02-24]
+                3. ZERO TOLLERANZA SVEZIA: No RP, RI, DI, DAI nelle ultime 2 uscite. [cite: 2026-02-24]
+                4. CHILE PRECISION: Sprint < 1200m richiede un '1' recente. [cite: 2026-02-24]
                 5. SOUTHWELL KEY: Ignora favorito sotto quota 3.00. [cite: 2026-02-24]
-                6. ZERO TOLLERANZA SVEZIA: No RP, RI, DI, DAI nelle ultime 3 uscite. [cite: 2026-02-24]
-                7. UNIVERSALI: BULLONE SERRATO (No FE, T, 0), HIGHLANDER (Rating/Peso). [cite: 2026-02-20, 2026-02-23]
+                6. UNIVERSALI: BULLONE SERRATO & HIGHLANDER EFFICIENCY. [cite: 2026-02-23]
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '💰 PEPITA D'ORO INDIVIDUATA: [NOME]. 
-                LA SCOMMESSA DEL PISTOLERO: [Analisi specifica basata sulla freschezza e sul tracciato].'
+                LA SCOMMESSA DEL PISTOLERO: [Analisi specifica basata sui bias del tracciato].'
                 """
                 
                 response_pplx = client_pplx.chat.completions.create(
