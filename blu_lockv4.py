@@ -30,27 +30,27 @@ except KeyError:
 client_gemini = genai.Client(api_key=GEMINI_API_KEY)
 client_pplx = OpenAI(api_key=PPLX_API_KEY, base_url="https://api.perplexity.ai")
 
-st.set_page_config(page_title="SNIPER 15.6 SOUTHWELL KEY", page_icon="🤠", layout="wide")
+st.set_page_config(page_title="SNIPER 15.7 PATCH SVEZIA", page_icon="🤠", layout="wide")
 
-st.title("🌵 SNIPER 15.6: 'LA LEGGE DEL WEST' 🤠")
-st.markdown("### *'Il favorito a Southwell è solo carta, il secondo migliore è il Marmo.'* 🔫 🥃")
+st.title("🌵 SNIPER 15.7: 'LA LEGGE DEL WEST' 🤠")
+st.markdown("### *'In Svezia il Marmo non deve avere crepe. Zero RP, solo gloria.'* 🔫 🥃")
 
 # 3. SISTEMA DI SELEZIONE A MATRICE TOTALE (CON MIRINO MANUALE)
 col1, col2, col3 = st.columns(3)
 
 with col1:
     nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
-        "UK", "USA", "ITALIA", "FRANCIA", "ARGENTINA", "SVEZIA", "SUD AFRICA", "AUSTRALIA"
+        "SVEZIA", "UK", "USA", "ITALIA", "FRANCIA", "ARGENTINA", "SUD AFRICA", "AUSTRALIA"
     ])
 
 with col2:
-    ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Identifica il Tracciato):", help="Esempio: Southwell, Napoli, Firenze")
+    ippodromo = st.text_input("🏟️ INSERISCI IPPODROMO (Identifica il Tracciato):", help="Esempio: Bollnäs, Southwell, Napoli")
 
 with col3:
     if nazione == "USA":
         tipologia = st.selectbox("🏇 MODULO:", ["DIRT/SPEED (MARKET LAW)"])
     elif nazione in ["UK", "ITALIA", "FRANCIA", "SVEZIA"]:
-        tipologia = st.selectbox("🏇 MODULO:", ["GALOPPO PIANO", "TROTTO (BULLONE SERRATO)", "HANDICAP/NASTRI"])
+        tipologia = st.selectbox("🏇 MODULO:", ["TROTTO (BULLONE SERRATO)", "GALOPPO PIANO", "HANDICAP/NASTRI"])
     else:
         tipologia = st.selectbox("🏇 MODULO:", ["FLAT/PIANO", "HANDICAP/ZAVORRA"])
 
@@ -66,36 +66,36 @@ if st.button("💥 PREMI IL GRILLETTO (ANALISI CHIRURGICA)"):
     if not uploaded_files or not ippodromo:
         st.warning("EHI COWBOY! CARICA I DATI E IL NOME DELL'IPPODROMO.")
     else:
-        with st.spinner(f"LO SCERIFFO STA ANALIZZANDO LA SABBIA DI {ippodromo}... 🚬"):
+        with st.spinner(f"LO SCERIFFO STA ANALIZZANDO LA POLVERE DI {ippodromo}... 🚬"):
             try:
-                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.0 FLASH)
-                prompt_vision = f"ESTRAI DALLE IMMAGINI PER {ippodromo} ({nazione}): NOME, QUOTA, RATING, PESO, SEQUENZA, NOTE (FE, T, CD, RP, RI)."
+                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
+                prompt_vision = f"ESTRAI DALLE IMMAGINI PER {ippodromo} ({nazione}): NOME, QUOTA, RATING, PESO, SEQUENZA, NOTE (FE, T, CD, RP, RI, DI, DAI)."
                 response_vision = client_gemini.models.generate_content(
                     model='gemini-2.5-flash', 
                     contents=[prompt_vision] + images_to_process
                 )
                 dati_estratti = response_vision.text
-                st.success(f"INDIZI RACCOLTI CON GEMINI 2.0 FLASH! 🥃")
+                st.success(f"INDIZI RACCOLTI CON GEMINI 2.5 FLASH! 🥃")
 
-                # FASE 2: ANALISI DELLO SCERIFFO CON CHIAVE SOUTHWELL
+                # FASE 2: ANALISI DELLO SCERIFFO CON PATCH SVEZIA
                 prompt_pplx = f"""
                 SISTEMA: ANALIZZATORE OFFLINE. PARLA COME UN COWBOY DURO.
                 IPPODROMO: {ippodromo}. NAZIONE: {nazione}. DATI: {dati_estratti}
 
-                PARAMETRI DI PERFEZIONE 15.6:
-                1. CHIAVE SOUTHWELL (UK): Se ippodromo == 'SOUTHWELL':
-                   - Se QUOTA < 3.00, il favorito è MARMO INSTABILE. Ignoralo. [cite: 2026-02-24]
-                   - Cerca il SECONDO MIGLIORE per densità tecnica (Rating alto) e POLMONI D'ACCIAIO. [cite: 2026-02-24]
-                   - La pepita deve avere quota tra 5.00 e 10.00. [cite: 2026-02-24]
-                   - Deve aver corso su All Weather (A.W.) o Tapeta negli ultimi 30 giorni. [cite: 2026-02-24]
-                2. BIAS NAPOLI (PISTA GRANDE): Se Napoli, TOLLERA UN '4' RECENTE per polmoni d'acciaio. [cite: 2026-02-24]
-                3. BIAS FIRENZE/TREVISO: BULLONE SERRATO perfetto al via, zero errori meccanici. [cite: 2026-02-24]
-                4. HIGHLANDER: Efficienza = Rating / (Carico * Distanza) [cite: 2026-02-20].
-                5. UNIVERSALI: No RP, RI, DAI, FE, T, 0 [cite: 2026-02-23].
+                PARAMETRI DI PERFEZIONE 15.7:
+                1. PATCH SVEZIA (ZERO TOLLERANZA): Se nazione == 'SVEZIA':
+                   - Se un cavallo ha ANCHE SOLO UN 'RP', 'RI', 'DI', 'DAI' nelle ultime 3 uscite, è ABISSO MECCANICO immediato. Scartalo senza pietà. [cite: 2026-02-24]
+                   - In Svezia non si usa la frusta: cerca il MARMO con rating alto che corre di pura cazzimma propria. [cite: 2026-02-24]
+                2. CHIAVE SOUTHWELL (UK): Se ippodromo == 'SOUTHWELL':
+                   - Se QUOTA < 3.00, ignora il favorito (MARMO INSTABILE). Cerca il secondo migliore con quota 5-10. [cite: 2026-02-24]
+                3. BIAS NAPOLI (PISTA GRANDE): Se Napoli, TOLLERA UN '4' RECENTE per polmoni d'acciaio. [cite: 2026-02-24]
+                4. BIAS FIRENZE/TREVISO: BULLONE SERRATO perfetto al via. [cite: 2026-02-24]
+                5. HIGHLANDER: Efficienza = Rating / (Carico * Distanza) [cite: 2026-02-20].
+                6. UNIVERSALI: No RP, RI, DAI, FE, T, 0 [cite: 2026-02-23].
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '💰 PEPITA D'ORO INDIVIDUATA: [NOME]. 
-                LA SCOMMESSA DEL PISTOLERO: [Analisi specifica per {ippodromo} basata sulla logica corretta].'
+                LA SCOMMESSA DEL PISTOLERO: [Analisi specifica per {ippodromo} con Patch Svezia].'
                 TERMINI: MARMO, CEMENTO, ABISSO, CAZZIMMA, BULLONE SERRATO, TRACK ANALYTICS.
                 """
                 
