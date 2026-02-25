@@ -4,30 +4,43 @@ from openai import OpenAI
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- GRAFICA OMNI-CORE (CANTIERE GLOBALE BLINDATO) ---
+# --- GRAFICA BLUE LOCK (PULITA, CHIRURGICA, NEON CYAN) ---
 st.markdown("""
     <style>
-    .stApp { background-color: #0a0a0a; color: #e0e0e0; font-family: 'Courier New', monospace; }
-    h1, h2, h3 { color: #d32f2f !important; text-transform: uppercase; font-weight: bold; }
-    .stButton>button { background-color: #d32f2f !important; color: white !important; border: 2px solid #ffeb3b !important; font-weight: bold; font-size: 1.2em; text-transform: uppercase; }
+    /* Sfondo principale blu scuro abisso */
+    .stApp { background-color: #0b132b; color: #e0e1dd; font-family: 'Arial', sans-serif; }
     
-    /* FIX COLORI REFERTO SCERIFFO: SFONDO SCURO, TESTO GIALLO ACCECANTE */
+    /* Titoli in azzurro neon */
+    h1, h2, h3 { color: #00ffcc !important; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; }
+    
+    /* Bottone innesco */
+    .stButton>button { 
+        background-color: #1c2541 !important; 
+        color: #00ffcc !important; 
+        border: 2px solid #00ffcc !important; 
+        font-weight: bold; font-size: 1.2em; text-transform: uppercase;
+        border-radius: 8px; transition: 0.3s;
+    }
+    .stButton>button:hover { background-color: #00ffcc !important; color: #0b132b !important; }
+    
+    /* Finestra del referto (Stile Terminale Logico) */
     div[data-testid="stAlert"] {
-        background-color: #121212 !important;
-        border: 2px solid #d32f2f !important;
-        border-left: 8px solid #d32f2f !important;
+        background-color: #1c2541 !important;
+        border: 1px solid #3a506b !important;
+        border-left: 8px solid #00ffcc !important;
+        border-radius: 5px;
     }
     div[data-testid="stAlert"] p {
-        color: #ffeb3b !important;
-        font-weight: bold !important;
+        color: #ffffff !important;
+        font-weight: 500 !important;
         font-size: 1.15em !important;
-        line-height: 1.4 !important;
+        line-height: 1.5 !important;
     }
     </style>
     """, unsafe_allow_html=True)
 
 def play_beep():
-    beep_html = '<audio autoplay><source src="https://www.myinstants.com/media/sounds/ricochet-sound.mp3" type="audio/mpeg"></audio>'
+    beep_html = '<audio autoplay><source src="https://www.myinstants.com/media/sounds/scanner-beep.mp3" type="audio/mpeg"></audio>'
     components.html(beep_html, height=0, width=0)
 
 # CHIAVI DEL CAVEAU
@@ -38,70 +51,58 @@ except KeyError:
     st.error("☠️ MANCANO LE MUNIZIONI NEI SECRETS!")
     st.stop()
 
-st.title("🌐 SNIPER 31.0: AUTO-SCAN OMNI-CORE 🎯")
-st.markdown("### *'Tu scegli la Nazione. Il mirino estrae metri, superficie e ippodromo da solo.'*")
+st.title("💠 SNIPER 32.0: BLUE LOCK CORE")
+st.markdown("### *'Zero statistiche esterne. Solo logica di ferro e filtro forma.'*")
 
-# MATRICE DINAMICA GLOBALE: L'UTENTE INSERISCE SOLO LA NAZIONE
-nazione = st.selectbox("🗺️ SELEZIONA LA NAZIONE (Il resto lo estrae lo scanner):", [
+# MATRICE DINAMICA
+nazione = st.selectbox("🌐 SELEZIONA LA NAZIONE:", [
     "UK", "USA", "ITALIA", "FRANCIA", "SVEZIA", "CILE", "BRASILE", 
     "SUD AFRICA", "AUSTRALIA", "GIAPPONE", "ALTRO"
 ])
 
-uploaded_files = st.file_uploader("📸 SCANNER CAVEAU (CARICA GLI SCREENSHOT):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
+uploaded_files = st.file_uploader("📸 SCANNER CAVEAU:", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
-if st.button("💥 INNESCA LA SCANSIONE AUTO-CORE"):
+if st.button("⚡ INNESCA IL FILTRO ASSOLUTO"):
     if not uploaded_files:
-        st.warning("CARICA I POSTER DEL CAVEAU, COMANDANTE.")
+        st.warning("CARICA I DATI, COMANDANTE.")
     else:
-        with st.spinner("LETTURA MURI DEL CAVEAU: ESTRAZIONE IPPODROMO, METRI E DATI... 🚬"):
+        with st.spinner("ISOLAMENTO DELLE PARTICELLE IN CORSO... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
                 
-                # FASE 1: ESTRAZIONE PURA E TOTALE (METADATI + NUMERI)
+                # FASE 1: ESTRAZIONE CHIRURGICA
                 prompt_v = f"""
-                SCANSIONA QUESTE IMMAGINI DELLA CORSA.
-                
-                FASE A: ESTRAI LE INFORMAZIONI GENERALI DELLA CORSA (LEGGIBILI IN ALTO NELLE GRAFICHE):
-                - IPPODROMO: (es. Kempton Park, Treviso, ecc.)
-                - DISTANZA: (es. 1410m, 1200m, ecc.)
-                - SUPERFICIE / PISTA: (es. P.All Weather, Erba, Sabbia, ecc.)
-                
-                FASE B: ESTRAI I DATI DEI CAVALLI (REGOLE CHIRURGICHE INVIOLABILI):
-                1. LEGGI ESATTAMENTE RIGA PER RIGA. NON MESCOLARE MAI I DATI DI UN CAVALLO CON QUELLI DI UN ALTRO.
-                2. NELLA SEQUENZA, L'ULTIMO ARRIVO (quello più a sinistra) DEVE ESSERE IL PRIMO AD ESSERE SCRITTO.
-                3. ESTRAI IN QUESTO FORMATO ESATTO PER OGNI RIGA, IGNORANDO TOTALMENTE I NOMI:
-                   # [NUMERO] | RT: [Rating] | GG: [Giorni] | SEQ RECENTE: [Es: 1-2-7-7-6] | QUOTA: [Quota]
-                SE UN DATO NON È CHIARO, SCRIVI "N/D".
+                ESTRAI LE INFORMAZIONI DA QUESTE IMMAGINI PER {nazione}.
+                1. TROVA IPPODROMO, DISTANZA E SUPERFICIE.
+                2. ESTRAI I DATI DEI CAVALLI RIGA PER RIGA:
+                   # [NUMERO] | RT: [Rating] | GG: [Giorni] | SEQ RECENTE: [Es: 1-2-7-7-6]
+                ATTENZIONE ALLA SEQUENZA: IL PRIMO NUMERO A SINISTRA È L'ULTIMA CORSA DISPUTATA.
+                IGNORA TOTALMENTE I NOMI.
                 """
                 res_v = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt_v] + images)
                 dati_estratti = res_v.text
 
-                # FASE 2: IL CERVELLO DINAMICO (RICEVE NAZIONE + DATI ESTRATTI DALLA FASE 1)
+                # FASE 2: IL CERVELLO (FILTRO OFFLINE BLOCCATO SULLE REGOLE)
                 prompt_p = f"""
-                SISTEMA: PROTOCOLLO GRANITO 3.0. PARLA CON SINTASSI RIGOROSAMENTE IN MAIUSCOLO.
-                CONTESTO FORNITO DALL'UTENTE: NAZIONE={nazione}.
+                SISTEMA: SEI UN FILTRO LOGICO OFFLINE. NON USARE IL WEB PER CERCARE STATISTICHE DI VITTORIA O QUOTE. ATTENITI AL 100% A QUESTE REGOLE.
                 
-                DATI ESTRATTI DALLO SCANNER (Leggili con attenzione: contengono Ippodromo, Distanza, Superficie e i Dati dei cavalli blindati):
+                DATI ESTRATTI:
                 {dati_estratti}
 
-                REGOLE UNIVERSALI (IL CEMENTO):
-                1. IDENTITÀ: USA ESCLUSIVAMENTE IL NUMERO (#). I NOMI SONO ABISSO. [cite: 2026-01-25]
-                2. DENSITÀ TECNICA: IGNORA LE QUOTE COME INDICATORE DI FORZA (TRANNE DOVE SPECIFICATO). CERCA IL SECONDO MIGLIORE CON POLMONI D'ACCIAIO E VOGLIA DI VINCERE. [cite: 2026-02-18, 2026-02-20]
-                3. SEQUENZA INVIOLABILE: L'ULTIMA USCITA (IL PRIMO NUMERO DELLA SEQUENZA) DEVE ESSERE 1 O 2. SE È 6, 7, 8, 9, FE, RP, CD, SCARTA IMMEDIATAMENTE IL NUMERO. È RUGGINE. [cite: 2026-02-25]
-                4. VERIFICA ANTI-ALLUCINAZIONE: Controlla che il numero che scegli abbia DAVVERO l'ultima uscita buona. Non scambiare le righe.
+                REGOLA DI SBARRAMENTO ASSOLUTO (MURO DELLA FORMA):
+                GUARDA IL PRIMO NUMERO DELLA SEQUENZA RECENTE (ES. SE LA SEQUENZA È 6-4-1-4-7, IL PRIMO NUMERO È 6). 
+                SE IL PRIMO NUMERO NON È "1" O "2", IL CAVALLO È ELIMINATO ISTANTANEAMENTE. 
+                NUMERI COME 3, 4, 5, 6, 7, 8, 9, 0, RP, FE SONO SCARTI TOTALI E NON DEVONO MAI ESSERE SELEZIONATI. NESSUNA ECCEZIONE. [cite: 2026-02-25]
 
-                CHIAVI REGIONALI DINAMICHE (ATTIVALE LEGGENDO I METADATI ESTRATTI DA GEMINI):
-                - SE NAZIONE == 'USA': APPLICA 'MARKET LAW'. IL MARMO DEVE AVERE UN '1' RECENTE. SE GG > 60 = RUGGINE.
-                - SE NAZIONE == 'SVEZIA': 'LEPRE BIAS'. SE IL PRIMO NASTRO È PULITO, SCHIACCIA LE QUOTE ALTE.
-                - SE NAZIONE IN ['CILE', 'BRASILE'] E LA DISTANZA ESTRATTA È < 1200: 'LATAM SPRINT'. PRIORITÀ ASSOLUTA A CHI HA UN '1' RECENTE. LA CAZZIMMA BATTE LA REGOLARITÀ.
-                - SE NAZIONE == 'FRANCIA': SE QUOTA > 12.00 SU TERRENO PESANTE = BURRONE.
-                - SE NAZIONE IN ['SUD AFRICA', 'AUSTRALIA']: VELOCITÀ PURA. PRIORITÀ A GG < 30 E RATING MASSIMO.
-                - SE L'IPPODROMO ESTRATTO È 'SOUTHWELL': IGNORA FAVORITI SOTTO QUOTA 3.00.
+                ISTRUZIONI:
+                1. Elimina tutti i cavalli che falliscono la REGOLA DI SBARRAMENTO ASSOLUTO.
+                2. Tra i sopravvissuti (quelli con 1 o 2 all'ultima uscita), scegli quello con il GG più basso e la sequenza più costante (polmoni d'acciaio).
+                3. Se NESSUN cavallo ha un 1 o un 2 all'ultima uscita, devi dichiarare il fallimento dell'analisi.
 
-                REFERTO FINALE (SINTASSI MAIUSCOLA OBBLIGATORIA) [cite: 2026-01-20]:
-                '💎 SACRO GRAAL INDIVIDUATO: [NUMERO #]' (Se tutti hanno ruggine, scrivi 'NESSUN SACRO GRAAL INDIVIDUATO')
-                'PIANO DI FUGA: [SPIEGA COME LA DISTANZA, LA SUPERFICIE E L'IPPODROMO ESTRATTI FAVORISCONO QUESTO NUMERO].'
-                'BULLONE SERRATO: [ANALISI DELLA DENSITÀ TECNICA, MOSTRANDO LA SEQUENZA ESATTA E PERCHÉ NON HA CREPE].'
+                REFERTO FINALE (MAIUSCOLO):
+                '💠 SACRO GRAAL INDIVIDUATO: [NUMERO #]' (OPPURE 'NESSUN SACRO GRAAL: TROPPA RUGGINE')
+                'PIANO DI FUGA: [Spiega perché questo numero supera il Muro della Forma].'
+                'BULLONE SERRATO: [Mostra la sequenza per dimostrare che l'ultimo arrivo è 1 o 2].'
                 """
                 
                 res_p = client_pplx.chat.completions.create(model="sonar-pro", messages=[{"role": "user", "content": prompt_p}])
@@ -111,4 +112,4 @@ if st.button("💥 INNESCA LA SCANSIONE AUTO-CORE"):
                 if "NESSUN" not in sentenza.upper() and "GRAAL" in sentenza.upper():
                     play_beep(); st.balloons()
             except Exception as e:
-                st.error(f"☠️ ALLARME SCATTATO: {e}")
+                st.error(f"☠️ ERRORE DI SISTEMA: {e}")
