@@ -4,155 +4,123 @@ from openai import OpenAI
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- GRAFICA ROYAL TURF (STILE CORSA IPPICA) ---
+# --- GRAFICA ROYAL TURF 2.0 (STILE CANTIERE IPPICO) ---
 st.markdown("""
     <style>
-    /* Sfondo principale: Verde Erba da Ippodromo (Dark Turf) */
+    /* Sfondo Verde Erba scuro per massima concentrazione */
     .stApp { 
-        background-color: #123524; 
-        background-image: radial-gradient(circle, #1b4d36 0%, #0d2617 100%);
+        background-color: #0e2a1d; 
+        background-image: linear-gradient(180deg, #123524 0%, #071a10 100%);
         color: #f0f4f1; 
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+        font-family: 'Courier New', Courier, monospace; 
     }
     
-    /* Titoli in Oro Corsa */
+    /* Titoli Oro per il Sacro Graal */
     h1, h2, h3 { 
-        color: #e6c27a !important; 
+        color: #d4af37 !important; 
         text-transform: uppercase; 
-        font-weight: 800; 
-        letter-spacing: 1px; 
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.6); 
+        font-weight: 900; 
+        text-shadow: 2px 2px 5px #000;
     }
     
-    /* Bottone innesco: Terra di pista (Dirt) con bordo Oro */
+    /* Bottone 'Grilletto' stile cuoio e oro */
     .stButton>button { 
-        background-color: #6b3e2e !important; 
+        background-color: #5d4037 !important; 
         color: #ffffff !important; 
-        border: 2px solid #e6c27a !important; 
-        font-weight: bold; font-size: 1.2em; text-transform: uppercase;
-        border-radius: 8px; transition: 0.3s;
-        box-shadow: 3px 3px 8px rgba(0,0,0,0.5);
+        border: 3px solid #d4af37 !important; 
+        font-weight: bold; font-size: 1.3em; text-transform: uppercase;
+        width: 100%; border-radius: 12px; height: 3em;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
     }
-    .stButton>button:hover { 
-        background-color: #e6c27a !important; 
-        color: #123524 !important; 
-    }
+    .stButton>button:hover { background-color: #d4af37 !important; color: #0e2a1d !important; }
     
-    /* Finestra del referto (Leggibilità assoluta: Sfondo scuro, Testo chiaro) */
+    /* Referto Finale Blindato */
     div[data-testid="stAlert"] {
-        background-color: #0a1f14 !important;
-        border: 2px solid #e6c27a !important;
-        border-left: 8px solid #e6c27a !important;
-        border-radius: 5px;
-        box-shadow: 4px 4px 12px rgba(0,0,0,0.7);
+        background-color: #071a10 !important;
+        border: 2px solid #d4af37 !important;
+        border-left: 10px solid #d4af37 !important;
+        border-radius: 8px;
     }
     div[data-testid="stAlert"] p {
         color: #ffffff !important;
         font-weight: bold !important;
-        font-size: 1.15em !important;
-        line-height: 1.5 !important;
-    }
-    
-    /* Etichette e testi input */
-    .stSelectbox label, .stFileUploader label {
-        color: #e6c27a !important;
-        font-weight: bold;
-        font-size: 1.1em;
+        font-size: 1.2em !important;
     }
     </style>
     """, unsafe_allow_html=True)
 
 def play_beep():
-    # Rintocco della campana dell'ultimo giro
+    # Suono campana ultimo giro
     beep_html = '<audio autoplay><source src="https://www.myinstants.com/media/sounds/boxing-bell.mp3" type="audio/mpeg"></audio>'
     components.html(beep_html, height=0, width=0)
 
-# CHIAVI DEL CAVEAU
+# 2. CASSAFORTE API
 try:
     client_gemini = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
     client_pplx = OpenAI(api_key=st.secrets["PERPLEXITY_API_KEY"], base_url="https://api.perplexity.ai")
 except KeyError:
-    st.error("☠️ MANCANO LE MUNIZIONI NEI SECRETS!")
+    st.error("☠️ MUNIZIONI MANCANTI (API KEYS)!")
     st.stop()
 
-st.title("🏇 SNIPER 34.0: ROYAL TURF ABSOLUTE CORE")
-st.markdown("### *'L'odore dell'erba. La freddezza del cemento. Zero errori, zero ruggine.'*")
+st.title("🏇 SNIPER 36.0: OMNI-TAPE ARCHITECT")
+st.markdown("### *'Mappatura nastri, metri e polmoni d'acciaio. Zero errori.'*")
 
-# MATRICE DINAMICA: L'UTENTE INSERISCE SOLO LA NAZIONE
-nazione = st.selectbox("🌍 SELEZIONA LA NAZIONE (Il resto lo estrae lo scanner):", [
-    "UK", "USA", "ITALIA", "FRANCIA", "SVEZIA", "CILE", "BRASILE", 
-    "SUD AFRICA", "AUSTRALIA", "GIAPPONE", "ALTRO"
+# 3. SELEZIONE NAZIONE
+nazione = st.selectbox("🌍 SELEZIONA IL TERRITORIO DI CACCIA:", [
+    "UK", "USA", "ITALIA", "FRANCIA", "SVEZIA", "CILE", "BRASILE", "SUD AFRICA", "AUSTRALIA", "GIAPPONE"
 ])
 
-uploaded_files = st.file_uploader("📸 SCATTA LA FOTO AL TOTALIZZATORE:", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
+# 4. SCANNER MOLECOLARE
+uploaded_files = st.file_uploader("📸 CARICA GLI SCREENSHOT DEL CAVEAU:", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
-if st.button("🏁 INNESCA IL FILTRO ASSOLUTO"):
+if st.button("🏁 ESEGUI PROTOCOLO GRANITO 3.0"):
     if not uploaded_files:
-        st.warning("CARICA I DATI, COMANDANTE.")
+        st.warning("CARICA I POSTER, COMANDANTE!")
     else:
-        with st.spinner("ISOLAMENTO DELLE PARTICELLE IN CORSO SULLA PISTA... ⏳"):
+        with st.spinner("SCANSIONE METRI E PARTICELLE IN CORSO... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
                 
-                # FASE 1: ESTRAZIONE CHIRURGICA (METADATI + NUMERI)
+                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
+                # Il prompt estrae ora specificamente la distanza e i metri di handicap
                 prompt_v = f"""
-                SCANSIONA QUESTE IMMAGINI DELLA CORSA PER {nazione}.
-                
-                FASE A: ESTRAI LE INFORMAZIONI GENERALI DELLA CORSA (LEGGIBILI IN ALTO NELLE GRAFICHE):
-                - IPPODROMO: (es. Kempton Park, Treviso, ecc.)
-                - DISTANZA: (es. 1410m, 1200m, ecc.)
-                - SUPERFICIE / PISTA: (es. P.All Weather, Erba, Sabbia, ecc.)
-                
-                FASE B: ESTRAI I DATI DEI CAVALLI (REGOLE CHIRURGICHE INVIOLABILI):
-                1. LEGGI ESATTAMENTE RIGA PER RIGA. NON MESCOLARE MAI I DATI DI UN CAVALLO CON QUELLI DI UN ALTRO.
-                2. NELLA SEQUENZA, L'ULTIMO ARRIVO (quello più a sinistra) DEVE ESSERE IL PRIMO AD ESSERE SCRITTO.
-                3. ESTRAI IN QUESTO FORMATO ESATTO PER OGNI RIGA, IGNORANDO TOTALMENTE I NOMI:
-                   # [NUMERO] | RT: [Rating] | GG: [Giorni] | SEQ RECENTE: [Es: 1-2-7-7-6] | QUOTA: [Quota]
-                SE IL DATO "GIORNI" (GG) NON È PRESENTE O NON È LEGGIBILE, SCRIVI TASSATIVAMENTE "N/D".
+                SCANSIONA LE IMMAGINI PER {nazione}.
+                FASE A (METADATI): ESTRAI IPPODROMO, DISTANZA TOTALE (es. 1410m) E TIPO DI CORSA (NASTRI/HANDICAP/PIANO).
+                FASE B (PARTICELLE): ESTRAI OGNI RIGA SENZA NOMI.
+                FORMATO: # [NUMERO] | NASTRO: [es. 0m, +20m, +40m] | RT: [Rating] | GG: [Giorni] | SEQ: [Es: 1-2-7-7-6] | QUOTA: [Quota]
+                REGOLE: 
+                - SE IL GG È MANCANTE, SCRIVI "N/D".
+                - NELLA SEQUENZA, IL PRIMO NUMERO A SINISTRA È L'ULTIMA CORSA (FORMA RECENTE). [cite: 2026-02-25]
                 """
                 res_v = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt_v] + images)
                 dati_estratti = res_v.text
 
-                # FASE 2: IL CERVELLO (FILTRO OFFLINE BLOCCATO SULLE REGOLE DI PERFEZIONE 15.15 E FILTRO RUGGINE)
+                # FASE 2: IL CERVELLO (PERPLEXITY SONAR PRO - OFFLINE LOGIC)
                 prompt_p = f"""
-                SISTEMA: SEI UN FILTRO LOGICO OFFLINE. NON USARE IL WEB PER CERCARE STATISTICHE DI VITTORIA O QUOTE. ATTENITI AL 100% A QUESTE REGOLE.
-                
-                CONTESTO FORNITO DALL'UTENTE: NAZIONE={nazione}.
-                
-                DATI ESTRATTI DALLO SCANNER:
-                {dati_estratti}
+                SISTEMA: PROTOCOLO GRANITO 3.0 - PIAZZATO BLINDATO. [cite: 2026-02-25]
+                SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
+                DATI ESTRATTI: {dati_estratti}
 
-                REGOLA 1: SBARRAMENTO ASSOLUTO (MURO DELLA FORMA)
-                GUARDA IL PRIMO NUMERO DELLA SEQUENZA RECENTE. SE NON È "1" O "2", IL CAVALLO È ELIMINATO ISTANTANEAMENTE. 
-                NUMERI COME 3, 4, 5, 6, 7, 8, 9, 0, RP, FE SONO SCARTI TOTALI. NESSUNA ECCEZIONE. [cite: 2026-02-25]
+                PARAMETRI DI PERFEZIONE 15.15:
+                1. MURO DELLA FORMA: IL PRIMO NUMERO DELLA SEQUENZA DEVE ESSERE 1 O 2. SE È >2 O RP/RI/FE/DAI, ELIMINA. [cite: 2026-02-25, 2026-02-24]
+                2. FILTRO RUGGINE: GG DEVE ESSERE < 45. SE GG È 'N/D' O > 45, ELIMINA (RUGGINE MORTALE). [cite: 2026-02-25, 2026-02-24]
+                3. BIAS NASTRI (LEPRE): SE LA CORSA È A NASTRI, IL CEMENTO È IL CAVALLO A 0m (PRIMO NASTRO). 
+                   DAI PRIORITÀ ASSOLUTA ALLA LEPRE (0m) SE HA SUPERATO I FILTRI 1 E 2. 
+                   UN "CACCIATORE" (+20m/+40m) È ABISSO SE LA LEPRE È CALDA. [cite: 2026-02-24]
+                4. BIAS NAPOLI: SE L'IPPODROMO È NAPOLI, TOLLERA UN '4' RECENTE PER POLMONI D'ACCIAIO. [cite: 2026-02-24]
+                5. SOUTHWELL KEY: SE IPPODROMO È SOUTHWELL, IGNORA FAVORITI < 3.00. [cite: 2026-02-24]
 
-                REGOLA 2: FILTRO RUGGINE INVALICABILE (IL FATTORE GG)
-                SE IL DATO 'GG' È 'N/D' (NON DISPONIBILE) O SE IL 'GG' È MAGGIORE DI 45, IL CAVALLO DEVE ESSERE ELIMINATO IMMEDIATAMENTE.
-                UN "1" OTTENUTO TROPPI GIORNI FA O IN DATA IGNOTA È UN'ILLUSIONE MORTALE. IL MOTORE DEVE ESSERE CALDO *ORA*. [cite: 2026-02-25]
-                
-                REGOLE DELLA NAZIONE:
-                SE {nazione} == 'USA': LA QUOTA BASSA COMANDA SE HA UN 1 RECENTE E GG BASSO.
-                SE {nazione} != 'USA': IGNORA LE QUOTE, CERCANDO SEMPRE IL SECONDO MIGLIORE PER DENSITÀ TECNICA E POLMONI D'ACCIAIO. [cite: 2026-02-20]
-
-                ISTRUZIONI DI SELEZIONE:
-                1. Applica la REGOLA 1 (Forma) e la REGOLA 2 (GG) in modo SPIETATO. Se manca il GG o è >45, elimina la particella.
-                2. IL SOPRAVVISSUTO:
-                   - SE RIMANE UN SOLO CAVALLO che ha superato ENTRAMBE le regole, QUELLO È IL SACRO GRAAL ASSOLUTO. [cite: 2026-02-20]
-                   - SE RIMANGONO PIÙ CAVALLI, scegli quello con il GG (Giorni) più basso in assoluto e la sequenza totale più costante (il cemento che blinda il cantiere). [cite: 2026-02-20]
-                3. FALLIMENTO: Dichiara 'NESSUN SACRO GRAAL' *SOLO ED ESCLUSIVAMENTE* se TUTTI i cavalli sono stati eliminati (zero superstiti).
-
-                REFERTO FINALE (SINTASSI RIGOROSAMENTE IN MAIUSCOLO) [cite: 2026-01-20]:
-                '🏆 SACRO GRAAL INDIVIDUATO: [NUMERO #]' (OPPURE 'NESSUN SACRO GRAAL: TROPPA RUGGINE NEI MOTORI' se zero superstiti)
-                'PIANO DI CORSA: [Spiega perché questo numero supera il Muro della Forma E il Filtro Ruggine].'
-                'BULLONE SERRATO: [Mostra la sequenza esatta per dimostrare che l'ultimo arrivo è 1 o 2 e CONFERMA CHE IL GG È < 45].'
+                REFERTO FINALE (SINTASSI MAIUSCOLA):
+                '🏆 SACRO GRAAL INDIVIDUATO: [NUMERO #]' (O 'NESSUN SACRO GRAAL' SE ZERO SUPERSTITI)
+                'PIANO DI CORSA: [ANALISI DEI METRI DI PENALITÀ, DISTANZA E DENSITÀ TECNICA].'
+                'BULLONE SERRATO: [CONFERMA SEQ, GG < 45 E POSIZIONE NEL NASTRO].'
                 """
                 
                 res_p = client_pplx.chat.completions.create(model="sonar-pro", messages=[{"role": "user", "content": prompt_p}])
                 sentenza = res_p.choices[0].message.content
                 
                 st.info(sentenza)
-                # La condizione non suona se dice "NESSUN"
                 if "NESSUN" not in sentenza.upper() and "GRAAL" in sentenza.upper():
                     play_beep(); st.balloons()
             except Exception as e:
-                st.error(f"☠️ CADUTA SULL'OSTACOLO: {e}")
+                st.error(f"☠️ ALLARME SCATTATO: {e}")
