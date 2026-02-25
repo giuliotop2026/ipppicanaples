@@ -75,8 +75,8 @@ except KeyError:
     st.error("☠️ MANCANO LE MUNIZIONI NEI SECRETS!")
     st.stop()
 
-st.title("🏇 SNIPER 33.0: ROYAL TURF CORE")
-st.markdown("### *'L'odore dell'erba. La freddezza del cemento. Zero errori.'*")
+st.title("🏇 SNIPER 34.0: ROYAL TURF ABSOLUTE CORE")
+st.markdown("### *'L'odore dell'erba. La freddezza del cemento. Zero errori, zero ruggine.'*")
 
 # MATRICE DINAMICA: L'UTENTE INSERISCE SOLO LA NAZIONE
 nazione = st.selectbox("🌍 SELEZIONA LA NAZIONE (Il resto lo estrae lo scanner):", [
@@ -108,12 +108,12 @@ if st.button("🏁 INNESCA IL FILTRO ASSOLUTO"):
                 2. NELLA SEQUENZA, L'ULTIMO ARRIVO (quello più a sinistra) DEVE ESSERE IL PRIMO AD ESSERE SCRITTO.
                 3. ESTRAI IN QUESTO FORMATO ESATTO PER OGNI RIGA, IGNORANDO TOTALMENTE I NOMI:
                    # [NUMERO] | RT: [Rating] | GG: [Giorni] | SEQ RECENTE: [Es: 1-2-7-7-6] | QUOTA: [Quota]
-                SE UN DATO NON È CHIARO, SCRIVI "N/D".
+                SE IL DATO "GIORNI" (GG) NON È PRESENTE O NON È LEGGIBILE, SCRIVI TASSATIVAMENTE "N/D".
                 """
                 res_v = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt_v] + images)
                 dati_estratti = res_v.text
 
-                # FASE 2: IL CERVELLO (FILTRO OFFLINE BLOCCATO SULLA REGOLA DEL SINGOLO SOPRAVVISSUTO)
+                # FASE 2: IL CERVELLO (FILTRO OFFLINE BLOCCATO SULLE REGOLE DI PERFEZIONE 15.15 E FILTRO RUGGINE)
                 prompt_p = f"""
                 SISTEMA: SEI UN FILTRO LOGICO OFFLINE. NON USARE IL WEB PER CERCARE STATISTICHE DI VITTORIA O QUOTE. ATTENITI AL 100% A QUESTE REGOLE.
                 
@@ -122,26 +122,29 @@ if st.button("🏁 INNESCA IL FILTRO ASSOLUTO"):
                 DATI ESTRATTI DALLO SCANNER:
                 {dati_estratti}
 
-                REGOLA DI SBARRAMENTO ASSOLUTO (MURO DELLA FORMA):
-                GUARDA IL PRIMO NUMERO DELLA SEQUENZA RECENTE (ES. SE LA SEQUENZA È 6-4-1-4-7, IL PRIMO NUMERO È 6). 
-                SE IL PRIMO NUMERO NON È "1" O "2", IL CAVALLO È ELIMINATO ISTANTANEAMENTE. 
-                NUMERI COME 3, 4, 5, 6, 7, 8, 9, 0, RP, FE SONO SCARTI TOTALI E NON DEVONO MAI ESSERE SELEZIONATI. NESSUNA ECCEZIONE. [cite: 2026-02-25]
+                REGOLA 1: SBARRAMENTO ASSOLUTO (MURO DELLA FORMA)
+                GUARDA IL PRIMO NUMERO DELLA SEQUENZA RECENTE. SE NON È "1" O "2", IL CAVALLO È ELIMINATO ISTANTANEAMENTE. 
+                NUMERI COME 3, 4, 5, 6, 7, 8, 9, 0, RP, FE SONO SCARTI TOTALI. NESSUNA ECCEZIONE. [cite: 2026-02-25]
+
+                REGOLA 2: FILTRO RUGGINE INVALICABILE (IL FATTORE GG)
+                SE IL DATO 'GG' È 'N/D' (NON DISPONIBILE) O SE IL 'GG' È MAGGIORE DI 45, IL CAVALLO DEVE ESSERE ELIMINATO IMMEDIATAMENTE.
+                UN "1" OTTENUTO TROPPI GIORNI FA O IN DATA IGNOTA È UN'ILLUSIONE MORTALE. IL MOTORE DEVE ESSERE CALDO *ORA*. [cite: 2026-02-25]
                 
                 REGOLE DELLA NAZIONE:
                 SE {nazione} == 'USA': LA QUOTA BASSA COMANDA SE HA UN 1 RECENTE E GG BASSO.
-                SE {nazione} != 'USA': IGNORA LE QUOTE, CONCENTRATI SUL GG E SUI POLMONI D'ACCIAIO.
+                SE {nazione} != 'USA': IGNORA LE QUOTE, CERCANDO SEMPRE IL SECONDO MIGLIORE PER DENSITÀ TECNICA E POLMONI D'ACCIAIO. [cite: 2026-02-20]
 
                 ISTRUZIONI DI SELEZIONE:
-                1. Elimina spietatamente tutti i cavalli che falliscono la REGOLA DI SBARRAMENTO ASSOLUTO.
+                1. Applica la REGOLA 1 (Forma) e la REGOLA 2 (GG) in modo SPIETATO. Se manca il GG o è >45, elimina la particella.
                 2. IL SOPRAVVISSUTO:
-                   - SE RIMANE UN SOLO CAVALLO con "1" o "2", QUELLO È IL SACRO GRAAL ASSOLUTO. Non serve alcun confronto. È il vero vincitore nascosto che schiaccia la ruggine avversaria. [cite: 2026-02-20]
-                   - SE RIMANGONO PIÙ CAVALLI, scegli quello con il GG (Giorni) più basso e la sequenza totale più costante (polmoni d'acciaio).
+                   - SE RIMANE UN SOLO CAVALLO che ha superato ENTRAMBE le regole, QUELLO È IL SACRO GRAAL ASSOLUTO. [cite: 2026-02-20]
+                   - SE RIMANGONO PIÙ CAVALLI, scegli quello con il GG (Giorni) più basso in assoluto e la sequenza totale più costante (il cemento che blinda il cantiere). [cite: 2026-02-20]
                 3. FALLIMENTO: Dichiara 'NESSUN SACRO GRAAL' *SOLO ED ESCLUSIVAMENTE* se TUTTI i cavalli sono stati eliminati (zero superstiti).
 
                 REFERTO FINALE (SINTASSI RIGOROSAMENTE IN MAIUSCOLO) [cite: 2026-01-20]:
                 '🏆 SACRO GRAAL INDIVIDUATO: [NUMERO #]' (OPPURE 'NESSUN SACRO GRAAL: TROPPA RUGGINE NEI MOTORI' se zero superstiti)
-                'PIANO DI CORSA: [Spiega perché questo numero è il sopravvissuto perfetto. Se era l'unico a passare il muro, dillo esplicitamente].'
-                'BULLONE SERRATO: [Mostra la sequenza esatta per dimostrare che l'ultimo arrivo è 1 o 2 e analizza il GG].'
+                'PIANO DI CORSA: [Spiega perché questo numero supera il Muro della Forma E il Filtro Ruggine].'
+                'BULLONE SERRATO: [Mostra la sequenza esatta per dimostrare che l'ultimo arrivo è 1 o 2 e CONFERMA CHE IL GG È < 45].'
                 """
                 
                 res_p = client_pplx.chat.completions.create(model="sonar-pro", messages=[{"role": "user", "content": prompt_p}])
