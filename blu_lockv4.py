@@ -42,7 +42,7 @@ except KeyError:
     st.stop()
 
 st.title("🤠 SNIPER 100.0: THE OMNISCIENT SHERIFF")
-st.markdown("### *'Filtro Cristallo Anti-Squalifica. Visione Totale.'*")
+st.markdown("### *'Filtro Cristallo 2.1 Attivo. Polmoni d'Acciaio. Visione Totale.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
@@ -59,47 +59,53 @@ if uploaded_files:
         with cols[i]:
             st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (PROTOCOLLO ESPERTO DINAMICO + CRISTALLO 2.0) ---
+# --- 4. IL GRILLETTO (PROTOCOLLO ESPERTO DINAMICO + CRISTALLO 2.1) ---
 if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
     if not uploaded_files:
         st.warning("CARICA I MANIFESTI, COMANDANTE!")
     else:
-        with st.spinner("LO SCERIFFO STA SCANSIONANDO L'ABISSO... ⏳"):
+        with st.spinner("LO SCERIFFO STA SCANSIONANDO L'ABISSO E I POLMONI D'ACCIAIO... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
                 prompt = f"""
-                SEI L'ESPERTO DINAMICO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
+                SEI L'ESPERTO DINAMICO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-19, 2026-01-20]
                 TERRITORIO: {nazione}
 
                 FASE 1: ESTRAZIONE CINETICA (VISION)
                 - Identifica l'IPPODROMO e la TIPOLOGIA DI GARA (Maiden, Nastri, Trotto, Galoppo).
-                - Nel TROTTO, leggi 'REC' (Record) come valore tecnico. [cite: 2026-02-25]
-                - Estrai per ogni riga: Numero, Nome, RT/Rec, GG, SEQ, Quota e Metri.
+                - Nel TROTTO, leggi 'REC' (Record) come valore tecnico. Nel GALOPPO leggi RT. [cite: 2026-02-25]
+                - Estrai per ogni riga: Numero, Nome, RT/Rec, GG, SEQ (primo a sinistra = gara più recente), Quota. Le sigle RP, RI, DAI, FE, CD sono squalifiche/cadute.
 
-                FASE 2: APPLICAZIONE FILTRI (GRANITO 3.0 + CRISTALLO 2.0)
+                FASE 2: APPLICAZIONE FILTRI (GRANITO 3.0 + CRISTALLO 2.1)
                 1. MURO FORMA: SEQ deve iniziare con 1 o 2. [cite: 2026-02-25]
-                2. FILTRO CRISTALLO (ANTI-SQUALIFICA): 
-                   - SE L'ULTIMO ESITO È RP, RI, DAI, SCARTA IMMEDIATAMENTE (INSTABILITÀ). [cite: 2026-02-15]
-                   - CONTA LE SQUALIFICHE (RP, RI, DAI) NELLA SEQUENZA DI 5 GARE. SE SONO >= 2, IL CAVALLO È RADIOATTIVO. ELIMINA. [cite: 2026-02-20]
-                3. FILTRO RUGGINE: GG < 45. (Eccezione: 'Iron Lung' se RT/Rec è dominante). [cite: 2026-02-25]
-                4. SENTINELLA QUOTE: Se Quota > 15.00, richiede RT/Rec superiore di almeno 5 punti. [cite: 2026-02-20]
-                5. BIAS NASTRI: Priorità alla 'Lepre' (0m) se pulita. [cite: 2026-02-24]
+                2. FILTRO CRISTALLO 2.1 (FLESSIBILITÀ ANTI-SQUALIFICA): 
+                   - Scarta il cavallo SOLO se presenta squalifiche (RP, RI, DAI, FE, CD) nelle sue DUE gare più recenti (i primi due valori a sinistra della SEQ).
+                   - Se la squalifica è vecchia (terza, quarta o quinta posizione) ma il cavallo ha superato il Muro Forma recente (1 o 2), IL CAVALLO È PERDONATO E PASSA.
+                3. FILTRO RUGGINE: GG < 45. (Eccezione: 'Iron Lung' se RT/Rec è dominante rispetto a tutti). [cite: 2026-02-25]
+                4. POLMONI D'ACCIAIO (CRITICO): Identifica tra i superstiti chi ha il miglior valore tecnico (RT/Rec). Se un cavallo passa i filtri 1, 2 e 3 ma ha un RT debole o non da vertice, DEVE ESSERE SCARTATO. IGNORA LA QUOTA. [cite: 2026-02-20]
 
-                FASE 3: REFERTO FINALE
+                FASE 3: REFERTO FINALE SINTETICO
                 '🌍 BERSAGLIO: [NAZIONE] - [IPPODROMO] - [TIPO GARA]'
-                '🏆 SACRO GRAAL INDIVIDUATO: PARTICELLA [NUMERO #] - [NOME]'
-                'ANALISI: [Dettaglio su RT/Rec, GG e assenza di squalifiche ripetute].'
-                'BULLONE SERRATO: [Conferma stabilità andatura e requisiti].'
                 
-                SE NON C'È PERFEZIONE: '🌵 NESSUNA PEPITA IN QUESTO FIUME.'
+                '🔍 SCANSIONE SUPERSTITI:'
+                - [NOME CAVALLO 1]: PASSATO (GG [X], SEQ [Y], RT/REC [Z])
+                (Elenca solo chi passa i filtri. OBBLIGATORIO mostrare GG, SEQ e RT/Rec).
+
+                SE C'È UN VERO SACRO GRAAL CON POLMONI D'ACCIAIO:
+                '💰 TAGLIA RISCOSSA: PISTOLERO [NUMERO #] - [NOME]'
+                'BULLONE SERRATO: [Motivazione rapida su forma e superiorità tecnica (RT/Rec)].'
+                
+                SE NON C'È PERFEZIONE O L'UNICO SUPERSTITE HA UN RT BASSO: 
+                '🌵 NESSUNA PEPITA IN QUESTO FIUME. I SUPERSTITI MANCANO DI POLMONI D'ACCIAIO O STABILITÀ.'
                 """
 
                 res = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt] + images)
                 sentenza = res.text
                 
                 st.info(sentenza)
-                if "SACRO GRAAL" in sentenza.upper():
+                if "TAGLIA RISCOSSA" in sentenza.upper():
                     play_victory_bell(); st.balloons()
             except Exception as e:
                 st.error(f"☠️ SERPENTE NELLO STIVALE: {e}")
+                
