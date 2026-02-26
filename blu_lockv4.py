@@ -5,6 +5,10 @@ from google import genai
 from openai import OpenAI
 from PIL import Image
 import streamlit.components.v1 as components
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 # --- GRAFICA ROYAL TURF 2.0 (STILE CANTIERE IPPICO) ---
@@ -37,6 +41,11 @@ st.markdown("""
         border-left: 10px solid #d4af37 !important;
         border-radius: 8px;
     }
+    div[data-testid="stAlert"] p {
+        color: #ffffff !important;
+        font-weight: bold !important;
+        font-size: 1.2em !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -52,66 +61,56 @@ except KeyError:
     st.error("☠️ MUNIZIONI MANCANTI (API KEYS)!")
     st.stop()
 
-st.title("🏇 SNIPER 42.0: OMNI-AUTO PILOT")
-st.markdown("### *'Web Scraping diretto SNAI. Protocollo Statistico 15.15 attivo.'*")
+st.title("🏇 SNIPER 44.0: DIAMOND DRILL")
+st.markdown("### *'Web Scraping Stealth. Protocollo Granito 3.0 e Patch Anti-Maiden attiva.'*")
 
 # 3. SELEZIONE NAZIONE
 nazione = st.selectbox("🌍 TERRITORIO DI CACCIA:", [
-    "ITALIA", "UK", "IRLANDA", "USA", "FRANCIA", "GERMANIA", "SUD AFRICA", "AUSTRALIA"
+    "ITALIA", "UK", "IRLANDA", "USA", "FRANCIA", "GERMANIA", "SUD AFRICA", "AUSTRALIA", "SVEZIA"
 ])
 
-# 4. MOTORE DI SCRAPING REALE (BULLONE SERRATO)
-def fetch_real_snai_data():
-    url = "https://ippica.snai.it/partenti"
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
+# 4. MOTORE DI TRIVELLAZIONE (SELENIUM STEALTH SCRAPER)
+def get_snai_data_stealth():
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36")
+    
     try:
-        response = requests.get(url, headers=headers, timeout=10)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        
-        # Estrazione molecolare dei dati pubblici
-        corse_data = []
-        # Cerchiamo le tabelle o i div che contengono i dati dei partenti
-        items = soup.find_all('div', class_='partenti-row') # Esempio di classe, verrebbe adattata alla struttura reale
-        
-        for item in items:
-            # Estraiamo i metadati
-            ippodromo = item.find('span', class_='ippodromo').text if item.find('span', class_='ippodromo') else "N/D"
-            distanza = item.find('span', class_='distanza').text if item.find('span', class_='distanza') else "N/D"
-            cavallo = item.find('span', class_='nome-cavallo').text if item.find('span', class_='nome-cavallo') else "#?"
-            rt = item.find('span', class_='rating').text if item.find('span', class_='rating') else "N/D"
-            gg = item.find('span', class_='giorni').text if item.find('span', class_='giorni') else "N/D"
-            seq = item.find('span', class_='sequenza').text if item.find('span', class_='sequenza') else "N/D"
-            
-            corse_data.append(f"IPP: {ippodromo} | DIST: {distanza} | CAV: {cavallo} | RT: {rt} | GG: {gg} | SEQ: {seq}")
-        
-        return "\n".join(corse_data) if corse_data else soup.get_text()[:5000] # Fallback al testo se non trova classi
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        driver.get("https://ippica.snai.it/partenti")
+        time.sleep(5) # Attesa per bypassare challenge iniziali
+        html_content = driver.page_source
+        driver.quit()
+        return html_content
     except Exception as e:
-        return f"ERRORE CONNESSIONE CAVEAU: {str(e)}"
+        return f"ERRORE TRIVELLAZIONE: {str(e)}"
 
 # 5. RADAR AUTOMATICO
 if st.button("🚀 LANCIA RADAR GLOBALE"):
-    with st.spinner("INFILTRAZIONE NEI SERVER SNAI IN CORSO... ⏳"):
+    with st.spinner("TRIVELLAZIONE CAVEAU SNAI IN CORSO... ⏳"):
         try:
-            # ESECUZIONE SCRAPING REALE
-            dati_molecolari = fetch_real_snai_data()
+            raw_data = get_snai_data_stealth()
             
             # FASE 2: IL CERVELLO (STEALTH PROMPT PER EVITARE CENSORI)
             prompt_p = f"""
             SISTEMA: PROTOCOLO ANALISI STATISTICA 15.15. [cite: 2026-02-25]
             SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
             DATA: 2026-02-26.
-            DATI GREZZI: {dati_molecolari}
+            DATI DA ANALIZZARE: {raw_data[:15000]}
 
-            ANALIZZA LA DENSITÀ TECNICA DELLE PARTICELLE:
-            1. COSTANZA (SEQ): IDENTIFICA CHI INIZIA CON 1 O 2. [cite: 2026-02-25]
-            2. EFFICIENZA (GG): FILTRA SOLO GG < 45. [cite: 2026-02-25]
-            3. RATING (RT): CERCA IL GAP SUPERIORE A 5 PUNTI. [cite: 2026-02-20]
+            LOGICA DI SELEZIONE MOLECOLARE:
+            1. IDENTIFICA PARTICELLE (#) CON ULTIMA SEQ 1 O 2. (SE MAIDEN, SOLO 1). [cite: 2026-02-25]
+            2. FILTRO RUGGINE: GG < 45. (SE MAIDEN, GG < 15). [cite: 2026-02-25]
+            3. GAP RT: SE MAIDEN, GAP RATING ≥ 5 RISPETTO AL SECONDO MIGLIORE. [cite: 2026-02-25]
+            4. BIAS NASTRI: PRIORITÀ LEPRE (0m) SE CALDA. [cite: 2026-02-24]
 
-            ORDINE DI REFERTO (MAIUSCOLO):
+            REFERTO FINALE (SINTASSI MAIUSCOLA):
             '🏆 OBIETTIVO INDIVIDUATO: [IPPODROMO] - [ORARIO] - [NUMERO #]'
-            'ANALISI TECNICA: [MOTIVAZIONE SU SEQ, GG E RT].'
-            'STRATEGIA STABILITÀ: [GIOCA PIAZZATO 1-3 O 1-4 PER PROTEZIONE].' [cite: 2026-02-15]
-            'BULLONE SERRATO: [CONFERMA REQUISITI 15.15].'
+            'ANALISI TECNICA: [DETTAGLI SU SEQ, GG E DENSITÀ RT].'
+            'ORDINE DI MERCATO: [GIOCA PIAZZATO 1-4 SE DISPONIBILE, ALTRIMENTI 1-3].' [cite: 2026-02-15]
+            'BULLONE SERRATO: [CONFERMA REQUISITI 15.15 SUPERATI].'
             """
             
             res_p = client_pplx.chat.completions.create(model="sonar-pro", messages=[{"role": "user", "content": prompt_p}])
@@ -121,10 +120,14 @@ if st.button("🚀 LANCIA RADAR GLOBALE"):
             if "OBIETTIVO" in sentenza.upper() and "INDIVIDUATO" in sentenza.upper():
                 play_beep(); st.balloons()
         except Exception as e:
-            st.error(f"☠️ ERRORE SISTEMA: {e}")
+            st.error(f"☠️ ERRORE RADAR: {e}")
 
-# 6. SCANNER MANUALE (PERFETTO PER PISA E DATI COMPLESSI)
+# 6. SCANNER MANUALE (BACKUP SEMPRE PRONTO)
 with st.expander("📸 BACKUP: CARICA SCREENSHOT SE IL RADAR È OSCURATO"):
     uploaded_files = st.file_uploader("UPLOAD:", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
-    if st.button("🏁 ANALISI MANUALE"):
-        st.write("Esecuzione analisi manuale basata su screenshot...")
+    if st.button("🏁 ESEGUI ANALISI MANUALE"):
+        if uploaded_files:
+            with st.spinner("SCANSIONE PARTICELLE..."):
+                images = [Image.open(f) for f in uploaded_files]
+                res_v = client_gemini.models.generate_content(model='gemini-2.0-flash', contents=[f"ESTRAI DATI MOLECOLARI PER {nazione}"] + images)
+                st.write(res_v.text)
