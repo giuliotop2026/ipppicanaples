@@ -1,6 +1,7 @@
 streamlit
-google-genai
-openai
-Pillow
+selenium
+webdriver-manager
 beautifulsoup4
-requests
+openai
+google-genai
+Pillow
