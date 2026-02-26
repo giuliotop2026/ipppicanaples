@@ -1,7 +1,6 @@
 streamlit
+undetected-chromedriver
 selenium
-webdriver-manager
-beautifulsoup4
-openai
 google-genai
+openai
 Pillow
