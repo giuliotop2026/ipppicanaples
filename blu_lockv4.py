@@ -41,8 +41,8 @@ except KeyError:
     st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI (GEMINI_API_KEY)!")
     st.stop()
 
-st.title("🤠 SNIPER 85.0: THE DYNAMIC EXPERT")
-st.markdown("### *'Visione Molecolare. Filtri Ippodromo Attivi. Gloria Totale.'*")
+st.title("🤠 SNIPER 100.0: THE OMNISCIENT SHERIFF")
+st.markdown("### *'Filtro Cristallo Anti-Squalifica. Visione Totale.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
@@ -59,39 +59,38 @@ if uploaded_files:
         with cols[i]:
             st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (PROTOCOLLO ESPERTO DINAMICO) ---
+# --- 4. IL GRILLETTO (PROTOCOLLO ESPERTO DINAMICO + CRISTALLO 2.0) ---
 if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
     if not uploaded_files:
         st.warning("CARICA I MANIFESTI, COMANDANTE!")
     else:
-        with st.spinner("LO SCERIFFO STA ANALIZZANDO LA MATRICE... ⏳"):
+        with st.spinner("LO SCERIFFO STA SCANSIONANDO L'ABISSO... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
                 prompt = f"""
-                SEI L'ESPERTO DINAMICO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO.
+                SEI L'ESPERTO DINAMICO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
                 TERRITORIO: {nazione}
 
-                FASE 1: ESTRAZIONE CINETICA
-                - Identifica l'IPPODROMO e la TIPOLOGIA DI GARA (Maiden, Nastri, Handicap, Piano).
-                - Estrai per ogni cavallo: Numero, Nome, RT (o Rec), GG, SEQ, Quota e Nastro (0m, 20m, etc.).
+                FASE 1: ESTRAZIONE CINETICA (VISION)
+                - Identifica l'IPPODROMO e la TIPOLOGIA DI GARA (Maiden, Nastri, Trotto, Galoppo).
+                - Nel TROTTO, leggi 'REC' (Record) come valore tecnico. [cite: 2026-02-25]
+                - Estrai per ogni riga: Numero, Nome, RT/Rec, GG, SEQ, Quota e Metri.
 
-                FASE 2: APPLICAZIONE FILTRI DINAMICI (PROTOCOLLO GRANITO 3.0)
-                1. MURO FORMA: SEQ inizia con 1 o 2.
-                2. FILTRO RUGGINE: GG < 45. (Eccezione: 'Iron Lung' se RT è +5 rispetto al secondo).
-                3. PATCH MAIDEN: Se Maiden, accetta SOLO SEQ 1 e GG < 15.
-                4. BIAS NASTRI: Priorità assoluta alla 'Lepre' (0m) se ha passato i filtri forma.
-                5. SENTINELLA QUOTE: Se Quota > 15.00, richiede RT superiore di almeno 5 punti per stabilità.
-                6. FILTRI LOCALI:
-                   - NAPOLI: Tolleranza SEQ '4' se RT è dominante.
-                   - SVEZIA: Tolleranza Zero per RP, RI, DAI nelle ultime 2 uscite.
-                   - SOUTHWELL: Ignora favoriti < 3.00.
+                FASE 2: APPLICAZIONE FILTRI (GRANITO 3.0 + CRISTALLO 2.0)
+                1. MURO FORMA: SEQ deve iniziare con 1 o 2. [cite: 2026-02-25]
+                2. FILTRO CRISTALLO (ANTI-SQUALIFICA): 
+                   - SE L'ULTIMO ESITO È RP, RI, DAI, SCARTA IMMEDIATAMENTE (INSTABILITÀ). [cite: 2026-02-15]
+                   - CONTA LE SQUALIFICHE (RP, RI, DAI) NELLA SEQUENZA DI 5 GARE. SE SONO >= 2, IL CAVALLO È RADIOATTIVO. ELIMINA. [cite: 2026-02-20]
+                3. FILTRO RUGGINE: GG < 45. (Eccezione: 'Iron Lung' se RT/Rec è dominante). [cite: 2026-02-25]
+                4. SENTINELLA QUOTE: Se Quota > 15.00, richiede RT/Rec superiore di almeno 5 punti. [cite: 2026-02-20]
+                5. BIAS NASTRI: Priorità alla 'Lepre' (0m) se pulita. [cite: 2026-02-24]
 
                 FASE 3: REFERTO FINALE
                 '🌍 BERSAGLIO: [NAZIONE] - [IPPODROMO] - [TIPO GARA]'
-                '🏆 SACRO GRAAL: PARTICELLA [NUMERO #] - [NOME]'
-                'PIANO DI CORSA: [Dettaglio su RT, GG, SEQ e perché schiaccia il favorito].'
-                'BULLONE SERRATO: [Conferma requisiti specifici ippodromo/nazione].'
+                '🏆 SACRO GRAAL INDIVIDUATO: PARTICELLA [NUMERO #] - [NOME]'
+                'ANALISI: [Dettaglio su RT/Rec, GG e assenza di squalifiche ripetute].'
+                'BULLONE SERRATO: [Conferma stabilità andatura e requisiti].'
                 
                 SE NON C'È PERFEZIONE: '🌵 NESSUNA PEPITA IN QUESTO FIUME.'
                 """
