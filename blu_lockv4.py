@@ -3,101 +3,115 @@ from google import genai
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- GRAFICA ROYAL TURF 2.0 (STILE CANTIERE IPPICO) ---
+# --- 1. GRAFICA GOLDEN EYE (CONTRASTO MASSIMO) ---
 st.markdown("""
     <style>
     .stApp { 
-        background-color: #0e2a1d; 
-        background-image: linear-gradient(180deg, #123524 0%, #071a10 100%);
-        color: #f0f4f1; 
+        background-color: #05140b; 
+        background-image: radial-gradient(circle, #0e2a1d 0%, #05140b 100%);
+        color: #ffffff; 
         font-family: 'Courier New', Courier, monospace; 
     }
     h1, h2, h3 { 
-        color: #d4af37 !important; 
+        color: #ffd700 !important; 
         text-transform: uppercase; 
         font-weight: 900; 
-        text-shadow: 2px 2px 5px #000;
+        text-shadow: 3px 3px 6px #000;
+        border-bottom: 2px solid #ffd700;
+    }
+    /* Miglioramento leggibilità testo nelle info */
+    .stAlert p {
+        color: #ffffff !important;
+        font-size: 1.2rem !important;
+        line-height: 1.6 !important;
+        text-shadow: 1px 1px 2px #000;
     }
     .stButton>button { 
-        background-color: #5d4037 !important; 
+        background-color: #8b0000 !important; 
         color: #ffffff !important; 
-        border: 3px solid #d4af37 !important; 
-        font-weight: bold; font-size: 1.3em; text-transform: uppercase;
-        width: 100%; border-radius: 12px; height: 3em;
-        box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
+        border: 2px solid #ffd700 !important; 
+        font-weight: bold; font-size: 1.4em; text-transform: uppercase;
+        border-radius: 0px; height: 3.5em;
+        box-shadow: 0px 5px 15px rgba(0,0,0,0.7);
     }
-    .stButton>button:hover { background-color: #d4af37 !important; color: #0e2a1d !important; }
-    div[data-testid="stAlert"] {
-        background-color: #071a10 !important;
-        border: 2px solid #d4af37 !important;
-        border-left: 10px solid #d4af37 !important;
-        border-radius: 8px;
-    }
+    .stButton>button:hover { background-color: #ffd700 !important; color: #000 !important; }
     </style>
     """, unsafe_allow_html=True)
 
-def play_beep():
-    beep_html = '<audio autoplay><source src="https://www.myinstants.com/media/sounds/boxing-bell.mp3" type="audio/mpeg"></audio>'
-    components.html(beep_html, height=0, width=0)
+# --- 2. PROTOCOLLO SONORO (GONG DELLA VITTORIA) ---
+def play_victory_sound():
+    # Suono di campana da pugilato per annunciare il Sacro Graal
+    audio_url = "https://www.myinstants.com/media/sounds/boxing-bell.mp3"
+    sound_html = f"""
+        <audio autoplay>
+            <source src="{audio_url}" type="audio/mpeg">
+        </audio>
+    """
+    components.html(sound_html, height=0, width=0)
 
-# 2. CASSAFORTE API (MUNIZIONI GEMINI)
+# --- 3. CASSAFORTE API ---
 try:
     client_gemini = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 except KeyError:
     st.error("☠️ MUNIZIONI MANCANTI (GEMINI_API_KEY)!")
     st.stop()
 
-st.title("🏇 SNIPER 39.1: THE ANALYTIC BEAST")
-st.markdown("### *'Cervello Gemini potenziato. Analisi molecolare attiva. Zero costi.'*")
+st.title("🏇 SNIPER 40.0: GOLDEN EYE")
+st.markdown("### *'Contrasto sbloccato. Radar acustico attivo. Mappatura Rec/RT integrata.'*")
 
-nazione = st.selectbox("🌍 SELEZIONA IL TERRITORIO DI CACCIA:", [
-    "UK", "IRLANDA", "USA", "ITALIA", "FRANCIA", "GERMANIA", "SVEZIA", "SUD AFRICA", "AUSTRALIA"
+nazione = st.selectbox("🌍 TERRITORIO DI CACCIA:", [
+    "UK", "IRLANDA", "USA", "ITALIA", "FRANCIA", "SUD AFRICA", "AUSTRALIA"
 ])
 
-uploaded_files = st.file_uploader("📸 CARICA GLI SCREENSHOT DEL CAVEAU:", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
+uploaded_files = st.file_uploader("📸 CARICA GLI SCREENSHOT (TABELLA STATISTICHE):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 if st.button("🏁 ESEGUI PROTOCOLO GRANITO 3.0"):
     if not uploaded_files:
         st.warning("CARICA I POSTER, COMANDANTE!")
     else:
-        with st.spinner("GEMINI STA ANALIZZANDO L'ABISSO CON LOGICA PERPLEXITY... ⏳"):
+        with st.spinner("SCANSIONE MOLECOLARE IN CORSO... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
                 
-                # PROMPT POTENZIATO: LOGICA DI FERRO [cite: 2026-02-25]
+                # PROMPT CALIBRATO SULLA MATRICE SNAI
                 prompt = f"""
-                SISTEMA: PROTOCOLO GRANITO 3.0 - ANALISI MOLECOLARE.
-                RUOLO: ANALISTA IPPICO SENIOR (PHILOSOPHY: BLUE LOCK). [cite: 2026-01-19]
+                SISTEMA: PROTOCOLO GRANITO 3.0 - ANALISI IPPICA SENIOR. [cite: 2026-02-25]
                 SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
                 NAZIONE: {nazione}
 
-                FASE 1: SCANSIONE CINETICA
-                Identifica ogni particella (#). Estrai con precisione chirurgica:
+                FASE 1: ESTRAZIONE (Cerca la tabella 'STATISTICHE')
+                Identifica ogni riga della tabella. Mappa i dati così:
                 - # [NUMERO]
-                - RT [RATING TECNICO]
-                - GG [GIORNI DALL'ULTIMA CORSA]
-                - SEQ [SEQUENZA RISULTATI - IL PRIMO A SINISTRA È IL PIÙ RECENTE]
+                - NOME CAVALLO (Dalla colonna 'Partente')
+                - RT [Dalla colonna 'Rec.']
+                - GG [Dalla colonna 'GG']
+                - SEQ [Dalla colonna 'Ultimi Arrivi']
 
-                FASE 2: FILTRI INVIOLABILI (PROCESSO DI ELIMINAZIONE) [cite: 2026-02-25]
-                1. MURO DELLA FORMA: Scarta chi non ha 1 o 2 come primo numero a sinistra.
-                2. FILTRO RUGGINE: Scarta chi ha GG > 45 (o dati mancanti).
-                3. PARAMETRO MAIDEN: Se la corsa è Maiden, accetta solo SEQ 1 e GG < 15.
+                FASE 2: FILTRI DI ELIMINAZIONE 15.15 [cite: 2026-02-25]
+                1. MURO FORMA: Il primo quadratino a sinistra in 'Ultimi Arrivi' deve essere 1 o 2.
+                2. FILTRO RUGGINE: GG deve essere < 45. Se è un DEBUTTANTE (N/A), scarta.
+                3. SE MAIDEN: Accetta solo SEQ 1 e GG < 15.
 
-                FASE 3: ANALISI DENSITÀ TECNICA (IL SECONDO MIGLIORE) [cite: 2026-02-20]
-                Ignora le quote. Cerca chi ha "Polmoni d'Acciaio". Identifica il vincitore nascosto che schiaccia il favorito di carta.
+                FASE 3: DENSITÀ TECNICA (POLMONI D'ACCIAIO) [cite: 2026-02-20]
+                Confronta l'RT (Rec.) dei superstiti. Identifica il vincitore nascosto.
 
                 REFERTO FINALE:
-                '🏆 SACRO GRAAL INDIVIDUATO: PARTICELLA [NUMERO #]' (OPPURE 'NESSUN SACRO GRAAL: INSTABILITÀ')
-                'PIANO DI CORSA: [ANALISI DETTAGLIATA DELLA SUPERIORITÀ TECNICA].' [cite: 2026-02-18]
-                'BULLONE SERRATO: [CONFERMA GG E SEQ INVIOLABILI].'
+                '🏆 SACRO GRAAL INDIVIDUATO: PARTICELLA [NUMERO #] - [NOME]' (O 'NESSUN SACRO GRAAL')
+                'PIANO DI CORSA: [ANALISI DETTAGLIATA SU GG E DENSITÀ TECNICA RT].' [cite: 2026-02-18]
+                'BULLONE SERRATO: [CONFERMA REQUISITI SUPERATI].'
                 """
                 
                 res = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt] + images)
                 sentenza = res.text
                 
+                # Visualizzazione con stile ad alto contrasto
                 st.info(sentenza)
+                
+                # TRIGGER SONORO E VISIVO
                 if "NESSUN" not in sentenza.upper() and "GRAAL" in sentenza.upper():
-                    play_beep()
+                    play_victory_sound()
                     st.balloons()
+                    st.success("✅ OBIETTIVO IDENTIFICATO. PROCEDERE AL MERCATO.")
+                    
             except Exception as e:
                 st.error(f"☠️ ERRORE DI SISTEMA: {e}")
