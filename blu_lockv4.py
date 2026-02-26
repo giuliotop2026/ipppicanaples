@@ -3,7 +3,7 @@ from google import genai
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- 1. GRAFICA WESTERN CHIARA (MASSIMA LEGGIBILITÀ) ---
+# --- 1. GRAFICA WESTERN CHIARA (MASSIMA CONCENTRAZIONE) ---
 st.markdown("""
     <style>
     .stApp { 
@@ -35,15 +35,15 @@ def play_victory_sound():
     audio_url = "https://www.myinstants.com/media/sounds/boxing-bell.mp3"
     components.html(f'<audio autoplay><source src="{audio_url}" type="audio/mpeg"></audio>', height=0, width=0)
 
-# --- 3. CONNESSIONE A GEMINI ---
+# --- 3. CONNESSIONE A GEMINI (MOTORE BLINDATO) ---
 try:
     client_gemini = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 except KeyError:
-    st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI (GEMINI_API_KEY)!")
+    st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI (GEMINI_API_KEY) NEI SECRETS!")
     st.stop()
 
-st.title("🤠 SALOON 'EL GRANITO'")
-st.markdown("### *'Tutti i filtri attivi: Nastri, Maiden e Polmoni d'Acciaio.'*")
+st.title("🤠 SALOON 'EL GRANITO' 48.0")
+st.markdown("### *'Gabbia di lettura attiva. Zero errori sulle colonne. Vittoria totale.'*")
 
 # --- 4. BACHECA DEI RICERCATI ---
 nazione = st.selectbox("🗺️ TERRITORIO DI FRONTIERA:", [
@@ -60,50 +60,54 @@ if uploaded_files:
         with cols[i]:
             st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 5. IL GRILLETTO (PROTOCOLLO PERFETTO 15.15) ---
+# --- 5. IL GRILLETTO (PROTOCOLLO INFALLIBILE) ---
 if st.button("🐎 SCATENA IL DUELLO (ANALIZZA)"):
     if not uploaded_files:
         st.warning("EHI COMPADRE, CARICA I MANIFESTI PRIMA DI SPARARE!")
     else:
-        with st.spinner("LO SCERIFFO GEMINI APPLICA TUTTE LE LEGGI... ⏳"):
+        with st.spinner("LO SCERIFFO GEMINI STA DECIFRANDO LA MATRICE... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
-                # PROMPT ASSOLUTO: TUTTI I FILTRI DEL VECCHIO CODICE
+                # PROMPT ASSOLUTO: GABBIA DI LETTURA + FILTRI GRANITO 3.0
                 prompt = f"""
                 SEI LO SCERIFFO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO.
                 TERRITORIO: {nazione}
 
-                FASE 1: IDENTIFICAZIONE BERSAGLI E TIPO DI CORSA
-                Analizza l'immagine e capisci se la corsa è MAIDEN/DEBUTTANTI, a NASTRI (presenza di metri come 0m, 20m) o PIANO/NORMALE.
-                Per ogni cavallo estrai: Numero, Nome, RT (o Rec), GG, SEQ (Ultimi Arrivi - il primo a sinistra è l'ultimo risultato), Nastro (se applicabile).
-                Se un dato è mancante, consideralo 'N/D' e il cavallo viene automaticamente SCARTATO.
+                FASE 1: GABBIA DI LETTURA (ANTI-ERRORE CRITICO)
+                Devi leggere la tabella in modo chirurgico. NON SCAMBIARE LE COLONNE.
+                L'ordine delle colonne è solitamente: Numero | Partente | Peso | Rt. | GG | Ultimi Arrivi.
+                - PESO: IGNORALO TOTALMENTE. NON È L'RT.
+                - RT (Rating/Densità): Estrai QUESTO numero. È fondamentale.
+                - GG (Giorni): Estrai il numero esatto dei giorni.
+                - SEQ (Ultimi Arrivi): Il primo numero a SINISTRA è l'ultima corsa.
+                Se un cavallo ha N/D su GG o RT, viene eliminato istantaneamente.
 
-                FASE 2: LE LEGGI DELLA FRONTIERA (GRANITO 3.0)
+                FASE 2: LE LEGGI DELLA FRONTIERA (FILTRI)
                 
-                REGOLE PER CORSE NORMALI O A NASTRI:
-                1. MURO FORMA: SEQ deve iniziare con 1 o 2. [cite: 2026-02-25]
-                2. FILTRO RUGGINE: GG < 45. [cite: 2026-02-25]
-                3. BIAS NASTRI: Se la corsa è a nastri, dai priorità assoluta alla "lepre" (0m) se ha passato i filtri 1 e 2.
-                4. POLMONI D'ACCIAIO: Cerca il secondo migliore per densità tecnica (RT) ignorando le quote. Il valore RT DEVE essere dominante. [cite: 2026-02-20]
+                REGOLE CORSE NORMALI:
+                1. MURO FORMA: SEQ deve iniziare SOLO con 1 o 2.
+                2. FILTRO RUGGINE: GG DEVE essere INFERIORE a 45.
+                3. POLMONI D'ACCIAIO (RT): Tra chi ha superato i filtri, identifica il cavallo con la migliore Densità Tecnica (RT) reale, ignorando le quote.
 
                 PROTOCOLLO SPECIALE MAIDEN / DEBUTTANTI:
-                1. MURO FORMA: Accetta SOLO '1'. Il '2' è instabile.
+                Se leggi 'MAIDEN' o 'DEBUTTANTI':
+                1. MURO FORMA: Accetta SOLO '1'. (Scarta il '2').
                 2. FILTRO RUGGINE: Accetta SOLO GG < 15.
-                3. GAP RT: L'RT deve essere almeno 5 punti superiore al secondo.
+                3. GAP RT: L'RT deve essere almeno 5 punti superiore agli altri.
 
-                FORMATO OUTPUT RICHIESTO (SII SPIETATO E BREVE):
+                FASE 3: REFERTO FINALE (FORMATO OBBLIGATORIO)
                 
                 '🔍 SCANSIONE SUPERSTITI:'
-                - [NOME CAVALLO]: PASSATO (TIPO CORSA: [Maiden/Nastri/Normale], GG [X], SEQ [Y], RT [Z], NASTRO [Metri se applicabile])
-                (Elenca SOLO chi supera tutti i filtri. È OBBLIGATORIO indicare l'RT).
+                - [NOME CAVALLO]: (GG: [Valore], SEQ: [Valore], RT: [Valore])
+                (Elenca QUI SOLO chi ha passato i filtri MURO FORMA e RUGGINE. Se non passano, non elencarli).
 
-                SE C'È UN SUPERSTITE CON VERI POLMONI D'ACCIAIO:
+                SE C'È UN VINCITORE CON POLMONI D'ACCIAIO:
                 '💰 TAGLIA RISCOSSA: PISTOLERO [NUMERO] - [NOME]'
-                'BULLONE SERRATO: [Spiega in una riga perché il suo RT/Densità e i filtri lo rendono il Sacro Graal].'
+                'BULLONE SERRATO: [Spiega in una riga perché il suo RT e la sua forma lo rendono il vero vincitore].'
                 
-                SE NESSUNO PASSA I FILTRI O L'RT È TROPPO DEBOLE:
-                '🌵 NESSUNA PEPITA D'ORO IN QUESTO FIUME. NESSUNO HA I REQUISITI DI CEMENTO O I POLMONI D'ACCIAIO.'
+                SE NESSUNO PASSA O SE MANCANO I REQUISITI TECNICI:
+                '🌵 NESSUNA PEPITA D'ORO IN QUESTO FIUME. I POLMONI D'ACCIAIO MANCANO O LA RUGGINE È TROPPA.'
                 """
 
                 res = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt] + images)
