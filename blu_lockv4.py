@@ -1,11 +1,9 @@
 import streamlit as st
 from google import genai
 from PIL import Image
-import base64
-import io
 import streamlit.components.v1 as components
 
-# --- 1. GRAFICA WESTERN SALOON (LIGHT THEME) ---
+# --- 1. GRAFICA WESTERN CHIARA (SALOON MEZZOGIORNO DI FUOCO) ---
 st.markdown("""
     <style>
     .stApp { 
@@ -21,32 +19,33 @@ st.markdown("""
         text-shadow: 1px 1px 2px #cda26e;
         border-bottom: 3px solid #5a3a22;
     }
-    .stAlert p { color: #3d2b1f !important; font-size: 1.4rem !important; font-weight: bold; }
+    .stAlert p { color: #3d2b1f !important; font-size: 1.3rem !important; font-weight: bold; }
     .stButton>button { 
         background-color: #a0522d !important; color: #fff8dc !important; 
-        border: 3px solid #5a3a22 !important; font-weight: bold; font-size: 1.6em; 
+        border: 3px solid #5a3a22 !important; font-weight: bold; font-size: 1.5em; 
         width: 100%; border-radius: 8px; height: 3.5em;
-        box-shadow: 4px 4px 10px rgba(0,0,0,0.3);
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
     }
-    .stButton>button:hover { background-color: #ffd700 !important; color: #0e2a1d !important; }
+    .stButton>button:hover { background-color: #8b4513 !important; color: #ffd700 !important; }
     </style>
     """, unsafe_allow_html=True)
 
-def play_victory_bell():
+# --- 2. RADAR ACUSTICO ---
+def play_victory_sound():
     audio_url = "https://www.myinstants.com/media/sounds/boxing-bell.mp3"
     components.html(f'<audio autoplay><source src="{audio_url}" type="audio/mpeg"></audio>', height=0, width=0)
 
-# --- 2. CONNESSIONE AL CERVELLO GEMINI ---
+# --- 3. CONNESSIONE AL CERVELLO GEMINI ---
 try:
     client_gemini = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 except KeyError:
-    st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI (GEMINI_API_KEY)!")
+    st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI NEI SECRETS (GEMINI_API_KEY)!")
     st.stop()
 
-st.title("🤠 SNIPER 50.0: ORO PURO")
-st.markdown("### *'Protocollo Piazzato Blindato. Caccia all'Oro Senza Errori.'*")
+st.title("🤠 SNIPER 51.0: IRON LUNG")
+st.markdown("### *'Protocollo Granito 3.0 Evoluto. Densità Tecnica Totale.'*")
 
-# --- 3. BACHECA DEI RICERCATI ---
+# --- 4. BACHECA DEI RICERCATI ---
 nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
     "UK", "IRLANDA", "USA", "ITALIA", "FRANCIA", "GERMANIA", 
     "SVEZIA", "CILE", "BRASILE", "SUD AFRICA", "AUSTRALIA", "GIAPPONE"
@@ -61,10 +60,10 @@ if uploaded_files:
         with cols[i]:
             st.image(file, caption=f"Manifesto #{i+1}", use_container_width=True)
 
-# --- 4. IL GRILLETTO (ALGORITMO INFALLIBILE) ---
+# --- 5. IL GRILLETTO (PROTOCOLLO INFALLIBILE) ---
 if st.button("🐎 SCATENA IL DUELLO (TROVA IL VINCITORE)"):
     if not uploaded_files:
-        st.warning("CARICA I MANIFESTI, COMANDANTE!")
+        st.warning("EHI COMPADRE, CARICA I MANIFESTI!")
     else:
         with st.spinner("LO SCERIFFO STA SCANSIONANDO L'ABISSO... ⏳"):
             try:
@@ -72,26 +71,25 @@ if st.button("🐎 SCATENA IL DUELLO (TROVA IL VINCITORE)"):
 
                 prompt = f"""
                 SEI LO SCERIFFO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-19, 2026-01-20]
-                NAZIONE: {nazione}
+                TERRITORIO: {nazione}
 
                 FASE 1: GABBIA DI LETTURA
-                Analizza chirurgicamente la tabella SNAI. 
-                COLONNE: N., St., Partente, Peso, Rt., GG, Ultimi Arrivi.
-                NON SCAMBIARE PESO E RT.
+                Identifica: Numero, Nome, RT (Rating/Rec), GG (Giorni), SEQ (Ultimi Arrivi).
+                NON SCAMBIARE IL PESO CON L'RT.
 
-                FASE 2: PROTOCOLLO PIAZZATO BLINDATO [cite: 2026-02-25]
-                1. MURO FORMA: Identifica chi ha 1 o 2 come ultimo risultato. [cite: 2026-02-25]
-                2. FILTRO RUGGINE: Controlla GG < 45. [cite: 2026-02-25]
-                3. POLMONI D'ACCIAIO: Tra i partenti, identifica il cavallo con la Densità Tecnica (RT) più solida e regolarità nella sequenza. Cerca il 'Secondo Migliore' che garantisce il piazzamento blindato schiacciando il favorito instabile. [cite: 2026-02-20]
+                FASE 2: LEGGI DELLA FRONTIERA (GRANITO 3.0 EVOLUTO)
+                1. MURO FORMA: Cerca chi ha 1 o 2 come ultimo esito. [cite: 2026-02-25]
+                2. FILTRO RUGGINE: Preferenza GG < 45. [cite: 2026-02-25]
+                3. ECCEZIONE "POLMONI D'ACCIAIO": Se un cavallo ha un RT (Rating) molto superiore agli altri, tollera GG fino a 90 (come successo con la numero 7 a Laval). La densità tecnica batte la ruggine temporanea. [cite: 2026-02-20]
+                4. IL SECONDO MIGLIORE: Identifica il cavallo che garantisce il piazzamento (1-2-3) schiacciando il favorito instabile. [cite: 2026-02-20]
 
-                FASE 3: REFERTO FINALE
-                NON FARE DISCORSI LUNGHI. 
-                VOGLIO IL NOME E IL NUMERO DEL VINCITORE NASCOSTO.
-                
-                REFERTO:
+                REFERTO FINALE (SINTETICO):
                 '💰 TAGLIA RISCOSSA: PISTOLERO [NUMERO #] - [NOME]'
-                'COLPO SICURO: [Breve spiegazione tecnica: RT vs Forma].'
-                'BULLONE SERRATO: [Conferma GG e SEQ].'
+                'MOTIVO: [Analisi su RT e Forma recente].'
+                'BULLONE SERRATO: [Dati GG e SEQ].'
+                
+                SE NESSUNO HA I REQUISITI MINIMI:
+                '🌵 NESSUNA PEPITA IN QUESTO FIUME.'
                 """
 
                 res = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt] + images)
@@ -99,6 +97,6 @@ if st.button("🐎 SCATENA IL DUELLO (TROVA IL VINCITORE)"):
                 
                 st.info(sentenza)
                 if "TAGLIA" in sentenza.upper():
-                    play_victory_bell(); st.balloons()
+                    play_victory_sound(); st.balloons()
             except Exception as e:
                 st.error(f"☠️ SERPENTE NELLO STIVALE: {e}")
