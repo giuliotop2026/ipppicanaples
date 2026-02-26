@@ -41,8 +41,8 @@ except KeyError:
     st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI (GEMINI_API_KEY)!")
     st.stop()
 
-st.title("🤠 SNIPER 103.0: CAZZIMMA SHERIFF")
-st.markdown("### *'Campo Ridotto. Polmoni d'Acciaio. Zero Errori.'*")
+st.title("🤠 SNIPER 103.1: UNIVERSAL CAZZIMMA")
+st.markdown("### *'Lettura Universale. Campo Ridotto. Zero Errori.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
@@ -68,19 +68,19 @@ if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
-                # IL PROMPT TATTICO SUPREMO 103.0 [cite: 2026-02-18, 2026-02-20]
+                # IL PROMPT TATTICO SUPREMO 103.1 [cite: 2026-02-18, 2026-02-20]
                 prompt = f"""
                 SEI L'ARCHITETTO TATTICO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO.
                 TERRITORIO: {nazione}
 
-                FASE 1: ESTRAZIONE CINETICA PERFETTA
+                FASE 1: ESTRAZIONE CINETICA PERFETTA E UNIVERSALE
                 - Identifica l'IPPODROMO, la DISTANZA, la TIPOLOGIA DI GARA (Maiden, Nastri, Handicap, Trotto, Galoppo) e il NUMERO TOTALE DI PARTENTI.
                 - Estrai per ogni riga: Numero, Nome, NASTRO/METRI (se presente), RT/Rec, GG, SEQ, Quota. ESTRAI ANCHE LE INFORMAZIONI SUI CAMBI EQUIPAGGIAMENTO (es. "paraocchi") DALLA SEZIONE SIGNPOSTS O COMMENTI.
-                - LETTURA SEQ (CRITICA): Fai ESTREMA attenzione alla lettura della sequenza. Se c'è scritto "8-8-7-2-2", significa che gli ultimi due risultati sono secondi posti. Non sbagliare l'estrazione del dato più recente!
+                - REGOLA LETTURA PIATTAFORMA (UNIVERSALE E CRITICA): Indipendentemente dalla nazione della corsa, se il testo usa il formato testuale (es. 8-8-7-2-2), l'ultimo risultato (il più recente) è A DESTRA. Se leggi una tabella con i quadrati colorati, l'ultimo risultato (il più recente) è IL PRIMO A SINISTRA. Applica questa regola sempre, per non sbagliare l'estrazione della forma recente!
                 - IGNORA LE QUOTE COME INDICATORE DI FORZA. I bookmaker creano favoriti finti che sono particelle instabili. Noi cerchiamo i "Polmoni d'Acciaio" e la "Cazzimma" [cite: 2026-02-18, 2026-02-20].
 
                 FASE 2: APPLICAZIONE FILTRI (IL PROTOCOLLO DEFINITIVO)
-                1. MURO FORMA: L'ultimo risultato valido (effettivo) deve essere 1 o 2.
+                1. MURO FORMA: L'ultimo risultato valido (effettivo, letto con la Regola Universale) deve essere 1 o 2.
                 2. CRISTALLO 2.1 (ANTI-SQUALIFICA): Scarta SOLO se le squalifiche (RP, RI, DAI, FE) sono nelle DUE gare più recenti.
                 3. FILTRO RUGGINE: GG < 45.
                 4. CUORE IMPAVIDO (CONTINUITÀ REALE): Analizza le ultime 3 gare: DEVE AVERE ALMENO DUE piazzamenti a podio (1, 2 o 3). Nessun fuoco di paglia.
@@ -95,7 +95,7 @@ if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
                 '🌍 BERSAGLIO: [NAZIONE] - [IPPODROMO] - [TIPO GARA] - PARTENTI: [NUMERO]'
                 
                 '🔍 SCANSIONE SUPERSTITI:'
-                - PARTICELLA [NUMERO]: PASSATO (GG [X], SEQ [Y], RT/REC [Z], [NOTE SU CAZZIMMA, EQUIPAGGIAMENTO O BARRICATA])
+                - PARTICELLA [NUMERO]: PASSATO (GG [X], SEQ [Y - indicare lettura corretta], RT/REC [Z], [NOTE SU CAZZIMMA, EQUIPAGGIAMENTO O BARRICATA])
                 (Elenca solo i superstiti che passano TUTTE le fasi).
 
                 SE C'È UN VERO SACRO GRAAL TATTICO:
