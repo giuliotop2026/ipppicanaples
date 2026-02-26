@@ -41,8 +41,8 @@ except KeyError:
     st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI (GEMINI_API_KEY)!")
     st.stop()
 
-st.title("🤠 SNIPER 101.1: ITALIAN BOUNTY HUNTER")
-st.markdown("### *'Legge del Cronometro. Lettura SEQ Inversa. Zero Errori.'*")
+st.title("🤠 SNIPER 102.0: TACTICAL SHERIFF")
+st.markdown("### *'Legge Barricata. Cuore Impavido. Zero Errori.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
@@ -59,51 +59,53 @@ if uploaded_files:
         with cols[i]:
             st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (LA FUSIONE TOTALE + REGOLE ITALIA/TROTTO) ---
+# --- 4. IL GRILLETTO (LA FUSIONE TATTICA TOTALE) ---
 if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
     if not uploaded_files:
         st.warning("CARICA I MANIFESTI, COMANDANTE!")
     else:
-        with st.spinner("LO SCERIFFO STA INCROCIANDO TUTTE LE LEGGI... ⏳"):
+        with st.spinner("LO SCERIFFO STA INCROCIANDO MATEMATICA E TATTICA DI GARA... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
-                # IL PROMPT SUPREMO AGGIORNATO [cite: 2026-01-20, 2026-02-25]
+                # IL PROMPT TATTICO SUPREMO [cite: 2026-01-20, 2026-02-25]
                 prompt = f"""
-                SEI L'ARCHITETTO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-19, 2026-01-20]
+                SEI L'ARCHITETTO TATTICO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-19, 2026-01-20]
                 TERRITORIO: {nazione}
 
                 FASE 1: ESTRAZIONE CINETICA
-                - Identifica l'IPPODROMO, la DISTANZA e la TIPOLOGIA DI GARA (Maiden, Nastri, Handicap, Trotto, Galoppo, ecc.).
+                - Identifica l'IPPODROMO, la DISTANZA e la TIPOLOGIA DI GARA (Maiden, Nastri, Handicap, Trotto, Galoppo).
                 - Estrai per ogni riga: Numero, Nome, NASTRO/METRI (se presente), RT/Rec, GG, SEQ, Quota.
-                - REGOLA REC TROTTO (CRITICA): Nel TROTTO, il valore 'REC' indica i minuti/secondi al chilometro. IL NUMERO PIÙ BASSO È IL MIGLIORE (es. 11.4 batte 12.4).
-                - REGOLA SEQ ITALIANA (CRITICA): Se leggi le stringhe di testo nei bookmaker italiani (es. 2-3-2-9-6), il risultato PIÙ RECENTE è l'ultimo numero a DESTRA. Se invece leggi la tabella con i quadratini colorati, il risultato PIÙ RECENTE è il primo a SINISTRA. Adatta la lettura del 'Muro Forma' di conseguenza.
+                - REGOLA REC TROTTO (CRITICA): Nel TROTTO, il valore 'REC' indica i minuti/secondi al km. IL NUMERO PIÙ BASSO È IL MIGLIORE (es. 11.4 batte 12.4).
+                - REGOLA SEQ ITALIANA (CRITICA): Nei siti italiani (stringhe di testo es. 2-3-2-9-6), il risultato PIÙ RECENTE è l'ultimo numero a DESTRA. Nelle tabelle a colori, è il primo a SINISTRA.
 
-                FASE 2: APPLICAZIONE FILTRI (IL PROTOCOLLO DEFINITIVO)
-                1. MURO FORMA: Il risultato PIÙ RECENTE (calcolato secondo la Regola SEQ) deve essere 1 o 2. [cite: 2026-02-25]
-                2. CRISTALLO 2.1 (ANTI-SQUALIFICA): Scarta SOLO se le squalifiche (RP, RI, DAI, FE, CD) sono nelle DUE gare più recenti. Le vecchie squalifiche sono perdonate se ha superato il Muro Forma.
+                FASE 2: APPLICAZIONE FILTRI (IL PROTOCOLLO TATTICO DEFINITIVO)
+                1. MURO FORMA: Il risultato PIÙ RECENTE deve essere 1 o 2. [cite: 2026-02-25]
+                2. CRISTALLO 2.1 (ANTI-SQUALIFICA): Scarta SOLO se le squalifiche (RP, RI, DAI, FE, CD) sono nelle DUE gare più recenti.
                 3. FILTRO RUGGINE: GG < 45. [cite: 2026-02-25]
-                4. POLMONI D'ACCIAIO & MOTORE CIECO: Identifica il miglior valore tecnico (RT/Rec rispettando la Regola Rec Trotto). Se "N/A" ma il cavallo ha VINTO (SEQ recente = 1) ed è fresco (GG < 45), passa per manifesta forma in pista. Ignora le quote. [cite: 2026-02-20]
+                4. CUORE IMPAVIDO (CONTINUITÀ REALE): Analizza le 3 gare più recenti della SEQ. Il cavallo DEVE AVERE ALMENO DUE piazzamenti a podio (1, 2 o 3) in quelle 3 gare. Se ha vinto l'ultima ma le due precedenti sono pessime (es. 1-8-9 o 1-RP-0), SCARTALO come "fuoco di paglia". Vogliamo regolarità. [cite: 2026-02-20]
+                5. POLMONI D'ACCIAIO & MOTORE CIECO: Identifica il miglior valore tecnico (RT/Rec). Se "N/A" ma ha vinto (SEQ recente = 1) ed è fresco (GG < 45), passa per manifesta forma in pista. Ignora le quote. [cite: 2026-02-20]
                 
                 PROTOCOLLI SPECIALI (PRIORITÀ ASSOLUTA):
-                5. PATCH ANTI-MAIDEN: SE LA CORSA È "MAIDEN", ACCETTA SOLO SEQ RECENTE "1" (il "2" si scarta). ACCETTA SOLO GG < 15. IL GAP RT DEVE ESSERE >= 5 SUL SECONDO. Se fallisce, scrivi 'NESSUN SACRO GRAAL: INSTABILITÀ MAIDEN'. [cite: 2026-02-25]
-                6. BIAS NASTRI (LEPRE): Nelle corse a nastri, il cemento è il cavallo a 0m (primo nastro). Dai priorità assoluta alla lepre se passa i filtri 1 e 2.
-                7. BIAS NAPOLI: Se l'ippodromo è NAPOLI, tollera un '4' recente per Polmoni d'Acciaio.
-                8. SOUTHWELL KEY: Se l'ippodromo è SOUTHWELL, ignora favoriti < 3.00.
+                6. LEGGE DELLA BARRICATA (TROTTO - SECONDA FILA): Nel Trotto (specie su distanze brevi come 1600m), i Numeri MAGGIORI DI 7 (es. 8, 9, 10...) partono in seconda fila, bloccati nel traffico. SCARTA SEMPRE i numeri > 7, A MENO CHE il loro REC non sia migliore di ALMENO 0.8 SECONDI rispetto al miglior REC della prima fila (Numeri 1-7).
+                7. PATCH ANTI-MAIDEN: SE È "MAIDEN", ACCETTA SOLO SEQ RECENTE "1". ACCETTA SOLO GG < 15. GAP RT >= 5 SUL SECONDO. [cite: 2026-02-25]
+                8. BIAS NASTRI (LEPRE): Nelle corse a nastri, priorità assoluta alla lepre (0m) se passa i filtri.
+                9. BIAS NAPOLI: Se l'ippodromo è NAPOLI, tollera un '4' recente per Polmoni d'Acciaio.
+                10. SOUTHWELL KEY: Se l'ippodromo è SOUTHWELL, ignora favoriti < 3.00.
 
                 FASE 3: REFERTO FINALE
                 '🌍 BERSAGLIO: [NAZIONE] - [IPPODROMO] - [TIPO GARA]'
                 
                 '🔍 SCANSIONE SUPERSTITI:'
-                - [NOME CAVALLO]: PASSATO (GG [X], SEQ [Y], RT/REC [Z], NASTRO [W se presente])
-                (Elenca solo i superstiti. Mostra i dati confermando di aver applicato correttamente le regole REC e SEQ).
+                - PARTICELLA [NUMERO]: PASSATO (GG [X], SEQ [Y], RT/REC [Z], [NOTE SU BARRICATA O CUORE IMPAVIDO se rilevanti])
+                (Elenca solo i superstiti che passano TUTTE le fasi).
 
-                SE C'È UN SACRO GRAAL:
+                SE C'È UN VERO SACRO GRAAL TATTICO:
                 '💰 TAGLIA RISCOSSA: PISTOLERO [NUMERO #] - [NOME]'
-                'BULLONE SERRATO: [Motivazione su RT, Nastri, Maiden, Cronometro o Motore Cieco].'
+                'BULLONE SERRATO: [Motivazione su RT/Rec, Barricata superata o Cuore Impavido dimostrato].'
                 
-                SE NON C'È PERFEZIONE: 
-                '🌵 NESSUNA PEPITA IN QUESTO FIUME.'
+                SE NON C'È PERFEZIONE TATTICA: 
+                '🌵 NESSUNA PEPITA IN QUESTO FIUME. I SUPERSTITI SONO BLOCCATI DALLA BARRICATA O MANCANO DI CUORE IMPAVIDO.'
                 """
 
                 res = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt] + images)
