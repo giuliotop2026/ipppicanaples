@@ -41,8 +41,8 @@ except KeyError:
     st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI (GEMINI_API_KEY)!")
     st.stop()
 
-st.title("🤠 SNIPER 103.1: UNIVERSAL CAZZIMMA")
-st.markdown("### *'Lettura Universale. Campo Ridotto. Zero Errori.'*")
+st.title("🤠 SNIPER 103.2: BLIND OVERRIDE")
+st.markdown("### *'Lettura Universale. Salvacondotto Motore Cieco. Zero Errori.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
@@ -68,42 +68,42 @@ if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
-                # IL PROMPT TATTICO SUPREMO 103.1 [cite: 2026-02-18, 2026-02-20]
+                # IL PROMPT TATTICO SUPREMO 103.2 [cite: 2026-02-18, 2026-02-20]
                 prompt = f"""
                 SEI L'ARCHITETTO TATTICO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO.
                 TERRITORIO: {nazione}
 
                 FASE 1: ESTRAZIONE CINETICA PERFETTA E UNIVERSALE
-                - Identifica l'IPPODROMO, la DISTANZA, la TIPOLOGIA DI GARA (Maiden, Nastri, Handicap, Trotto, Galoppo) e il NUMERO TOTALE DI PARTENTI.
-                - Estrai per ogni riga: Numero, Nome, NASTRO/METRI (se presente), RT/Rec, GG, SEQ, Quota. ESTRAI ANCHE LE INFORMAZIONI SUI CAMBI EQUIPAGGIAMENTO (es. "paraocchi") DALLA SEZIONE SIGNPOSTS O COMMENTI.
-                - REGOLA LETTURA PIATTAFORMA (UNIVERSALE E CRITICA): Indipendentemente dalla nazione della corsa, se il testo usa il formato testuale (es. 8-8-7-2-2), l'ultimo risultato (il più recente) è A DESTRA. Se leggi una tabella con i quadrati colorati, l'ultimo risultato (il più recente) è IL PRIMO A SINISTRA. Applica questa regola sempre, per non sbagliare l'estrazione della forma recente!
-                - IGNORA LE QUOTE COME INDICATORE DI FORZA. I bookmaker creano favoriti finti che sono particelle instabili. Noi cerchiamo i "Polmoni d'Acciaio" e la "Cazzimma" [cite: 2026-02-18, 2026-02-20].
+                - Identifica l'IPPODROMO, la DISTANZA, la TIPOLOGIA DI GARA e il NUMERO TOTALE DI PARTENTI.
+                - Estrai per ogni riga: Numero, Nome, NASTRO/METRI, RT/Rec, GG, SEQ, Quota e cambi equipaggiamento.
+                - DIVIETO DI ALLUCINAZIONE RT (CRITICO): Se nel tabellone la colonna 'Rt.' o 'Rec' non c'è o è vuota (come in USA), SCRIVI TASSATIVAMENTE "N/A". NON INVENTARE NUMERI.
+                - REGOLA LETTURA PIATTAFORMA: Testo (es. 8-8-7-2-2) -> l'ultimo è A DESTRA. Quadrati colorati -> l'ultimo è IL PRIMO A SINISTRA. Applica questa regola SEMPRE.
+                - IGNORA LE QUOTE COME INDICATORE DI FORZA [cite: 2026-02-20].
 
                 FASE 2: APPLICAZIONE FILTRI (IL PROTOCOLLO DEFINITIVO)
-                1. MURO FORMA: L'ultimo risultato valido (effettivo, letto con la Regola Universale) deve essere 1 o 2.
+                1. MURO FORMA: L'ultimo risultato valido deve essere 1 o 2.
                 2. CRISTALLO 2.1 (ANTI-SQUALIFICA): Scarta SOLO se le squalifiche (RP, RI, DAI, FE) sono nelle DUE gare più recenti.
                 3. FILTRO RUGGINE: GG < 45.
-                4. CUORE IMPAVIDO (CONTINUITÀ REALE): Analizza le ultime 3 gare: DEVE AVERE ALMENO DUE piazzamenti a podio (1, 2 o 3). Nessun fuoco di paglia.
+                4. CUORE IMPAVIDO: Ultime 3 gare: ALMENO DUE piazzamenti a podio (1, 2 o 3). Nessun fuoco di paglia.
                 
                 PROTOCOLLI SPECIALI (PRIORITÀ ASSOLUTA):
-                5. LEGGE DEL CAMPO RIDOTTO E CAZZIMMA (CRITICA): SE I PARTENTI SONO 7 O MENO (Pagamento Piazzato a 2): La tolleranza è zero. Il superstite DEVE avere un RT/Rec palesemente dominante (Polmoni d'Acciaio) OPPURE avere un "Cambio Tattico / Cazzimma" (es. mette il paraocchi per la prima volta). Se il favorito di quota ha un RT debole, è una trappola: trova il vero mostro nascosto che lo schiaccerà [cite: 2026-02-18, 2026-02-20].
-                6. LEGGE DELLA BARRICATA (TROTTO - SECONDA FILA): Scarta i numeri > 7 (seconda fila) a meno che il loro REC non sia migliore di almeno 0.8 secondi rispetto alla prima fila.
-                7. PATCH ANTI-MAIDEN: SE È "MAIDEN", ACCETTA SOLO SEQ RECENTE "1". ACCETTA SOLO GG < 15. GAP RT >= 5 SUL SECONDO.
-                8. BIAS NASTRI: Nelle corse a nastri, priorità assoluta alla lepre (0m).
+                5. LEGGE DEL CAMPO RIDOTTO E CAZZIMMA (PARTENTI <= 7): In campi piccoli la tolleranza è zero. Il superstite DEVE avere un RT/Rec palesemente dominante (gap >= 5 punti) OPPURE un "Cambio Tattico". 
+                >>> SALVACONDO MOTORE CIECO (ECCEZIONE SUPREMA): Se il valore RT/Rec è "N/A" (Motore Cieco), MA il cavallo ha VINTO l'ultima corsa (SEQ recente = 1) ed è fresco (GG < 45), QUESTO DIMOSTRA CAZZIMMA ASSOLUTA. Il cavallo SUPERA IL CAMPO RIDOTTO DI DIRITTO, asfaltando la mancanza di RT numerico! <<<
+                6. LEGGE DELLA BARRICATA (TROTTO - SECONDA FILA): Scarta i numeri > 7 a meno che il loro REC non sia migliore di almeno 0.8s sulla prima fila.
+                7. PATCH ANTI-MAIDEN: SE È "MAIDEN", ACCETTA SOLO SEQ RECENTE "1". GG < 15. GAP RT >= 5.
 
                 FASE 3: REFERTO FINALE
                 '🌍 BERSAGLIO: [NAZIONE] - [IPPODROMO] - [TIPO GARA] - PARTENTI: [NUMERO]'
                 
                 '🔍 SCANSIONE SUPERSTITI:'
-                - PARTICELLA [NUMERO]: PASSATO (GG [X], SEQ [Y - indicare lettura corretta], RT/REC [Z], [NOTE SU CAZZIMMA, EQUIPAGGIAMENTO O BARRICATA])
-                (Elenca solo i superstiti che passano TUTTE le fasi).
-
+                - PARTICELLA [NUMERO]: PASSATO (GG [X], SEQ [Y], RT/REC [Z], [NOTE SU SALVACONDOTTO CIECO O CAZZIMMA])
+                
                 SE C'È UN VERO SACRO GRAAL TATTICO:
                 '💰 TAGLIA RISCOSSA: PISTOLERO [NUMERO #] - [NOME]'
-                'BULLONE SERRATO: [Motivazione su Polmoni d'Acciaio (RT dominante), Cazzimma (equipaggiamento), ignorando le quote trappola].'
+                'BULLONE SERRATO: [Motivazione su Polmoni d'Acciaio o Salvacondotto Motore Cieco].'
                 
-                SE NON C'È PERFEZIONE TATTICA O MANCA LA CAZZIMMA IN CAMPO RIDOTTO: 
-                '🌵 NESSUNA PEPITA IN QUESTO FIUME. I SUPERSTITI SONO BLOCCATI DALLA BARRICATA O MANCANO DI POLMONI D'ACCIAIO.'
+                SE NON C'È PERFEZIONE: 
+                '🌵 NESSUNA PEPITA IN QUESTO FIUME.'
                 """
 
                 res = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt] + images)
