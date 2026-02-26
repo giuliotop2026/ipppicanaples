@@ -19,10 +19,10 @@ st.markdown("""
         text-shadow: 1px 1px 2px #cda26e;
         border-bottom: 3px solid #5a3a22;
     }
-    .stAlert p { color: #3d2b1f !important; font-size: 1.4rem !important; font-weight: bold; }
+    .stAlert p { color: #3d2b1f !important; font-size: 1.3rem !important; font-weight: bold; }
     .stButton>button { 
         background-color: #a0522d !important; color: #fff8dc !important; 
-        border: 3px solid #5a3a22 !important; font-weight: bold; font-size: 1.6em; 
+        border: 3px solid #5a3a22 !important; font-weight: bold; font-size: 1.5em; 
         width: 100%; border-radius: 8px; height: 3.5em;
         box-shadow: 4px 4px 10px rgba(0,0,0,0.3);
     }
@@ -34,19 +34,19 @@ def play_victory_bell():
     audio_url = "https://www.myinstants.com/media/sounds/boxing-bell.mp3"
     components.html(f'<audio autoplay><source src="{audio_url}" type="audio/mpeg"></audio>', height=0, width=0)
 
-# --- 2. CONNESSIONE AL CERVELLO GEMINI ---
+# --- 2. CONNESSIONE AL CERVELLO OMNISCIENTE ---
 try:
     client_gemini = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 except KeyError:
     st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI (GEMINI_API_KEY)!")
     st.stop()
 
-st.title("🤠 SNIPER 100.1: OMNISCIENT SHERIFF")
-st.markdown("### *'Filtro Cristallo 2.1. Eccezione Motore Cieco. Visione Totale.'*")
+st.title("🤠 SNIPER 101.0: PERFECT BOUNTY HUNTER")
+st.markdown("### *'Patch Maiden Attiva. Bias Nastri. Perdono Squalifiche. Zero Errori.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
-    "UK", "IRLANDA", "USA", "ITALIA", "FRANCIA", "GERMANIA", 
+    "UK", "USA", "ITALIA", "FRANCIA", "IRLANDA", "GERMANIA", 
     "SVEZIA", "CILE", "BRASILE", "SUD AFRICA", "AUSTRALIA", "GIAPPONE"
 ])
 
@@ -59,47 +59,49 @@ if uploaded_files:
         with cols[i]:
             st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (PROTOCOLLO ESPERTO DINAMICO) ---
+# --- 4. IL GRILLETTO (LA FUSIONE TOTALE) ---
 if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
     if not uploaded_files:
         st.warning("CARICA I MANIFESTI, COMANDANTE!")
     else:
-        with st.spinner("LO SCERIFFO STA SCANSIONANDO L'ABISSO E I MOTORI CIECHI... ⏳"):
+        with st.spinner("LO SCERIFFO STA INCROCIANDO TUTTE LE LEGGI... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
+                # IL PROMPT SUPREMO CHE CONTIENE TUTTI I TUOI SEGRETI [cite: 2026-01-20, 2026-02-25]
                 prompt = f"""
-                SEI L'ESPERTO DINAMICO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-19, 2026-01-20]
+                SEI L'ARCHITETTO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-19, 2026-01-20]
                 TERRITORIO: {nazione}
 
-                FASE 1: ESTRAZIONE CINETICA (VISION)
-                - Identifica l'IPPODROMO e la TIPOLOGIA DI GARA (Maiden, Nastri, Trotto, Galoppo).
-                - Nel TROTTO, leggi 'REC' (Record) come valore tecnico. Nel GALOPPO leggi RT. [cite: 2026-02-25]
-                - Estrai per ogni riga: Numero, Nome, RT/Rec, GG, SEQ (primo a sinistra = gara più recente), Quota. Le sigle RP, RI, DAI, FE, CD sono squalifiche/cadute.
+                FASE 1: ESTRAZIONE CINETICA
+                - Identifica l'IPPODROMO, la DISTANZA e la TIPOLOGIA DI GARA (Maiden, Nastri, Handicap, ecc.).
+                - Estrai per ogni riga: Numero, Nome, NASTRO/METRI (se presente), RT/Rec, GG, SEQ, Quota.
 
-                FASE 2: APPLICAZIONE FILTRI (GRANITO 3.0 + CRISTALLO 2.1)
+                FASE 2: APPLICAZIONE FILTRI (IL PROTOCOLLO DEFINITIVO)
                 1. MURO FORMA: SEQ deve iniziare con 1 o 2. [cite: 2026-02-25]
-                2. FILTRO CRISTALLO 2.1 (FLESSIBILITÀ ANTI-SQUALIFICA): 
-                   - Scarta il cavallo SOLO se presenta squalifiche (RP, RI, DAI, FE, CD) nelle sue DUE gare più recenti (i primi due valori a sinistra della SEQ).
-                   - Se la squalifica è vecchia (terza, quarta o quinta posizione) ma il cavallo ha superato il Muro Forma recente (1 o 2), IL CAVALLO È PERDONATO E PASSA.
+                2. CRISTALLO 2.1 (ANTI-SQUALIFICA): Scarta SOLO se le squalifiche (RP, RI, DAI, FE, CD) sono nelle DUE gare più recenti. Le vecchie squalifiche sono perdonate se ha superato il Muro Forma.
                 3. FILTRO RUGGINE: GG < 45. [cite: 2026-02-25]
-                4. POLMONI D'ACCIAIO E "MOTORE CIECO" (CRITICO): 
-                   - Cerca chi ha il miglior valore tecnico (RT/Rec). Se l'RT è debole e non da vertice, DEVE ESSERE SCARTATO.
-                   - ECCEZIONE MOTORE CIECO: Se il valore RT/Rec è "N/A", "ASSENTE", "NON DISPONIBILE" o vuoto, MA il cavallo ha VINTO l'ultima corsa (SEQ inizia con '1') ed è fresco (GG < 45), PASSA IL FILTRO DI DIRITTO per manifesta forma cinetica in pista. IGNORA LA QUOTA. [cite: 2026-02-20]
+                4. POLMONI D'ACCIAIO & MOTORE CIECO: Identifica il miglior valore tecnico (RT/Rec). Se "N/A" ma il cavallo ha VINTO (SEQ 1) ed è fresco (GG < 45), passa per manifesta forma in pista. Ignora le quote. [cite: 2026-02-20]
+                
+                PROTOCOLLI SPECIALI (PRIORITÀ ASSOLUTA):
+                5. PATCH ANTI-MAIDEN: SE LA CORSA È "MAIDEN", ACCETTA SOLO SEQ "1" (il "2" si scarta). ACCETTA SOLO GG < 15. IL GAP RT DEVE ESSERE >= 5 SUL SECONDO. Se fallisce, scrivi 'NESSUN SACRO GRAAL: INSTABILITÀ MAIDEN'. [cite: 2026-02-25]
+                6. BIAS NASTRI (LEPRE): Nelle corse a nastri, il cemento è il cavallo a 0m (primo nastro). Dai priorità assoluta alla lepre se passa i filtri 1 e 2.
+                7. BIAS NAPOLI: Se l'ippodromo è NAPOLI, tollera un '4' recente per Polmoni d'Acciaio.
+                8. SOUTHWELL KEY: Se l'ippodromo è SOUTHWELL, ignora favoriti < 3.00.
 
-                FASE 3: REFERTO FINALE SINTETICO
+                FASE 3: REFERTO FINALE
                 '🌍 BERSAGLIO: [NAZIONE] - [IPPODROMO] - [TIPO GARA]'
                 
                 '🔍 SCANSIONE SUPERSTITI:'
-                - [NOME CAVALLO 1]: PASSATO (GG [X], SEQ [Y], RT/REC [Z])
-                (Elenca solo chi passa i filtri. OBBLIGATORIO mostrare GG, SEQ e RT/Rec).
+                - [NOME CAVALLO]: PASSATO (GG [X], SEQ [Y], RT/REC [Z], NASTRO [W se presente])
+                (Elenca solo i superstiti. Mostra i dati.)
 
-                SE C'È UN VERO SACRO GRAAL:
+                SE C'È UN SACRO GRAAL:
                 '💰 TAGLIA RISCOSSA: PISTOLERO [NUMERO #] - [NOME]'
-                'BULLONE SERRATO: [Motivazione rapida su forma, superiorità tecnica o eccezione motore cieco].'
+                'BULLONE SERRATO: [Motivazione su RT, Nastri, Maiden o Motore Cieco].'
                 
-                SE NON C'È PERFEZIONE O I SUPERSTITI SONO DEBOLI: 
-                '🌵 NESSUNA PEPITA IN QUESTO FIUME. I SUPERSTITI MANCANO DI POLMONI D'ACCIAIO O STABILITÀ.'
+                SE NON C'È PERFEZIONE: 
+                '🌵 NESSUNA PEPITA IN QUESTO FIUME.'
                 """
 
                 res = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt] + images)
@@ -110,4 +112,3 @@ if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
                     play_victory_bell(); st.balloons()
             except Exception as e:
                 st.error(f"☠️ SERPENTE NELLO STIVALE: {e}")
-                
