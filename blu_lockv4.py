@@ -41,8 +41,8 @@ except KeyError:
     st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI (GEMINI_API_KEY)!")
     st.stop()
 
-st.title("🤠 SNIPER 100.0: THE OMNISCIENT SHERIFF")
-st.markdown("### *'Filtro Cristallo 2.1 Attivo. Polmoni d'Acciaio. Visione Totale.'*")
+st.title("🤠 SNIPER 100.1: OMNISCIENT SHERIFF")
+st.markdown("### *'Filtro Cristallo 2.1. Eccezione Motore Cieco. Visione Totale.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
@@ -59,12 +59,12 @@ if uploaded_files:
         with cols[i]:
             st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (PROTOCOLLO ESPERTO DINAMICO + CRISTALLO 2.1) ---
+# --- 4. IL GRILLETTO (PROTOCOLLO ESPERTO DINAMICO) ---
 if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
     if not uploaded_files:
         st.warning("CARICA I MANIFESTI, COMANDANTE!")
     else:
-        with st.spinner("LO SCERIFFO STA SCANSIONANDO L'ABISSO E I POLMONI D'ACCIAIO... ⏳"):
+        with st.spinner("LO SCERIFFO STA SCANSIONANDO L'ABISSO E I MOTORI CIECHI... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
@@ -82,8 +82,10 @@ if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
                 2. FILTRO CRISTALLO 2.1 (FLESSIBILITÀ ANTI-SQUALIFICA): 
                    - Scarta il cavallo SOLO se presenta squalifiche (RP, RI, DAI, FE, CD) nelle sue DUE gare più recenti (i primi due valori a sinistra della SEQ).
                    - Se la squalifica è vecchia (terza, quarta o quinta posizione) ma il cavallo ha superato il Muro Forma recente (1 o 2), IL CAVALLO È PERDONATO E PASSA.
-                3. FILTRO RUGGINE: GG < 45. (Eccezione: 'Iron Lung' se RT/Rec è dominante rispetto a tutti). [cite: 2026-02-25]
-                4. POLMONI D'ACCIAIO (CRITICO): Identifica tra i superstiti chi ha il miglior valore tecnico (RT/Rec). Se un cavallo passa i filtri 1, 2 e 3 ma ha un RT debole o non da vertice, DEVE ESSERE SCARTATO. IGNORA LA QUOTA. [cite: 2026-02-20]
+                3. FILTRO RUGGINE: GG < 45. [cite: 2026-02-25]
+                4. POLMONI D'ACCIAIO E "MOTORE CIECO" (CRITICO): 
+                   - Cerca chi ha il miglior valore tecnico (RT/Rec). Se l'RT è debole e non da vertice, DEVE ESSERE SCARTATO.
+                   - ECCEZIONE MOTORE CIECO: Se il valore RT/Rec è "N/A", "ASSENTE", "NON DISPONIBILE" o vuoto, MA il cavallo ha VINTO l'ultima corsa (SEQ inizia con '1') ed è fresco (GG < 45), PASSA IL FILTRO DI DIRITTO per manifesta forma cinetica in pista. IGNORA LA QUOTA. [cite: 2026-02-20]
 
                 FASE 3: REFERTO FINALE SINTETICO
                 '🌍 BERSAGLIO: [NAZIONE] - [IPPODROMO] - [TIPO GARA]'
@@ -92,11 +94,11 @@ if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
                 - [NOME CAVALLO 1]: PASSATO (GG [X], SEQ [Y], RT/REC [Z])
                 (Elenca solo chi passa i filtri. OBBLIGATORIO mostrare GG, SEQ e RT/Rec).
 
-                SE C'È UN VERO SACRO GRAAL CON POLMONI D'ACCIAIO:
+                SE C'È UN VERO SACRO GRAAL:
                 '💰 TAGLIA RISCOSSA: PISTOLERO [NUMERO #] - [NOME]'
-                'BULLONE SERRATO: [Motivazione rapida su forma e superiorità tecnica (RT/Rec)].'
+                'BULLONE SERRATO: [Motivazione rapida su forma, superiorità tecnica o eccezione motore cieco].'
                 
-                SE NON C'È PERFEZIONE O L'UNICO SUPERSTITE HA UN RT BASSO: 
+                SE NON C'È PERFEZIONE O I SUPERSTITI SONO DEBOLI: 
                 '🌵 NESSUNA PEPITA IN QUESTO FIUME. I SUPERSTITI MANCANO DI POLMONI D'ACCIAIO O STABILITÀ.'
                 """
 
