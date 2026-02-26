@@ -65,9 +65,9 @@ except KeyError:
 st.title("🏇 SNIPER 36.0: OMNI-TAPE ARCHITECT")
 st.markdown("### *'Mappatura nastri, metri e polmoni d'acciaio. Zero errori.'*")
 
-# 3. SELEZIONE NAZIONE
+# 3. SELEZIONE NAZIONE (AGGIUNTA GERMANIA)
 nazione = st.selectbox("🌍 SELEZIONA IL TERRITORIO DI CACCIA:", [
-    "UK", "USA", "ITALIA", "FRANCIA", "SVEZIA", "CILE", "BRASILE", "SUD AFRICA", "AUSTRALIA", "GIAPPONE"
+    "UK", "USA", "ITALIA", "FRANCIA", "GERMANIA", "SVEZIA", "CILE", "BRASILE", "SUD AFRICA", "AUSTRALIA", "GIAPPONE"
 ])
 
 # 4. SCANNER MOLECOLARE
@@ -82,7 +82,6 @@ if st.button("🏁 ESEGUI PROTOCOLO GRANITO 3.0"):
                 images = [Image.open(f) for f in uploaded_files]
                 
                 # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
-                # Il prompt estrae ora specificamente la distanza e i metri di handicap
                 prompt_v = f"""
                 SCANSIONA LE IMMAGINI PER {nazione}.
                 FASE A (METADATI): ESTRAI IPPODROMO, DISTANZA TOTALE (es. 1410m) E TIPO DI CORSA (NASTRI/HANDICAP/PIANO).
