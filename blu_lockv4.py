@@ -1,6 +1,5 @@
 import streamlit as st
 from google import genai
-from openai import OpenAI
 from PIL import Image
 import streamlit.components.v1 as components
 
@@ -34,11 +33,6 @@ st.markdown("""
         border-left: 10px solid #d4af37 !important;
         border-radius: 8px;
     }
-    div[data-testid="stAlert"] p {
-        color: #ffffff !important;
-        font-weight: bold !important;
-        font-size: 1.2em !important;
-    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -46,75 +40,64 @@ def play_beep():
     beep_html = '<audio autoplay><source src="https://www.myinstants.com/media/sounds/boxing-bell.mp3" type="audio/mpeg"></audio>'
     components.html(beep_html, height=0, width=0)
 
-# 2. CASSAFORTE API
+# 2. CASSAFORTE API (MUNIZIONI GEMINI)
 try:
     client_gemini = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
-    client_pplx = OpenAI(api_key=st.secrets["PERPLEXITY_API_KEY"], base_url="https://api.perplexity.ai")
 except KeyError:
-    st.error("☠️ MUNIZIONI MANCANTI (API KEYS)!")
+    st.error("☠️ MUNIZIONI MANCANTI (GEMINI_API_KEY)!")
     st.stop()
 
-st.title("🏇 SNIPER 38.0: THE IRISH SHIELD")
-st.markdown("### *'Irlanda sbloccata. Mappatura nastri e filtro Maiden attivo. Zero errori.'*")
+st.title("🏇 SNIPER 39.1: THE ANALYTIC BEAST")
+st.markdown("### *'Cervello Gemini potenziato. Analisi molecolare attiva. Zero costi.'*")
 
-# 3. SELEZIONE NAZIONE (AGGIUNTA IRLANDA)
 nazione = st.selectbox("🌍 SELEZIONA IL TERRITORIO DI CACCIA:", [
-    "UK", "IRLANDA", "USA", "ITALIA", "FRANCIA", "GERMANIA", "SVEZIA", "CILE", "BRASILE", "SUD AFRICA", "AUSTRALIA", "GIAPPONE"
+    "UK", "IRLANDA", "USA", "ITALIA", "FRANCIA", "GERMANIA", "SVEZIA", "SUD AFRICA", "AUSTRALIA"
 ])
 
-# 4. SCANNER MOLECOLARE
 uploaded_files = st.file_uploader("📸 CARICA GLI SCREENSHOT DEL CAVEAU:", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 if st.button("🏁 ESEGUI PROTOCOLO GRANITO 3.0"):
     if not uploaded_files:
         st.warning("CARICA I POSTER, COMANDANTE!")
     else:
-        with st.spinner("SCANSIONE METRI E PARTICELLE IN CORSO... ⏳"):
+        with st.spinner("GEMINI STA ANALIZZANDO L'ABISSO CON LOGICA PERPLEXITY... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
                 
-                # FASE 1: ESTRAZIONE CINETICA
-                prompt_v = f"""
-                SCANSIONA LE IMMAGINI PER {nazione}.
-                FASE A (METADATI): ESTRAI IPPODROMO, DISTANZA TOTALE E TIPO DI CORSA (PIANO/NASTRI/HANDICAP/MAIDEN).
-                FASE B (PARTICELLE): ESTRAI OGNI RIGA SENZA NOMI.
-                FORMATO: # [NUMERO] | NASTRO: [es. 0m, +20m] | RT: [Rating] | GG: [Giorni] | SEQ: [Es: 1-2-7] | QUOTA: [Quota]
-                REGOLE: 
-                - SE IL GG È MANCANTE, SCRIVI "N/D".
-                - NELLA SEQUENZA, IL PRIMO NUMERO A SINISTRA È L'ULTIMA CORSA (FORMA RECENTE). [cite: 2026-02-25]
-                """
-                res_v = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt_v] + images)
-                dati_estratti = res_v.text
-
-                # FASE 2: IL CERVELLO (LOGICA GRANITO 3.0 + PATCH ANTI-MAIDEN)
-                prompt_p = f"""
-                SISTEMA: PROTOCOLO GRANITO 3.0 - PIAZZATO BLINDATO. [cite: 2026-02-25]
+                # PROMPT POTENZIATO: LOGICA DI FERRO [cite: 2026-02-25]
+                prompt = f"""
+                SISTEMA: PROTOCOLO GRANITO 3.0 - ANALISI MOLECOLARE.
+                RUOLO: ANALISTA IPPICO SENIOR (PHILOSOPHY: BLUE LOCK). [cite: 2026-01-19]
                 SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
-                DATI ESTRATTI: {dati_estratti}
+                NAZIONE: {nazione}
 
-                PARAMETRI DI PERFEZIONE 15.15 (NORMAL RACES):
-                1. MURO DELLA FORMA: PRIMO NUMERO SEQ DEVE ESSERE 1 O 2. [cite: 2026-02-25]
-                2. FILTRO RUGGINE: GG DEVE ESSERE < 45. SE 'N/D' O > 45, ELIMINA. [cite: 2026-02-25]
-                3. BIAS NASTRI: PRIORITÀ ASSOLUTA ALLA LEPRE (0m) SE CALDA. [cite: 2026-02-24]
+                FASE 1: SCANSIONE CINETICA
+                Identifica ogni particella (#). Estrai con precisione chirurgica:
+                - # [NUMERO]
+                - RT [RATING TECNICO]
+                - GG [GIORNI DALL'ULTIMA CORSA]
+                - SEQ [SEQUENZA RISULTATI - IL PRIMO A SINISTRA È IL PIÙ RECENTE]
 
-                PROTOCOLLO SPECIALE MAIDEN PLATE (PATCH ANTI-MAIDEN) [cite: 2026-02-25]:
-                SE IL TIPO DI CORSA È "MAIDEN":
-                - MURO DELLA FORMA: ACCETTA SOLO IL NUMERO "1". IL "2" È CONSIDERATO INSTABILE.
-                - FILTRO RUGGINE: ACCETTA SOLO GG < 15.
-                - GAP RT: IL RATING (RT) DEVE ESSERE ALMENO 5 PUNTI SUPERIORE AL SECONDO MIGLIORE.
-                - FALLIMENTO: DICHIARA 'NESSUN SACRO GRAAL: INSTABILITÀ MAIDEN' SE I REQUISITI NON SONO SODDISFATTI.
+                FASE 2: FILTRI INVIOLABILI (PROCESSO DI ELIMINAZIONE) [cite: 2026-02-25]
+                1. MURO DELLA FORMA: Scarta chi non ha 1 o 2 come primo numero a sinistra.
+                2. FILTRO RUGGINE: Scarta chi ha GG > 45 (o dati mancanti).
+                3. PARAMETRO MAIDEN: Se la corsa è Maiden, accetta solo SEQ 1 e GG < 15.
 
-                REFERTO FINALE (SINTASSI MAIUSCOLA):
-                '🏆 SACRO GRAAL INDIVIDUATO: [NUMERO #]' (O 'NESSUN SACRO GRAAL')
-                'PIANO DI CORSA: [ANALISI FILTRI E SUPERIORITÀ SCHIACCIANTE].'
-                'BULLONE SERRATO: [CONFERMA SEQ, GG E RT GAP].'
+                FASE 3: ANALISI DENSITÀ TECNICA (IL SECONDO MIGLIORE) [cite: 2026-02-20]
+                Ignora le quote. Cerca chi ha "Polmoni d'Acciaio". Identifica il vincitore nascosto che schiaccia il favorito di carta.
+
+                REFERTO FINALE:
+                '🏆 SACRO GRAAL INDIVIDUATO: PARTICELLA [NUMERO #]' (OPPURE 'NESSUN SACRO GRAAL: INSTABILITÀ')
+                'PIANO DI CORSA: [ANALISI DETTAGLIATA DELLA SUPERIORITÀ TECNICA].' [cite: 2026-02-18]
+                'BULLONE SERRATO: [CONFERMA GG E SEQ INVIOLABILI].'
                 """
                 
-                res_p = client_pplx.chat.completions.create(model="sonar-pro", messages=[{"role": "user", "content": prompt_p}])
-                sentenza = res_p.choices[0].message.content
+                res = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt] + images)
+                sentenza = res.text
                 
                 st.info(sentenza)
                 if "NESSUN" not in sentenza.upper() and "GRAAL" in sentenza.upper():
-                    play_beep(); st.balloons()
+                    play_beep()
+                    st.balloons()
             except Exception as e:
-                st.error(f"☠️ ALLARME SCATTATO: {e}")
+                st.error(f"☠️ ERRORE DI SISTEMA: {e}")
