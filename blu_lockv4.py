@@ -62,10 +62,10 @@ except KeyError:
     st.error("☠️ MUNIZIONI MANCANTI (API KEYS)!")
     st.stop()
 
-st.title("🏇 SNIPER 36.0: OMNI-TAPE ARCHITECT")
-st.markdown("### *'Mappatura nastri, metri e polmoni d'acciaio. Zero errori.'*")
+st.title("🏇 SNIPER 37.0: ABSOLUTE SHIELD")
+st.markdown("### *'Patch Anti-Maiden attiva. Zero errori, zero instabilità.'*")
 
-# 3. SELEZIONE NAZIONE (AGGIUNTA GERMANIA)
+# 3. SELEZIONE NAZIONE
 nazione = st.selectbox("🌍 SELEZIONA IL TERRITORIO DI CACCIA:", [
     "UK", "USA", "ITALIA", "FRANCIA", "GERMANIA", "SVEZIA", "CILE", "BRASILE", "SUD AFRICA", "AUSTRALIA", "GIAPPONE"
 ])
@@ -82,11 +82,12 @@ if st.button("🏁 ESEGUI PROTOCOLO GRANITO 3.0"):
                 images = [Image.open(f) for f in uploaded_files]
                 
                 # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
+                # Il prompt ora identifica esplicitamente se la corsa è una MAIDEN
                 prompt_v = f"""
                 SCANSIONA LE IMMAGINI PER {nazione}.
-                FASE A (METADATI): ESTRAI IPPODROMO, DISTANZA TOTALE (es. 1410m) E TIPO DI CORSA (NASTRI/HANDICAP/PIANO).
+                FASE A (METADATI): ESTRAI IPPODROMO, DISTANZA TOTALE (es. 1410m) E TIPO DI CORSA (PIANO/NASTRI/HANDICAP/MAIDEN).
                 FASE B (PARTICELLE): ESTRAI OGNI RIGA SENZA NOMI.
-                FORMATO: # [NUMERO] | NASTRO: [es. 0m, +20m, +40m] | RT: [Rating] | GG: [Giorni] | SEQ: [Es: 1-2-7-7-6] | QUOTA: [Quota]
+                FORMATO: # [NUMERO] | NASTRO: [es. 0m, +20m] | RT: [Rating] | GG: [Giorni] | SEQ: [Es: 1-2-7-7-6] | QUOTA: [Quota]
                 REGOLE: 
                 - SE IL GG È MANCANTE, SCRIVI "N/D".
                 - NELLA SEQUENZA, IL PRIMO NUMERO A SINISTRA È L'ULTIMA CORSA (FORMA RECENTE). [cite: 2026-02-25]
@@ -94,25 +95,28 @@ if st.button("🏁 ESEGUI PROTOCOLO GRANITO 3.0"):
                 res_v = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt_v] + images)
                 dati_estratti = res_v.text
 
-                # FASE 2: IL CERVELLO (PERPLEXITY SONAR PRO - OFFLINE LOGIC)
+                # FASE 2: IL CERVELLO (PERPLEXITY SONAR PRO - OFFLINE LOGIC CON PATCH ANTI-MAIDEN)
                 prompt_p = f"""
                 SISTEMA: PROTOCOLO GRANITO 3.0 - PIAZZATO BLINDATO. [cite: 2026-02-25]
                 SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
                 DATI ESTRATTI: {dati_estratti}
 
-                PARAMETRI DI PERFEZIONE 15.15:
-                1. MURO DELLA FORMA: IL PRIMO NUMERO DELLA SEQUENZA DEVE ESSERE 1 O 2. SE È >2 O RP/RI/FE/DAI, ELIMINA. [cite: 2026-02-25, 2026-02-24]
-                2. FILTRO RUGGINE: GG DEVE ESSERE < 45. SE GG È 'N/D' O > 45, ELIMINA (RUGGINE MORTALE). [cite: 2026-02-25, 2026-02-24]
-                3. BIAS NASTRI (LEPRE): SE LA CORSA È A NASTRI, IL CEMENTO È IL CAVALLO A 0m (PRIMO NASTRO). 
-                   DAI PRIORITÀ ASSOLUTA ALLA LEPRE (0m) SE HA SUPERATO I FILTRI 1 E 2. 
-                   UN "CACCIATORE" (+20m/+40m) È ABISSO SE LA LEPRE È CALDA. [cite: 2026-02-24]
-                4. BIAS NAPOLI: SE L'IPPODROMO È NAPOLI, TOLLERA UN '4' RECENTE PER POLMONI D'ACCIAIO. [cite: 2026-02-24]
-                5. SOUTHWELL KEY: SE IPPODROMO È SOUTHWELL, IGNORA FAVORITI < 3.00. [cite: 2026-02-24]
+                PARAMETRI DI PERFEZIONE 15.15 (NORMAL RACES):
+                1. MURO DELLA FORMA: PRIMO NUMERO SEQ DEVE ESSERE 1 O 2. [cite: 2026-02-25]
+                2. FILTRO RUGGINE: GG DEVE ESSERE < 45. SE 'N/D' O > 45, ELIMINA. [cite: 2026-02-25]
+                3. BIAS NASTRI: PRIORITÀ LEPRE (0m) SE CALDA. [cite: 2026-02-24]
+
+                PROTOCOLLO SPECIALE MAIDEN PLATE (PATCH ANTI-MAIDEN) [cite: 2026-02-25]:
+                SE IL TIPO DI CORSA È "MAIDEN":
+                - IL MURO DELLA FORMA ACCETTA SOLO IL NUMERO "1". IL "2" È CONSIDERATO INSTABILE.
+                - IL FILTRO RUGGINE ACCETTA SOLO GG < 15. IL MOTORE DEVE ESSERE BOLLENTE.
+                - GAP RT: IL RATING (RT) DEL CANDIDATO DEVE ESSERE ALMENO 5 PUNTI SUPERIORE AL SECONDO MIGLIORE.
+                - SE QUESTI REQUISITI NON SONO SODDISFATTI, DICHIARA 'NESSUN SACRO GRAAL: INSTABILITÀ MAIDEN'.
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
-                '🏆 SACRO GRAAL INDIVIDUATO: [NUMERO #]' (O 'NESSUN SACRO GRAAL' SE ZERO SUPERSTITI)
-                'PIANO DI CORSA: [ANALISI DEI METRI DI PENALITÀ, DISTANZA E DENSITÀ TECNICA].'
-                'BULLONE SERRATO: [CONFERMA SEQ, GG < 45 E POSIZIONE NEL NASTRO].'
+                '🏆 SACRO GRAAL INDIVIDUATO: [NUMERO #]' (O 'NESSUN SACRO GRAAL')
+                'PIANO DI CORSA: [ANALISI DEI FILTRI E, SE MAIDEN, CONFERMA DELLA SUPERIORITÀ SCHIACCIANTE].'
+                'BULLONE SERRATO: [CONFERMA SEQ, GG E RT GAP].'
                 """
                 
                 res_p = client_pplx.chat.completions.create(model="sonar-pro", messages=[{"role": "user", "content": prompt_p}])
