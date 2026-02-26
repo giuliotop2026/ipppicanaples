@@ -41,10 +41,11 @@ except KeyError:
     st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI (GEMINI_API_KEY)!")
     st.stop()
 
-st.title("🤠 SNIPER 105.1: AMERICAN BLIND SIGHT")
-st.markdown("### *'Mirino Infallibile. Variante USA Attiva. Zero Allucinazioni.'*")
+st.title("🤠 SNIPER 106.0: THE FAVORITE'S LAW")
+st.markdown("### *'USA Focus: Favorito Tecnico. Zero Miracoli. Perfezione Blue Lock.'*")
 
-# --- 3. SELEZIONE TERRITORIO ---
+# --- 3. SELEZIONE TERRITORIO (ARSENALE COMPLETO) ---
+# Abbiamo ripristinato Germania, Brasile, Giappone, Cile e Svezia [cite: 2026-02-26]
 nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
     "UK", "USA", "ITALIA", "FRANCIA", "IRLANDA", "GERMANIA", 
     "SVEZIA", "CILE", "BRASILE", "SUD AFRICA", "AUSTRALIA", "GIAPPONE"
@@ -59,55 +60,51 @@ if uploaded_files:
         with cols[i]:
             st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (LA FUSIONE TATTICA TOTALE E SPIETATA) ---
+# --- 4. IL GRILLETTO (PROTOCOLLO 106.0 - USA BLINDATO) ---
 if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
     if not uploaded_files:
         st.warning("CARICA I MANIFESTI, COMANDANTE!")
     else:
-        with st.spinner("LO SCERIFFO STA CALCOLANDO LE DISTANZE E VERIFICANDO I MOTORI... ⏳"):
+        with st.spinner("LO SCERIFFO STA CERCANDO IL FAVORITO CON I POLMONI D'ACCIAIO... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
                 prompt = f"""
-                SEI L'ARCHITETTO TATTICO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
+                SEI L'ARCHITETTO TATTICO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-19, 2026-01-20]
                 TERRITORIO: {nazione}
 
-                FASE 1: ESTRAZIONE CINETICA PERFETTA E UNIVERSALE
-                - Identifica l'IPPODROMO, la DISTANZA esatta (es. 1600m, 2850m), la TIPOLOGIA DI GARA e il NUMERO TOTALE DI PARTENTI.
-                - Estrai per ogni riga: Numero, Nome, RT/Rec, GG, SEQ, Quota e cambi equipaggiamento.
-                - DIVIETO DI ALLUCINAZIONE RT: FAI UN DOPPIO CONTROLLO VISIVO. Assicurati di non scambiare l'RT con i Giorni (GG). Se la colonna 'Rt.' o 'Rec' è veramente vuota, SCRIVI "N/A".
+                FASE 1: ESTRAZIONE CINETICA (VISION)
+                - Identifica l'IPPODROMO, la DISTANZA, la TIPOLOGIA DI GARA e il NUMERO TOTALE DI PARTENTI.
+                - Estrai per ogni riga: Numero, Nome, RT/Rec, GG, SEQ, Quota.
+                - IDENTIFICA IL FAVORITO (CAVALLO CON LA QUOTA PIÙ BASSA). [cite: 2026-02-26]
                 - REGOLA LETTURA PIATTAFORMA: Testo (es. 8-8-7-2-2) -> l'ultimo è A DESTRA. Quadrati colorati -> l'ultimo è IL PRIMO A SINISTRA. Applica SEMPRE.
-                - IGNORA LE QUOTE COME INDICATORE DI FORZA. [cite: 2026-02-20]
 
-                FASE 2: APPLICAZIONE FILTRI (IL PROTOCOLLO DEFINITIVO)
-                1. MURO FORMA: L'ultimo risultato valido deve essere 1 o 2.
-                2. CRISTALLO 2.1 (ANTI-SQUALIFICA): Scarta SOLO se le squalifiche (RP, RI, DAI, FE) sono nelle DUE gare più recenti.
-                3. FILTRO RUGGINE: GG < 45.
+                FASE 2: APPLICAZIONE FILTRI (IL PROTOCOLLO DEFINITIVO 106.0)
+                1. MURO FORMA: L'ultimo risultato valido deve essere 1 o 2. [cite: 2026-02-25]
+                2. CRISTALLO 2.1 (ANTI-SQUALIFICA): Scarta SOLO se le squalifiche (RP, RI, DAI, FE, CD) sono nelle DUE gare più recenti.
+                3. FILTRO RUGGINE: GG < 45. [cite: 2026-02-25]
                 4. CUORE IMPAVIDO: Ultime 3 gare: ALMENO DUE piazzamenti a podio (1, 2 o 3).
                 
-                PROTOCOLLI TECNICI E CHILOMETRICI (PRIORITÀ ASSOLUTA):
-                5. POLMONI D'ACCIAIO E "MOTORE CIECO" (GEOLOCALIZZATO):
-                   - Cerca chi ha il miglior valore tecnico (RT/Rec). Se l'RT è debole e non da vertice, SCARTALO SENZA PIETÀ.
-                   - SE IL TERRITORIO È "USA" E L'RT È VUOTO/N.A.: Il cavallo passa SOLO SE ha GG < 45 E le sue ultime DUE gare sono entrambe a podio (es. SEQ 1,1 o 1,2 o 2,1 o 2,2). 
-                   - SE IL TERRITORIO NON È "USA" E L'RT È VUOTO/N.A.: SCARTA IL CAVALLO IMMEDIATAMENTE! Nessuna eccezione fuori dall'America per i fantasmi. [cite: 2026-02-20]
-                6. LEGGE DEL CAMPO RIDOTTO E CAZZIMMA (PARTENTI <= 7): Tolleranza zero. Il superstite DEVE avere RT/Rec dominante (gap >= 5) OPPURE un "Cambio Tattico". Se ha attivato correttamente l'ECCEZIONE MOTORE CIECO IN USA, supera questo vincolo di diritto.
-                7. LEGGE DELLA BARRICATA CON RADAR CHILOMETRICO (CRITICO): 
-                   - SE LA DISTANZA È <= 2100m (Gara Sprint): Scarta i numeri > 7 a meno che il loro REC non sia migliore di almeno 0.8s sulla prima fila.
-                   - SE LA DISTANZA È > 2100m (Gara Maratona, es. 2850m): LA LEGGE DELLA BARRICATA È COMPLETAMENTE DISATTIVATA! Non scartare i numeri alti, valuta tutti i cavalli basandoti solo sulla forma, perché nella maratona il traffico iniziale non è fatale.
-                8. PATCH ANTI-MAIDEN: SE È "MAIDEN", ACCETTA SOLO SEQ RECENTE "1". GG < 15. GAP RT >= 5.
+                PROTOCOLLI SPECIALI (PRIORITÀ ASSOLUTA):
+                5. LA LEGGE DEL FAVORITO (SOLO IN TERRITORIO "USA"): 
+                   - IL CANDIDATO DEVE ESSERE IL FAVORITO (QUOTA PIÙ BASSA) O AVERE UNA QUOTA MOLTO VICINA AD ESSO (MAX +2.00 DI SCARTO).
+                   - SCARTA CATEGORICAMENTE OGNI CAVALLO CON QUOTA > 8.00, ANCHE SE HA PARAMETRI PERFETTI. [cite: 2026-02-26]
+                   - IL SACRO GRAAL USA È L'UNIONE TRA IL FAVORITO DEL MERCATO E LA MIGLIORE DENSITÀ TECNICA (RT/REC). SE IL FAVORITO HA UN RT DEBOLE RISPETTO AL GRUPPO, SCARTA TUTTO. [cite: 2026-02-20, 2026-02-26]
+                6. ECCEZIONE MOTORE CIECO USA: SE RT È N/A, IL FAVORITO PASSA SOLO SE HA GG < 45 E ULTIME DUE GARE ENTRAMBE A PODIO (ES. 1,1 O 1,2 O 2,1 O 2,2). [cite: 2026-02-20]
+                7. PATCH ANTI-MAIDEN: SE È "MAIDEN", ACCETTA SOLO SEQ RECENTE "1". GG < 15. GAP RT >= 5. [cite: 2026-02-25]
 
                 FASE 3: REFERTO FINALE
-                '🌍 BERSAGLIO: [NAZIONE] - [IPPODROMO] - DISTANZA: [DISTANZA] - PARTENTI: [NUMERO]'
+                '🌍 BERSAGLIO: [NAZIONE] - [IPPODROMO] - DISTANZA: [DISTANZA]'
                 
                 '🔍 SCANSIONE SUPERSTITI:'
-                - PARTICELLA [NUMERO]: PASSATO (GG [X], SEQ [Y], RT/REC [Z], [NOTE SU SALVACONDOTTO O BARRICATA])
+                - PARTICELLA [NUMERO]: PASSATO (GG [X], SEQ [Y], RT/REC [Z], QUOTA [Q])
                 
-                SE C'È UN VERO SACRO GRAAL TATTICO:
+                SE C'È UN VERO SACRO GRAAL (FAVORITO + TECNICO):
                 '💰 TAGLIA RISCOSSA: PISTOLERO [NUMERO #] - [NOME]'
-                'BULLONE SERRATO: [Motivazione].'
+                'BULLONE SERRATO: [Conferma che è il favorito con i polmoni d'acciaio].'
                 
                 SE NON C'È PERFEZIONE: 
-                '🌵 NESSUNA PEPITA IN QUESTO FIUME. I SUPERSTITI MANCANO DI POLMONI D'ACCIAIO O FORMA DEVASTANTE.'
+                '🌵 NESSUNA PEPITA IN QUESTO FIUME. IL FAVORITO È DEBOLE O IL TECNICO HA QUOTA TROPPO ALTA.'
                 """
 
                 res = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt] + images)
@@ -118,3 +115,4 @@ if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
                     play_victory_bell(); st.balloons()
             except Exception as e:
                 st.error(f"☠️ SERPENTE NELLO STIVALE: {e}")
+                
