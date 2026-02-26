@@ -41,8 +41,8 @@ except KeyError:
     st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI (GEMINI_API_KEY)!")
     st.stop()
 
-st.title("🤠 SNIPER 105.0: THE BLIND SIGHT")
-st.markdown("### *'Mirino Infallibile. Forma Devastante. Zero Allucinazioni.'*")
+st.title("🤠 SNIPER 105.1: AMERICAN BLIND SIGHT")
+st.markdown("### *'Mirino Infallibile. Variante USA Attiva. Zero Allucinazioni.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
@@ -86,10 +86,11 @@ if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
                 4. CUORE IMPAVIDO: Ultime 3 gare: ALMENO DUE piazzamenti a podio (1, 2 o 3).
                 
                 PROTOCOLLI TECNICI E CHILOMETRICI (PRIORITÀ ASSOLUTA):
-                5. POLMONI D'ACCIAIO E "MOTORE CIECO" (USO ESTREMO E SPIETATO):
+                5. POLMONI D'ACCIAIO E "MOTORE CIECO" (GEOLOCALIZZATO):
                    - Cerca chi ha il miglior valore tecnico (RT/Rec). Se l'RT è debole e non da vertice, SCARTALO SENZA PIETÀ.
-                   - ECCEZIONE MOTORE CIECO: Applica questa regola SOLO SE la casella RT/Rec è INEQUIVOCABILMENTE vuota o "N/A". SE è davvero vuota, il cavallo passa SOLO SE ha una FORMA DEVASTANTE: GG < 20 E le sue ultime DUE gare sono entrambe a podio (es. SEQ che inizia con 1,1 o 1,2 o 2,1). Se ha un solo '1' e poi numeri scarsi, o se GG è >= 20, SCARTALO, è un bluff!
-                6. LEGGE DEL CAMPO RIDOTTO E CAZZIMMA (PARTENTI <= 7): Tolleranza zero. Il superstite DEVE avere RT/Rec dominante (gap >= 5) OPPURE un "Cambio Tattico". Se ha attivato correttamente l'ECCEZIONE MOTORE CIECO estrema, supera questo vincolo di diritto.
+                   - SE IL TERRITORIO È "USA" E L'RT È VUOTO/N.A.: Il cavallo passa SOLO SE ha GG < 45 E le sue ultime DUE gare sono entrambe a podio (es. SEQ 1,1 o 1,2 o 2,1 o 2,2). 
+                   - SE IL TERRITORIO NON È "USA" E L'RT È VUOTO/N.A.: SCARTA IL CAVALLO IMMEDIATAMENTE! Nessuna eccezione fuori dall'America per i fantasmi. [cite: 2026-02-20]
+                6. LEGGE DEL CAMPO RIDOTTO E CAZZIMMA (PARTENTI <= 7): Tolleranza zero. Il superstite DEVE avere RT/Rec dominante (gap >= 5) OPPURE un "Cambio Tattico". Se ha attivato correttamente l'ECCEZIONE MOTORE CIECO IN USA, supera questo vincolo di diritto.
                 7. LEGGE DELLA BARRICATA CON RADAR CHILOMETRICO (CRITICO): 
                    - SE LA DISTANZA È <= 2100m (Gara Sprint): Scarta i numeri > 7 a meno che il loro REC non sia migliore di almeno 0.8s sulla prima fila.
                    - SE LA DISTANZA È > 2100m (Gara Maratona, es. 2850m): LA LEGGE DELLA BARRICATA È COMPLETAMENTE DISATTIVATA! Non scartare i numeri alti, valuta tutti i cavalli basandoti solo sulla forma, perché nella maratona il traffico iniziale non è fatale.
