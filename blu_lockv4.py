@@ -1,11 +1,9 @@
 import streamlit as st
 from google import genai
 from PIL import Image
-import base64
-import io
 import streamlit.components.v1 as components
 
-# --- 1. GRAFICA 'MEZZOGIORNO DI FUOCO' (LIGHT THEME) ---
+# --- 1. GRAFICA WESTERN SALOON (LIGHT THEME) ---
 st.markdown("""
     <style>
     .stApp { 
@@ -43,10 +41,10 @@ except KeyError:
     st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI (GEMINI_API_KEY)!")
     st.stop()
 
-st.title("🤠 SNIPER 77.0: TOTAL ELIMINATOR")
-st.markdown("### *'Protocollo Infallibile. Sentinella delle Quote. Zero Margine di Errore.'*")
+st.title("🤠 SNIPER 85.0: THE DYNAMIC EXPERT")
+st.markdown("### *'Visione Molecolare. Filtri Ippodromo Attivi. Gloria Totale.'*")
 
-# --- 3. BACHECA DEI RICERCATI ---
+# --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
     "UK", "IRLANDA", "USA", "ITALIA", "FRANCIA", "GERMANIA", 
     "SVEZIA", "CILE", "BRASILE", "SUD AFRICA", "AUSTRALIA", "GIAPPONE"
@@ -59,50 +57,50 @@ if uploaded_files:
     cols = st.columns(len(uploaded_files))
     for i, file in enumerate(uploaded_files):
         with cols[i]:
-            st.image(file, caption=f"Manifesto #{i+1}", use_container_width=True)
+            st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (ALGORITMO DEFINITIVO) ---
-if st.button("🐎 SCATENA IL DUELLO (TROVA LA MULTIPLA)"):
+# --- 4. IL GRILLETTO (PROTOCOLLO ESPERTO DINAMICO) ---
+if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
     if not uploaded_files:
         st.warning("CARICA I MANIFESTI, COMANDANTE!")
     else:
-        with st.spinner("LO SCERIFFO STA SCANSIONANDO L'ABISSO... ⏳"):
+        with st.spinner("LO SCERIFFO STA ANALIZZANDO LA MATRICE... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
-                # IL PROMPT CHE FONDE TUTTA LA NOSTRA STORIA
                 prompt = f"""
-                SISTEMA: PROTOCOLO BLUE LOCK - ANALISI MOLECOLARE DEFINITIVA.
-                SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
-                NAZIONE: {nazione}
+                SEI L'ESPERTO DINAMICO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO.
+                TERRITORIO: {nazione}
 
-                FASE 1: GABBIA DI LETTURA CHIRURGICA
-                - Identifica: Numero, Nome, RT (Rating/Rec), GG (Giorni), SEQ (Ultimi Arrivi), Quota.
-                - CRITICO: NON scambiare PESO con RT. [cite: 2026-02-25]
+                FASE 1: ESTRAZIONE CINETICA
+                - Identifica l'IPPODROMO e la TIPOLOGIA DI GARA (Maiden, Nastri, Handicap, Piano).
+                - Estrai per ogni cavallo: Numero, Nome, RT (o Rec), GG, SEQ, Quota e Nastro (0m, 20m, etc.).
 
-                FASE 2: LE LEGGI DELLA FRONTIERA (GRANITO 3.0 + IRON LUNG)
-                1. MURO FORMA: SEQ deve iniziare con 1 o 2. (SOLO 1 se Maiden). [cite: 2026-02-25]
-                2. FILTRO RUGGINE (IRON LUNG): GG deve essere < 45. TOLLERA fino a 90 solo se RT è dominante (+5 punti sul secondo). [cite: 2026-02-25]
-                3. SENTINELLA DEL MERCATO: Se la QUOTA è > 15.00, il cavallo DEVE avere un RT superiore di almeno 5 punti rispetto agli altri. Altrimenti, SCARTA: è instabilità. [cite: 2026-02-20]
-                4. BIAS NASTRI/NAPOLI: Se Nastri, priorità 0m. Se Napoli, tollera '4' recente.
+                FASE 2: APPLICAZIONE FILTRI DINAMICI (PROTOCOLLO GRANITO 3.0)
+                1. MURO FORMA: SEQ inizia con 1 o 2.
+                2. FILTRO RUGGINE: GG < 45. (Eccezione: 'Iron Lung' se RT è +5 rispetto al secondo).
+                3. PATCH MAIDEN: Se Maiden, accetta SOLO SEQ 1 e GG < 15.
+                4. BIAS NASTRI: Priorità assoluta alla 'Lepre' (0m) se ha passato i filtri forma.
+                5. SENTINELLA QUOTE: Se Quota > 15.00, richiede RT superiore di almeno 5 punti per stabilità.
+                6. FILTRI LOCALI:
+                   - NAPOLI: Tolleranza SEQ '4' se RT è dominante.
+                   - SVEZIA: Tolleranza Zero per RP, RI, DAI nelle ultime 2 uscite.
+                   - SOUTHWELL: Ignora favoriti < 3.00.
 
                 FASE 3: REFERTO FINALE
-                Voglio solo la verità nuda e cruda. Se non c'è perfezione, scarta la gara.
-
-                REFERTO:
-                '💰 TAGLIA RISCOSSA: PISTOLERO [NUMERO #] - [NOME]'
-                'COLPO SICURO: [Analisi su RT schiacciante, GG e Sentinella Quote].'
-                'BULLONE SERRATO: [Conferma SEQ e Cemento Tecnico].'
+                '🌍 BERSAGLIO: [NAZIONE] - [IPPODROMO] - [TIPO GARA]'
+                '🏆 SACRO GRAAL: PARTICELLA [NUMERO #] - [NOME]'
+                'PIANO DI CORSA: [Dettaglio su RT, GG, SEQ e perché schiaccia il favorito].'
+                'BULLONE SERRATO: [Conferma requisiti specifici ippodromo/nazione].'
                 
-                SE NON C'È PERFEZIONE:
-                '🌵 NESSUNA PEPITA: [MOTIVO BREVE].'
+                SE NON C'È PERFEZIONE: '🌵 NESSUNA PEPITA IN QUESTO FIUME.'
                 """
 
                 res = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt] + images)
                 sentenza = res.text
                 
                 st.info(sentenza)
-                if "TAGLIA" in sentenza.upper() and "NESSUNA" not in sentenza.upper():
+                if "SACRO GRAAL" in sentenza.upper():
                     play_victory_bell(); st.balloons()
             except Exception as e:
                 st.error(f"☠️ SERPENTE NELLO STIVALE: {e}")
