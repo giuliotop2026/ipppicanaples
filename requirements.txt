@@ -4,3 +4,5 @@ selenium
 google-genai
 openai
 Pillow
+anthropic
+
