@@ -7,23 +7,18 @@ import streamlit.components.v1 as components
 # --- GRAFICA ROYAL TURF 2.0 (STILE CANTIERE IPPICO) ---
 st.markdown("""
     <style>
-    /* Sfondo Verde Erba scuro per massima concentrazione */
     .stApp { 
         background-color: #0e2a1d; 
         background-image: linear-gradient(180deg, #123524 0%, #071a10 100%);
         color: #f0f4f1; 
         font-family: 'Courier New', Courier, monospace; 
     }
-    
-    /* Titoli Oro per il Sacro Graal */
     h1, h2, h3 { 
         color: #d4af37 !important; 
         text-transform: uppercase; 
         font-weight: 900; 
         text-shadow: 2px 2px 5px #000;
     }
-    
-    /* Bottone 'Grilletto' stile cuoio e oro */
     .stButton>button { 
         background-color: #5d4037 !important; 
         color: #ffffff !important; 
@@ -33,8 +28,6 @@ st.markdown("""
         box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
     }
     .stButton>button:hover { background-color: #d4af37 !important; color: #0e2a1d !important; }
-    
-    /* Referto Finale Blindato */
     div[data-testid="stAlert"] {
         background-color: #071a10 !important;
         border: 2px solid #d4af37 !important;
@@ -50,7 +43,6 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 def play_beep():
-    # Suono campana ultimo giro
     beep_html = '<audio autoplay><source src="https://www.myinstants.com/media/sounds/boxing-bell.mp3" type="audio/mpeg"></audio>'
     components.html(beep_html, height=0, width=0)
 
@@ -62,12 +54,12 @@ except KeyError:
     st.error("☠️ MUNIZIONI MANCANTI (API KEYS)!")
     st.stop()
 
-st.title("🏇 SNIPER 37.0: ABSOLUTE SHIELD")
-st.markdown("### *'Patch Anti-Maiden attiva. Zero errori, zero instabilità.'*")
+st.title("🏇 SNIPER 38.0: THE IRISH SHIELD")
+st.markdown("### *'Irlanda sbloccata. Mappatura nastri e filtro Maiden attivo. Zero errori.'*")
 
-# 3. SELEZIONE NAZIONE
+# 3. SELEZIONE NAZIONE (AGGIUNTA IRLANDA)
 nazione = st.selectbox("🌍 SELEZIONA IL TERRITORIO DI CACCIA:", [
-    "UK", "USA", "ITALIA", "FRANCIA", "GERMANIA", "SVEZIA", "CILE", "BRASILE", "SUD AFRICA", "AUSTRALIA", "GIAPPONE"
+    "UK", "IRLANDA", "USA", "ITALIA", "FRANCIA", "GERMANIA", "SVEZIA", "CILE", "BRASILE", "SUD AFRICA", "AUSTRALIA", "GIAPPONE"
 ])
 
 # 4. SCANNER MOLECOLARE
@@ -81,13 +73,12 @@ if st.button("🏁 ESEGUI PROTOCOLO GRANITO 3.0"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
                 
-                # FASE 1: ESTRAZIONE CINETICA (GEMINI 2.5 FLASH)
-                # Il prompt ora identifica esplicitamente se la corsa è una MAIDEN
+                # FASE 1: ESTRAZIONE CINETICA
                 prompt_v = f"""
                 SCANSIONA LE IMMAGINI PER {nazione}.
-                FASE A (METADATI): ESTRAI IPPODROMO, DISTANZA TOTALE (es. 1410m) E TIPO DI CORSA (PIANO/NASTRI/HANDICAP/MAIDEN).
+                FASE A (METADATI): ESTRAI IPPODROMO, DISTANZA TOTALE E TIPO DI CORSA (PIANO/NASTRI/HANDICAP/MAIDEN).
                 FASE B (PARTICELLE): ESTRAI OGNI RIGA SENZA NOMI.
-                FORMATO: # [NUMERO] | NASTRO: [es. 0m, +20m] | RT: [Rating] | GG: [Giorni] | SEQ: [Es: 1-2-7-7-6] | QUOTA: [Quota]
+                FORMATO: # [NUMERO] | NASTRO: [es. 0m, +20m] | RT: [Rating] | GG: [Giorni] | SEQ: [Es: 1-2-7] | QUOTA: [Quota]
                 REGOLE: 
                 - SE IL GG È MANCANTE, SCRIVI "N/D".
                 - NELLA SEQUENZA, IL PRIMO NUMERO A SINISTRA È L'ULTIMA CORSA (FORMA RECENTE). [cite: 2026-02-25]
@@ -95,7 +86,7 @@ if st.button("🏁 ESEGUI PROTOCOLO GRANITO 3.0"):
                 res_v = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt_v] + images)
                 dati_estratti = res_v.text
 
-                # FASE 2: IL CERVELLO (PERPLEXITY SONAR PRO - OFFLINE LOGIC CON PATCH ANTI-MAIDEN)
+                # FASE 2: IL CERVELLO (LOGICA GRANITO 3.0 + PATCH ANTI-MAIDEN)
                 prompt_p = f"""
                 SISTEMA: PROTOCOLO GRANITO 3.0 - PIAZZATO BLINDATO. [cite: 2026-02-25]
                 SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
@@ -104,18 +95,18 @@ if st.button("🏁 ESEGUI PROTOCOLO GRANITO 3.0"):
                 PARAMETRI DI PERFEZIONE 15.15 (NORMAL RACES):
                 1. MURO DELLA FORMA: PRIMO NUMERO SEQ DEVE ESSERE 1 O 2. [cite: 2026-02-25]
                 2. FILTRO RUGGINE: GG DEVE ESSERE < 45. SE 'N/D' O > 45, ELIMINA. [cite: 2026-02-25]
-                3. BIAS NASTRI: PRIORITÀ LEPRE (0m) SE CALDA. [cite: 2026-02-24]
+                3. BIAS NASTRI: PRIORITÀ ASSOLUTA ALLA LEPRE (0m) SE CALDA. [cite: 2026-02-24]
 
                 PROTOCOLLO SPECIALE MAIDEN PLATE (PATCH ANTI-MAIDEN) [cite: 2026-02-25]:
                 SE IL TIPO DI CORSA È "MAIDEN":
-                - IL MURO DELLA FORMA ACCETTA SOLO IL NUMERO "1". IL "2" È CONSIDERATO INSTABILE.
-                - IL FILTRO RUGGINE ACCETTA SOLO GG < 15. IL MOTORE DEVE ESSERE BOLLENTE.
-                - GAP RT: IL RATING (RT) DEL CANDIDATO DEVE ESSERE ALMENO 5 PUNTI SUPERIORE AL SECONDO MIGLIORE.
-                - SE QUESTI REQUISITI NON SONO SODDISFATTI, DICHIARA 'NESSUN SACRO GRAAL: INSTABILITÀ MAIDEN'.
+                - MURO DELLA FORMA: ACCETTA SOLO IL NUMERO "1". IL "2" È CONSIDERATO INSTABILE.
+                - FILTRO RUGGINE: ACCETTA SOLO GG < 15.
+                - GAP RT: IL RATING (RT) DEVE ESSERE ALMENO 5 PUNTI SUPERIORE AL SECONDO MIGLIORE.
+                - FALLIMENTO: DICHIARA 'NESSUN SACRO GRAAL: INSTABILITÀ MAIDEN' SE I REQUISITI NON SONO SODDISFATTI.
 
                 REFERTO FINALE (SINTASSI MAIUSCOLA):
                 '🏆 SACRO GRAAL INDIVIDUATO: [NUMERO #]' (O 'NESSUN SACRO GRAAL')
-                'PIANO DI CORSA: [ANALISI DEI FILTRI E, SE MAIDEN, CONFERMA DELLA SUPERIORITÀ SCHIACCIANTE].'
+                'PIANO DI CORSA: [ANALISI FILTRI E SUPERIORITÀ SCHIACCIANTE].'
                 'BULLONE SERRATO: [CONFERMA SEQ, GG E RT GAP].'
                 """
                 
