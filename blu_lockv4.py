@@ -41,8 +41,8 @@ except KeyError:
     st.error("☠️ EHI STRANIERO, MANCANO LE MUNIZIONI (GEMINI_API_KEY)!")
     st.stop()
 
-st.title("🤠 SNIPER 104.0: DISTANCE RADAR")
-st.markdown("### *'Lettura Universale. Radar Chilometrico. Zero Errori.'*")
+st.title("🤠 SNIPER 105.0: THE BLIND SIGHT")
+st.markdown("### *'Mirino Infallibile. Forma Devastante. Zero Allucinazioni.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ TERRITORIO DI CACCIA:", [
@@ -59,25 +59,25 @@ if uploaded_files:
         with cols[i]:
             st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (LA FUSIONE TATTICA TOTALE) ---
+# --- 4. IL GRILLETTO (LA FUSIONE TATTICA TOTALE E SPIETATA) ---
 if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
     if not uploaded_files:
         st.warning("CARICA I MANIFESTI, COMANDANTE!")
     else:
-        with st.spinner("LO SCERIFFO STA CALCOLANDO LE DISTANZE E LE BARRICATE... ⏳"):
+        with st.spinner("LO SCERIFFO STA CALCOLANDO LE DISTANZE E VERIFICANDO I MOTORI... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
                 prompt = f"""
-                SEI L'ARCHITETTO TATTICO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO.
+                SEI L'ARCHITETTO TATTICO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
                 TERRITORIO: {nazione}
 
                 FASE 1: ESTRAZIONE CINETICA PERFETTA E UNIVERSALE
                 - Identifica l'IPPODROMO, la DISTANZA esatta (es. 1600m, 2850m), la TIPOLOGIA DI GARA e il NUMERO TOTALE DI PARTENTI.
                 - Estrai per ogni riga: Numero, Nome, RT/Rec, GG, SEQ, Quota e cambi equipaggiamento.
-                - DIVIETO DI ALLUCINAZIONE RT: Se la colonna 'Rt.' o 'Rec' è vuota, SCRIVI "N/A".
+                - DIVIETO DI ALLUCINAZIONE RT: FAI UN DOPPIO CONTROLLO VISIVO. Assicurati di non scambiare l'RT con i Giorni (GG). Se la colonna 'Rt.' o 'Rec' è veramente vuota, SCRIVI "N/A".
                 - REGOLA LETTURA PIATTAFORMA: Testo (es. 8-8-7-2-2) -> l'ultimo è A DESTRA. Quadrati colorati -> l'ultimo è IL PRIMO A SINISTRA. Applica SEMPRE.
-                - IGNORA LE QUOTE COME INDICATORE DI FORZA.
+                - IGNORA LE QUOTE COME INDICATORE DI FORZA. [cite: 2026-02-20]
 
                 FASE 2: APPLICAZIONE FILTRI (IL PROTOCOLLO DEFINITIVO)
                 1. MURO FORMA: L'ultimo risultato valido deve essere 1 o 2.
@@ -85,26 +85,28 @@ if st.button("🐎 SCATENA IL DUELLO (ANALISI TOTALE)"):
                 3. FILTRO RUGGINE: GG < 45.
                 4. CUORE IMPAVIDO: Ultime 3 gare: ALMENO DUE piazzamenti a podio (1, 2 o 3).
                 
-                PROTOCOLLI SPECIALI E CHILOMETRICI (PRIORITÀ ASSOLUTA):
-                5. LEGGE DEL CAMPO RIDOTTO E CAZZIMMA (PARTENTI <= 7): Tolleranza zero. Il superstite DEVE avere RT/Rec dominante (gap >= 5) OPPURE un "Cambio Tattico".
-                   >>> SALVACONDO MOTORE CIECO: Se RT/Rec è "N/A", MA ha vinto l'ultima (SEQ 1) ed è fresco (GG < 45), SUPERA IL CAMPO RIDOTTO DI DIRITTO! <<<
-                6. LEGGE DELLA BARRICATA CON RADAR CHILOMETRICO (CRITICO): 
+                PROTOCOLLI TECNICI E CHILOMETRICI (PRIORITÀ ASSOLUTA):
+                5. POLMONI D'ACCIAIO E "MOTORE CIECO" (USO ESTREMO E SPIETATO):
+                   - Cerca chi ha il miglior valore tecnico (RT/Rec). Se l'RT è debole e non da vertice, SCARTALO SENZA PIETÀ.
+                   - ECCEZIONE MOTORE CIECO: Applica questa regola SOLO SE la casella RT/Rec è INEQUIVOCABILMENTE vuota o "N/A". SE è davvero vuota, il cavallo passa SOLO SE ha una FORMA DEVASTANTE: GG < 20 E le sue ultime DUE gare sono entrambe a podio (es. SEQ che inizia con 1,1 o 1,2 o 2,1). Se ha un solo '1' e poi numeri scarsi, o se GG è >= 20, SCARTALO, è un bluff!
+                6. LEGGE DEL CAMPO RIDOTTO E CAZZIMMA (PARTENTI <= 7): Tolleranza zero. Il superstite DEVE avere RT/Rec dominante (gap >= 5) OPPURE un "Cambio Tattico". Se ha attivato correttamente l'ECCEZIONE MOTORE CIECO estrema, supera questo vincolo di diritto.
+                7. LEGGE DELLA BARRICATA CON RADAR CHILOMETRICO (CRITICO): 
                    - SE LA DISTANZA È <= 2100m (Gara Sprint): Scarta i numeri > 7 a meno che il loro REC non sia migliore di almeno 0.8s sulla prima fila.
                    - SE LA DISTANZA È > 2100m (Gara Maratona, es. 2850m): LA LEGGE DELLA BARRICATA È COMPLETAMENTE DISATTIVATA! Non scartare i numeri alti, valuta tutti i cavalli basandoti solo sulla forma, perché nella maratona il traffico iniziale non è fatale.
-                7. PATCH ANTI-MAIDEN: SE È "MAIDEN", ACCETTA SOLO SEQ RECENTE "1". GG < 15. GAP RT >= 5.
+                8. PATCH ANTI-MAIDEN: SE È "MAIDEN", ACCETTA SOLO SEQ RECENTE "1". GG < 15. GAP RT >= 5.
 
                 FASE 3: REFERTO FINALE
                 '🌍 BERSAGLIO: [NAZIONE] - [IPPODROMO] - DISTANZA: [DISTANZA] - PARTENTI: [NUMERO]'
                 
                 '🔍 SCANSIONE SUPERSTITI:'
-                - PARTICELLA [NUMERO]: PASSATO (GG [X], SEQ [Y], RT/REC [Z], [NOTE SU SALVACONDOTTO O DISATTIVAZIONE BARRICATA])
+                - PARTICELLA [NUMERO]: PASSATO (GG [X], SEQ [Y], RT/REC [Z], [NOTE SU SALVACONDOTTO O BARRICATA])
                 
                 SE C'È UN VERO SACRO GRAAL TATTICO:
                 '💰 TAGLIA RISCOSSA: PISTOLERO [NUMERO #] - [NOME]'
                 'BULLONE SERRATO: [Motivazione].'
                 
                 SE NON C'È PERFEZIONE: 
-                '🌵 NESSUNA PEPITA IN QUESTO FIUME.'
+                '🌵 NESSUNA PEPITA IN QUESTO FIUME. I SUPERSTITI MANCANO DI POLMONI D'ACCIAIO O FORMA DEVASTANTE.'
                 """
 
                 res = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt] + images)
