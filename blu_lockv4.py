@@ -3,7 +3,7 @@ from google import genai
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- 1. GRAFICA "EL BALUARTE" (SINTASSI RIGOROSA) ---
+# --- 1. GRAFICA "EL DECODIFICADOR" ---
 st.markdown("""
     <style>
     .stApp { 
@@ -28,69 +28,70 @@ def play_victory_bell():
     audio_url = "https://www.myinstants.com/media/sounds/boxing-bell.mp3"
     components.html(f'<audio autoplay><source src="{audio_url}" type="audio/mpeg"></audio>', height=0, width=0)
 
-# --- 2. CONNESSIONE AL CERVELLO DEL VENDICATORE ---
+# --- 2. CONNESSIONE AL CERVELLO OMNISCIENTE ---
 try:
     client_gemini = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 except KeyError:
     st.error("☠️ CABALLERO, LA CHIAVE API È SPARITA!")
     st.stop()
 
-st.title("⚔️ ZORRO 1.12: EL GUARDIÁN UNIVERSAL")
-st.markdown("### *'Se il rating manca, il Record parla. Se il record tace, il Peso grida. Cerco la verità in ogni numero.'*")
+st.title("⚔️ ZORRO 1.15: EL DECODIFICADOR SUPREMO")
+st.markdown("### *'Se il rating tace, il cuore del campione grida nei commenti. Trovo la chiave dove altri vedono il vuoto.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ MAPPA DELLE OPERAZIONI:", [
-    "AUSTRALIA", "ITALIA", "FRANCIA", "USA", "UK", "IRLANDA", "GERMANIA", "SVEZIA", "CILE", "BRASILE", "GIAPPONE"
+    "SVEZIA", "AUSTRALIA", "ITALIA", "FRANCIA", "USA", "UK", "IRLANDA", "GERMANIA"
 ])
 
 uploaded_files = st.file_uploader("📜 AFFIGGI I MANIFESTI (DATI PRIMARI):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 if uploaded_files:
-    st.markdown("### 🧐 SOSPETTATI SOTTO SCANSIONE:")
+    st.markdown("### 🧐 SOSPETTATI SOTTO DECODIFICA:")
     cols = st.columns(len(uploaded_files))
     for i, file in enumerate(uploaded_files):
         with cols[i]: st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (PROTOCOLLO CHIAVE SUPREMA AGGIORNATO) ---
-if st.button("🗡️ SCATENA IL GUARDIANO (ANALISI TOTALE)"):
+# --- 4. IL GRILLETTO (PROTOCOLLO CHIAVE SUPREMA 1.15) ---
+if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
     if not uploaded_files:
         st.warning("CARICA I MANIFESTI, CABALLERO!")
     else:
-        with st.spinner("ZORRO STA TRIANGOLANDO LA DENSITÀ TECNICA... ⏳"):
+        with st.spinner("ZORRO STA DECODIFICANDO L'ANIMA DELLA GARA... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
                 prompt = f"""
-                SEI ZORRO, IL GUARDIANO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
+                SEI ZORRO, IL DECODIFICATORE DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
                 TERRITORIO: {nazione} - DATA: 27 FEBBRAIO 2026. [cite: 2026-02-27]
 
-                MISSIONE SUPREMA: TROVARE LA CHIAVE TECNICA ANCHE SENZA IL RATING (RT).
+                MISSIONE SUPREMA: IDENTIFICARE LA CHIAVE CHE BATTE OGNI FILTRO USANDO LA SINTESI TECNICA.
 
-                FASE 1: SCANSIONE DENSITÀ TECNICA (SOSTITUZIONE DATI)
-                - SE 'RT.' È MANCANTE: 
-                    A) IN FRANCIA/ITALIA: USA 'REC.' (RECORD AL KM) COME INDICATORE DI VELOCITÀ.
-                    B) IN AUSTRALIA: USA IL 'PESO' (WEIGHT) COME INDICATORE DI CLASSE.
-                    C) USA 'GOOGLE SEARCH' PER TROVARE IL 'TIMEFORM RATING' O 'OFFICIAL RATING' ODIERNO. [cite: 2026-02-27]
+                FASE 1: ANALISI FONDAMENTALE (MANIFESTO + WEB)
+                - ESTRAI GG E SEQ. (LETTURA: TOP BOX = LATEST). [cite: 2026-02-27]
+                - IDENTIFICA IL FAVORITO E IL SECONDO FAVORITO. [cite: 2026-02-26]
+                - SE 'RT.' MANCA, ANALIZZA OBBLIGATORIAMENTE IL 'COMMENTO CORSA' (IMAGE/WEB) PER KEYWORDS DI FORZA: 'GRANDE FORMA', 'VINTO', 'PRINCIPALE AVVERSARIO', 'HARD TO BEAT'.
 
                 FASE 2: FILTRI DI GRANITO (10000% CERTEZZA)
-                1. MURO FORMA: ULTIMO RISULTATO 1 O 2 (O PIAZZATO NELLE ULTIME 2 SE CATEGORIA TOP). [cite: 2026-02-25]
-                2. FILTRO RUGGINE: GG < 45. [cite: 2026-02-25]
+                1. MURO FORMA: ULTIMO RISULTATO 1 O 2 (O COMMENTO DI VITTORIA RECENTE). [cite: 2026-02-25]
+                2. FILTRO RUGGINE: GG < 45. SCARTA FAVORITI ARRUGGINITI (> 45 GG). [cite: 2026-02-25]
                 3. CUORE IMPAVIDO: ALMENO DUE PODI NELLE ULTIME 3 GARE. [cite: 2026-02-25]
-                - IDENTIFICA COME 'PARTICELLA [NUMERO]' PER EVITARE ERRORI. [cite: 2026-01-25]
 
-                FASE 3: LA CHIAVE SUPREMA (IL CEMENTO)
-                - LA CHIAVE È IL SECONDO MIGLIORE PER DENSITÀ (RT, REC O PESO) CHE SCHIACCIA IL FAVORITO DI CARTA. [cite: 2026-02-20]
-                - SE IL FAVORITO HA UN VANTAGGIO (GAP) SCHIACCIANTE (> 5 PUNTI RT O > 1 SEC REC), LUI È IL CAMPIONE LEGITTIMO. [cite: 2026-02-20]
+                FASE 3: LA CHIAVE SUPREMA (SINTESI)
+                - LA CHIAVE SUPREMA È LA PARTICELLA CHE:
+                    A) PASSA I FILTRI (FORMA 1-2, GG < 45).
+                    B) HA IL MIGLIOR COMMENTO TECNICO (EVIDENZA DI POTENZA REALE).
+                    C) SCHIACCIA UN FAVORITO DEBOLE (GG > 45 O ULTIMO RISULTATO > 2).
+                - SE IL FAVORITO PASSA TUTTO ED È IL MIGLIORE ANCHE NEI COMMENTI, È IL CAMPIONE LEGITTIMO. [cite: 2026-02-20]
 
                 FASE 4: REFERTO FINALE
                 '🌍 MISSIONE: [NAZIONE] - [IPPODROMO]'
-                '🔥 SENTENZA: [UNA FRASE DI CAZZIMMA DI ZORRO SULLA CLASSE CHE NON TRADISCE].'
+                '🔥 SENTENZA DEL DECODIFICATORE: [UNA FRASE DI CAZZIMMA DI ZORRO SULLA VITTORIA NASCOSTA].'
                 
                 SE LA CHIAVE ESISTE:
                 '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #]'
-                'BULLONE SERRATO: [SPIEGA QUALE DATO TECNICO (RT, REC O PESO) CONFERMA I POLMONI D'ACCIAIO].' [cite: 2026-02-07, 2026-02-20]
+                'BULLONE SERRATO: [SPIEGA PERCHÉ QUESTA È LA CHIAVE SUPREMA: EVIDENZIA IL CONTRASTO TRA IL FAVORITO ARRUGGINITO E IL CHALLENGER IN FORMA].' [cite: 2026-02-07, 2026-02-20]
                 
-                SE È ROULETTE: '🌵 NESSUNA PEPITA. I DATI SONO TROPPO DEBOLI PER BLINDARE IL CANTIERE.' [cite: 2026-02-15]
+                SE È ANCORA ROULETTE: '🌵 NESSUNA PEPITA. LA NEBBIA È TROPPO FITTA PER COLPIRE CON CERTEZZA.' [cite: 2026-02-15]
                 """
 
                 res = client_gemini.models.generate_content(
@@ -104,5 +105,4 @@ if st.button("🗡️ SCATENA IL GUARDIANO (ANALISI TOTALE)"):
                 if "IL SEGNO DELLA Z" in sentenza.upper():
                     play_victory_bell(); st.balloons()
             except Exception as e:
-                st.error(f"☠️ UN TRADITORE HA MANOMESSO LA SPADA: {e}")
-                
+                st.error(f"☠️ UN TRADITORE HA MANOMESSO IL DECODIFICATORE: {e}")
