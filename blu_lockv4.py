@@ -36,8 +36,8 @@ except KeyError:
     st.error("☠️ CHIAVE API MANCANTE! IL VENDICATORE È DISARMATO.")
     st.stop()
 
-st.title("⚔️ ZORRO 1.10: EL OMNIPOTENTE")
-st.markdown("### *'Il codice universale per la gloria eterna. Analizzo l'abisso, trovo la verità, incido l'oro.'*")
+st.title("⚔️ ZORRO 1.11: EL GUARDIÁN")
+st.markdown("### *'Zero errori. Scansione millimetrica tra Rating e Ruggine. Solo il cemento blinda il cantiere.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ MAPPA DELLE OPERAZIONI MONDIALI:", [
@@ -52,12 +52,12 @@ if uploaded_files:
         with cols[i]:
             st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO SUPREMO ---
-if st.button("🗡️ INCIDI LA 'Z' (ANALISI OMNIPOTENTE)"):
+# --- 4. IL GRILLETTO SUPREMO (PROTOCOLLO GUARDIÁN 1.11) ---
+if st.button("🗡️ INCIDI LA 'Z' (ANALISI INFALLIBILE)"):
     if not uploaded_files:
         st.warning("CARICA I MANIFESTI, CABALLERO!")
     else:
-        with st.spinner("ZORRO STA SCANSIONANDO IL MONDO PER TE... ⏳"):
+        with st.spinner("ZORRO STA VERIFICANDO OGNI BULLONE... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
@@ -66,37 +66,36 @@ if st.button("🗡️ INCIDI LA 'Z' (ANALISI OMNIPOTENTE)"):
                 SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
                 TERRITORIO: {nazione} - DATA: 27 FEBBRAIO 2026. [cite: 2026-02-27]
 
-                MISSIONE: TROVARE LA CHIAVE SUPREMA IN QUALSIASI CIRCUITO O CONDIZIONE. [cite: 2026-02-21]
+                MISSIONE: TROVARE LA CHIAVE SUPREMA CON ZERO ERRORI DI TRASCRIZIONE. [cite: 2026-02-21]
 
-                FASE 0: RILEVAMENTO AMBIENTE (PROTOCOLLO LIVE)
-                - IDENTIFICA TERRENO (PANTANO/SOFT/HEAVY/MUDDY vs GOOD/FIRM). [cite: 2026-02-27]
-                - IDENTIFICA RITIRATI (GHOST PROTOCOL). SE > 35%, DICHIARA ROULETTE. [cite: 2026-01-19]
-                - USA 'GOOGLE SEARCH' PER VERIFICARE LA 'CAZZIMMA' DEL FANTINO E IL METEO LIVE. [cite: 2026-02-27]
+                FASE 0: CALIBRAZIONE OCCHIO (MORSA OCR)
+                - IDENTIFICA LE COLONNE 'Rt.' (RATING) E 'GG' (GIORNI).
+                - DIVIETO ASSOLUTO: NON SCAMBIARE I VALORI. SE LA COLONNA 'Rt.' È VUOTA O CONTIENE UN TRATTINO '-', IL RATING È DA CONSIDERARE 'NON DISPONIBILE'. NON USARE MAI I GIORNI (GG) COME RATING. [cite: 2026-02-07, 2026-02-20]
+                - SE IL RATING ESTRATTO È > 100 E LA COLONNA GG HA LO STESSO VALORE, SCARTA IL DATO COME 'CORROTTO'.
 
-                FASE 1: IL TRIBUNALE DEI DATI (TRIANGOLAZIONE)
-                - ESTRAI DATI (RT, GG, SEQ) DAL MANIFESTO. SE MANCANO, USI 'GOOGLE SEARCH' PER REPERIRLI. [cite: 2026-02-27]
-                - CONFRONTA MANIFESTO E WEB. SE CONTRASTANO, IL MANIFESTO È LEGGE, IL WEB È SOSPETTO. [cite: 2026-02-07]
+                FASE 1: RILEVAMENTO AMBIENTE (PROTOCOLLO LIVE)
+                - IDENTIFICA TERRENO (PANTANO/SOFT vs GOOD/FIRM). [cite: 2026-02-27]
+                - IDENTIFICA RITIRATI. SE > 35%, DICHIARA ROULETTE. [cite: 2026-01-19]
 
-                FASE 2: FILTRI DI GRANITO 3.0 (POLMONI D'ACCIAIO) [cite: 2026-02-25]
+                FASE 2: FILTRI DI GRANITO 3.0 (INVIOLABILI) [cite: 2026-02-25]
                 1. MURO FORMA: ULTIMO RISULTATO 1 O 2. [cite: 2026-02-25]
-                2. FILTRO RUGGINE: GG < 45. (ECCEZIONE: SE IL WEB DICE 'TRAINING EXCELLENT' O 'TRIAL WINNER'). [cite: 2026-02-25]
+                2. FILTRO RUGGINE: GG < 45. (ECCEZIONE: SOLO SE IL WEB CONFERMA TRAINING ECCELLENTE). [cite: 2026-02-25]
                 3. CUORE IMPAVIDO: ALMENO 2 PODI IN ULTIME 3 GARE. [cite: 2026-02-25]
-                - USA SOLO 'PARTICELLA [NUMERO]' PER EVITARE ERRORI. [cite: 2026-01-25]
 
-                FASE 3: LA CHIAVE SUPREMA (DENSITÀ TECNICA) [cite: 2026-02-20]
-                - REGOLA DEL GAP: IL TITANO DEVE AVERE RATING (RT) GAP >= 5 RISPETTO AL SECONDO. [cite: 2026-02-20]
-                - TEST DEL BURRO: SE IL FAVORITO HA GAP < 5, È 'BURRO'. CERCA IL SECONDO MIGLIORE CON POLMONI D'ACCIAIO. [cite: 2026-02-20]
+                FASE 3: LA CHIAVE SUPREMA (DENSITÀ TECNICA REALE) [cite: 2026-02-20]
+                - TEST DEL BURRO: IL FAVORITO DEVE AVERE UN RATING GAP >= 5 RISPETTO AL SECONDO SUPERSTITE. [cite: 2026-02-20]
+                - SE IL GAP È < 5, IL FAVORITO È 'BURRO'. CERCA LA CHIAVE NASCOSTA. [cite: 2026-02-20]
                 - VETO PANTANO: SE TERRENO PESANTE, IL CANDIDATO DEVE AVERE ALMENO 1 VITTORIA PASSATA NEL FANGO. [cite: 2026-02-27]
 
                 FASE 4: REFERTO FINALE
                 '🌍 MISSIONE: [NAZIONE] - [IPPODROMO]'
-                '🔥 SENTENZA: [UNA FRASE DI CAZZIMMA DI ZORRO SUL DISTRUGGERE LA ROULETTE].' [cite: 2026-02-15]
+                '🔥 SENTENZA: [UNA FRASE DI CAZZIMMA DI ZORRO SULLA VERITÀ E IL CEMENTO].'
                 
                 SE LA CHIAVE È VIVA:
                 '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #] - [NOME]'
-                'BULLONE SERRATO: [SPIEGA PERCHÉ QUESTA CHIAVE È CEMENTO, CITANDO RT, SEQ, TERRENO E GAP].' [cite: 2026-02-07, 2026-02-20]
+                'BULLONE SERRATO: [SPIEGA PERCHÉ QUESTA CHIAVE È CEMENTO, CITANDO RT REALE, GG REALI E GAP].' [cite: 2026-02-07, 2026-02-20]
                 
-                SE È ROULETTE: '🌵 NESSUNA PEPITA NEL DESERTO. RINFODERO LA SPADA PER SALVARE L'ORO.' [cite: 2026-01-19, 2026-02-15]
+                SE È ROULETTE O DATI MANCANTI: '🌵 NESSUNA PEPITA. I DATI SONO OMBRE O IL CANTIERE È FRAGILE. RINFODERO LA SPADA.' [cite: 2026-02-15]
                 """
 
                 res = client_gemini.models.generate_content(
