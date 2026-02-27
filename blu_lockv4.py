@@ -117,7 +117,7 @@ if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
                     # NUCLEO FLASH SCANSIONATO: gemini-3-flash-preview
                     st.warning(f"⚠️ TITANO PRO IN MANUTENZIONE, SCATENO IL NUCLEO FLASH...")
                     res = client_gemini.models.generate_content(
-                        model='gemini-3-flash-preview', 
+                        model='models/gemini-3.1-pro-preview', 
                         contents=[prompt] + images,
                         config={'tools': [{'google_search': {}}]}
                     )
