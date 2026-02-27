@@ -35,12 +35,12 @@ except KeyError:
     st.error("☠️ CABALLERO, LA CHIAVE API È SPARITA!")
     st.stop()
 
-st.title("⚔️ ZORRO 1.31: EL DECODIFICADOR SUPREMO (PRO)")
+st.title("⚔️ ZORRO 1.35: EL DECODIFICADOR SUPREMO (TITAN)")
 st.markdown("### *'Se il rating tace, il cuore del campione grida nei commenti. USA: la classe schiaccia la nebbia.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ MAPPA DELLE OPERAZIONI:", [
-    "USA", "SVEZIA", "AUSTRALIA", "ITALIA", "FRANCIA", "UK", "IRLANDA", "GERMANIA"
+    "USA", "UK", "SVEZIA", "AUSTRALIA", "ITALIA", "FRANCIA", "IRLANDA", "GERMANIA"
 ])
 
 uploaded_files = st.file_uploader("📜 AFFIGGI I MANIFESTI (DATI PRIMARI):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
@@ -71,27 +71,27 @@ if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
                     """
 
                 prompt = f"""
-                SEI ZORRO, IL DECODIFICATORE DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO.
-                TERRITORIO: {nazione} - DATA: 27 FEBBRAIO 2026.
+                SEI ZORRO, IL DECODIFICATORE DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
+                TERRITORIO: {nazione} - DATA: 27 FEBBRAIO 2026. [cite: 2026-02-27]
 
                 {usa_logic}
 
                 MISSIONE SUPREMA: IDENTIFICARE LA CHIAVE CHE BATTE OGNI FILTRO USANDO LA SINTESI TECNICA E LA RICERCA LIVE.
 
                 FASE 1: ANALISI FONDAMENTALE (MANIFESTO + WEB)
-                - ESTRAI GG E SEQ. (LETTURA: TOP BOX = LATEST).
-                - IDENTIFICA IL FAVORITO E IL SECONDO FAVORITO.
+                - ESTRAI GG E SEQ. (LETTURA: TOP BOX = LATEST). [cite: 2026-02-27]
+                - IDENTIFICA IL FAVORITO E IL SECONDO FAVORITO. [cite: 2026-02-26]
                 - SE 'RT.' MANCA O SE SIAMO IN USA, ANALIZZA I COMMENTI E I DATI DI VELOCITÀ (SPEED FIGURES) ONLINE.
 
                 FASE 2: FILTRI DI GRANITO (10000% CERTEZZA)
-                1. MURO FORMA: ULTIMO RISULTATO 1 O 2 (O COMMENTO DI VITTORIA RECENTE/CLASS DROP).
-                2. FILTRO RUGGINE: GG < 45. SCARTA FAVORITI ARRUGGINITI (> 45 GG).
-                3. CUORE IMPAVIDO: ALMENO DUE PODI NELLE ULTIME 3 GARE.
+                1. MURO FORMA: ULTIMO RISULTATO 1 O 2 (O COMMENTO DI VITTORIA RECENTE/CLASS DROP). [cite: 2026-02-25]
+                2. FILTRO RUGGINE: GG < 45. SCARTA FAVORITI ARRUGGINITI (> 45 GG). [cite: 2026-02-25]
+                3. CUORE IMPAVIDO: ALMENO DUE PODI NELLE ULTIME 3 GARE. [cite: 2026-02-25]
 
                 FASE 3: LA CHIAVE SUPREMA (SINTESI)
                 - LA CHIAVE SUPREMA È LA PARTICELLA CHE:
-                    A) PASSA I FILTRI (FORMA 1-2, GG < 45) O È UN TITANO LEGITTIMO USA.
-                    B) HA IL MIGLIOR RATING TECNICO (RT O SPEED FIGURE CERCATO).
+                    A) PASSA I FILTRI (FORMA 1-2, GG < 45) O È UN TITANO LEGITTIMO USA. [cite: 2026-02-20]
+                    B) HA IL MIGLIOR RATING TECNICO (RT O SPEED FIGURE CERCATO). [cite: 2026-02-20]
                     C) SCHIACCIA UN FAVORITO DEBOLE (GG > 45 O CATEGORIA INFERIORE).
 
                 FASE 4: REFERTO FINALE
@@ -100,23 +100,24 @@ if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
                 
                 SE LA CHIAVE ESISTE:
                 '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #]'
-                'BULLONE SERRATO: [SPIEGA PERCHÉ QUESTA È LA CHIAVE SUPREMA: CITA SPEED FIGURES O CLASS DROPS SE USA].'
+                'BULLONE SERRATO: [SPIEGA PERCHÉ QUESTA È LA CHIAVE SUPREMA: EVIDENZIA IL CONTRASTO TRA IL FAVORITO ARRUGGINITO E IL CHALLENGER IN FORMA].' [cite: 2026-02-07, 2026-02-20]
                 
-                SE È ANCORA ROULETTE: '🌵 NESSUNA PEPITA. LA NEBBIA È TROPPO FITTA PER COLPIRE CON CERTEZZA.'
+                SE È ANCORA ROULETTE: '🌵 NESSUNA PEPITA. LA NEBBIA È TROPPO FITTA PER COLPIRE CON CERTEZZA.' [cite: 2026-02-15]
                 """
 
-                # --- SISTEMA DI SICUREZZA AGGIORNATO ---
+                # --- SISTEMA DI SICUREZZA RICALIBRATO SUI NOMI BLINDATI ---
                 try:
-                    # TENTATIVO CON IL TITANO PRO IN PREVIEW
+                    # TITANO SUPREMO SCANSIONATO: gemini-3.1-pro-preview
                     res = client_gemini.models.generate_content(
                         model='gemini-3.1-pro-preview', 
                         contents=[prompt] + images,
                         config={'tools': [{'google_search': {}}]}
                     )
-                except Exception:
-                    # FALLBACK SUL NUCLEO FLASH SE IL PRO È BLOCCATO
+                except Exception as e:
+                    # NUCLEO FLASH SCANSIONATO: gemini-3-flash-preview
+                    st.warning(f"⚠️ TITANO PRO IN MANUTENZIONE, SCATENO IL NUCLEO FLASH...")
                     res = client_gemini.models.generate_content(
-                        model='gemini-3-flash', 
+                        model='gemini-3-flash-preview', 
                         contents=[prompt] + images,
                         config={'tools': [{'google_search': {}}]}
                     )
