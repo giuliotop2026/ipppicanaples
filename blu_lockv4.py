@@ -107,7 +107,7 @@ if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
                 """
 
                 res = client_gemini.models.generate_content(
-                    model='models/gemini-3-flash-preview', 
+                    model='gemini-3-flash-preview', 
                     contents=[prompt] + images,
                     config={'tools': [{'google_search': {}}]}
                 )
