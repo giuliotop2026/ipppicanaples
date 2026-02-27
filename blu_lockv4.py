@@ -3,7 +3,7 @@ from google import genai
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- 1. GRAFICA "HACIENDA DE LA VEGA" (LIGHT THEME) ---
+# --- 1. GRAFICA "HACIENDA DE LA VEGA" ---
 st.markdown("""
     <style>
     .stApp { 
@@ -34,17 +34,18 @@ def play_victory_bell():
     audio_url = "https://www.myinstants.com/media/sounds/boxing-bell.mp3"
     components.html(f'<audio autoplay><source src="{audio_url}" type="audio/mpeg"></audio>', height=0, width=0)
 
-# --- 2. CONNESSIONE AL CERVELLO DEL VENDICATORE ---
+# --- 2. CONNESSIONE AL CERVELLO DEL VENDICATORE CON MOTORE DI RICERCA ---
 try:
+    # IL CERVELLO ORA HA LA "MIRA TELESCOPICA" (SEARCH TOOL)
     client_gemini = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 except KeyError:
-    st.error("☠️ CABALLERO, MANCANO LE MUNIZIONI NELLA SERRATURA (GEMINI_API_KEY)!")
+    st.error("☠️ CABALLERO, LA SERRATURA È BLOCCATA! CONTROLLA LA GEMINI_API_KEY.")
     st.stop()
 
-st.title("⚔️ ZORRO: IL VENDICATORE DEL CANTIERE")
-st.markdown("### *'Non serve vedere i numeri per sentire il cuore di un campione. Colpisco nell'ombra, lascio il segno dell'oro.'*")
+st.title("⚔️ ZORRO: THE SEARCHING BLADE")
+st.markdown("### *'La mia spada colpisce ciò che l'occhio non vede. Fiuto il vento e trovo la verità tra le ombre del web.'*")
 
-# --- 3. SELEZIONE TERRITORIO (ARSENALE GEOPOLITICO COMPLETO) ---
+# --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ MAPPA DELLE MISSIONI:", [
     "AUSTRALIA", "UK", "USA", "ITALIA", "FRANCIA", "IRLANDA", "GERMANIA", 
     "SVEZIA", "CILE", "BRASILE", "SUD AFRICA", "GIAPPONE"
@@ -59,58 +60,59 @@ if uploaded_files:
         with cols[i]:
             st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (PROTOCOLLO ZORRO 1.0) ---
-if st.button("🗡️ INCIDI LA 'Z' (ANALISI SPIETATA)"):
+# --- 4. IL GRILLETTO (PROTOCOLLO ZORRO 1.2 CON WEB SEARCH) ---
+if st.button("🗡️ INCIDI LA 'Z' (ANALISI TOTALE CON RICERCA)"):
     if not uploaded_files:
         st.warning("UN VERO CAVALIERE NON SCENDE IN CAMPO SENZA MAPPA! CARICA I FILE.")
     else:
-        with st.spinner("ZORRO STA FIUTANDO IL VENTO E LE OMBRE... ⏳"):
+        with st.spinner("ZORRO STA SCANSIONANDO IL WEB E LE OMBRE... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
                 prompt = f"""
                 SEI ZORRO, IL DIFENSORE DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-19, 2026-01-20]
-                TERRITORIO: {nazione}
+                TERRITORIO ATTUALE: {nazione} - DATA ODIERNA: 27 FEBBRAIO 2026. [cite: 2026-02-27]
 
-                FASE 1: ESTRAZIONE CINETICA (VISION)
-                - IDENTIFICA IPPODROMO E DISTANZA.
-                - IDENTIFICA IL FAVORITO (QUOTA PIÙ BASSA). [cite: 2026-02-26]
+                FASE 1: ESTRAZIONE E RICERCA (MIRA TELESCOPICA)
+                - IDENTIFICA L'IPPODROMO E IL NUMERO DI GARA DALLE IMMAGINI.
+                - SE I DATI (RT/RATING, GG, SEQ) SONO MANCANTI O VUOTI (TIPICO IN AUSTRALIA/USA): 
+                  USA OBBLIGATORIAMENTE LO STRUMENTO 'GOOGLE SEARCH' PER TROVARE LE STATISTICHE DI QUELLA SPECIFICA GARA E DEI CAVALLI PARTENTI.
+                  CERCA: 'HORSE RACING RESULTS [IPPODROMO] [DATA]', 'RATING CAVALLO [NOME]', 'LAST RUNS [NOME CAVALLO]'. [cite: 2026-02-27]
 
-                FASE 2: APPLICAZIONE FILTRI (IL PROTOCOLLO DEL VENDICATORE)
-                1. MURO FORMA: L'ULTIMO RISULTATO DEVE ESSERE 1 O 2. [cite: 2026-02-25]
-                2. CRISTALLO 2.1: SCARTA SQUALIFICHE (RP, RI, DAI, FE, CD) NELLE ULTIME DUE GARE.
-                3. FILTRO RUGGINE: GG < 45. [cite: 2026-02-25]
-                4. CUORE IMPAVIDO: ALMENO DUE PODI (1, 2 O 3) NELLE ULTIME 3 GARE.
+                FASE 2: FILTRI DI GRANITO (ZERO ERRORI)
+                1. MURO FORMA: L'ULTIMO RISULTATO DEVE ESSERE 1 O 2. SE IL WEB DICE CHE HA PERSO L'ULTIMA, SCARTALO. [cite: 2026-02-25]
+                2. FILTRO RUGGINE: GG < 45. SE IL WEB DICE CHE NON CORRE DA MESI, SCARTALO. [cite: 2026-02-25]
+                3. CUORE IMPAVIDO: ALMENO DUE PODI (1, 2, 3) NELLE ULTIME 3 GARE. [cite: 2026-02-25]
+                
+                FASE 3: LEGGI SUPREME (POLMONI D'ACCIAIO)
+                4. LA CHIAVE DEL VINCITORE: CERCA IL SECONDO MIGLIORE PER DENSITÀ TECNICA (RATING) CHE SCHIACCIA IL FAVORITO DI CARTA INSTABILE. [cite: 2026-02-20]
+                5. USA FOCUS: SE TERRITORIO USA, IL CANDIDATO DEVE ESSERE IL FAVORITO O MOLTO VICINO (SCARTO MAX +2.00) E QUOTA < 8.00. [cite: 2026-02-26]
 
-                FASE 3: LEGGI TERRITORIALI (PRIORITÀ ASSOLUTA)
-                5. LA LEGGE DEL FAVORITO (USA): IL CANDIDATO DEVE ESSERE IL FAVORITO (< 8.00) E AVERE LA MIGLIORE DENSITÀ TECNICA (RT). SE IL FAVORITO È SPORCO, SCARTA TUTTO. [cite: 2026-02-26]
-                6. LEGGE DELL'OMBRA (SHADOW LAW - SOLO AUSTRALIA): 
-                   - SE IL TERRITORIO È "AUSTRALIA" E LE COLONNE TABELLARI SONO VUOTE: 
-                     A) IL CANDIDATO DEVE ESSERE IL FAVORITO ASSOLUTO (QUOTA < 3.00).
-                     B) IL PESO DEVE ESSERE COMPETITIVO (TECHNICAL DENSITY IMPLICITA).
-                     C) SE IL FAVORITO HA QUOTA < 3.00 IN CAMPO RIDOTTO (<= 7), SUPERA DI DIRITTO I FILTRI DI DENSITÀ.
-                7. PATCH ANTI-MAIDEN: SEQ 1, GG < 15, GAP RT >= 5. [cite: 2026-02-25]
-
-                FASE 4: REFERTO FINALE DA VENDICATORE
+                FASE 4: REFERTO FINALE DEL VENDICATORE
                 '🌍 MISSIONE: [NAZIONE] - [IPPODROMO]'
-                '🔥 MOTIVAZIONE DA COMBATTIMENTO: [INSERISCI UNA FRASE MOTIVAZIONALE DI ZORRO ADATTA ALLA CORSA].'
+                '🔥 MOTIVAZIONE: [UNA FRASE DI CAZZIMMA DI ZORRO SUL TROVARE LA VERITÀ NASCOSTA].'
                 
-                '🔍 SCANSIONE SUPERSTITI:'
-                - PARTICELLA [NUMERO]: PASSATO (GG [X], SEQ [Y], RT/REC [Z], QUOTA [Q])
+                '🔍 SCANSIONE SUPERSTITI (DATI TROVATI SUL WEB):'
+                - PARTICELLA [NUMERO]: PASSATO (GG [X], SEQ [Y], RATING [Z], QUOTA [Q])
                 
-                SE C'È IL SACRO GRAAL:
+                SE TROVI IL SACRO GRAAL (10000% CERTEZZA):
                 '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #] - [NOME]'
-                'BULLONE SERRATO: [SPIEGA PERCHÉ QUESTO CAVALLO HA LA CAZZIMMA PER STRACCIARE TUTTI].'
+                'BULLONE SERRATO: [SPIEGA COSA HA TROVATO IL WEB SUI POLMONI D'ACCIAIO DI QUESTO CAVALLO].' [cite: 2026-02-07, 2026-02-20]
                 
-                SE NON C'È PERFEZIONE: 
-                '🌵 NESSUNA PEPITA NEL DESERTO. UN CAVALIERE SA QUANDO RINFODERARE LA SPADA.'
+                SE NON C'È PERFEZIONE: '🌵 NESSUNA PEPITA NEL DESERTO. NEMMENO IL VENTO PORTA NOTIZIE DI CAMPIONI OGGI.' [cite: 2026-02-15]
                 """
 
-                res = client_gemini.models.generate_content(model='gemini-2.5-flash', contents=[prompt] + images)
+                # ESECUZIONE CON STRUMENTO DI RICERCA ATTIVATO
+                res = client_gemini.models.generate_content(
+                    model='gemini-2.0-flash', 
+                    contents=[prompt] + images,
+                    config={'tools': [{'google_search': {}}]}
+                )
                 sentenza = res.text
                 
                 st.info(sentenza)
-                if "SEGNO DELLA Z" in sentenza.upper():
+                if "TAGLIA RISCOSSA" in sentenza.upper() or "SEGNO DELLA Z" in sentenza.upper():
                     play_victory_bell(); st.balloons()
             except Exception as e:
                 st.error(f"☠️ UN SERPENTE HA MORSO IL CAVALLO: {e}")
+                
