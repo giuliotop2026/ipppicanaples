@@ -35,7 +35,7 @@ except KeyError:
     st.error("☠️ CABALLERO, LA CHIAVE API È SPARITA!")
     st.stop()
 
-st.title("⚔️ ZORRO 1.25: EL DECODIFICADOR SUPREMO")
+st.title("⚔️ ZORRO 1.31: EL DECODIFICADOR SUPREMO (PRO)")
 st.markdown("### *'Se il rating tace, il cuore del campione grida nei commenti. USA: la classe schiaccia la nebbia.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
@@ -101,13 +101,14 @@ if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
                 
                 SE LA CHIAVE ESISTE:
                 '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #]'
-                'BULLONE SERRATO: [SPIEGA PERCHÉ QUESTA È LA CHIAVE SUPREMA: CITA SPEED FIGURES O CLASS DROPS SE USA].' [cite: 2026-02-07, 2026-02-20]
+                'BULLONE SERRATO: [SPIEGA PERCHÉ QUESTA È LA CHIAVE SUPREMA: EVIDENZIA IL CONTRASTO TRA IL FAVORITO ARRUGGINITO E IL CHALLENGER IN FORMA].' [cite: 2026-02-07, 2026-02-20]
                 
                 SE È ANCORA ROULETTE: '🌵 NESSUNA PEPITA. LA NEBBIA È TROPPO FITTA PER COLPIRE CON CERTEZZA.' [cite: 2026-02-15]
                 """
 
+                # AGGIORNAMENTO MODELLO: GEMINI 3.1 PRO ATTIVATO
                 res = client_gemini.models.generate_content(
-                    model='gemini-2.5-flash', 
+                    model='gemini-3.1-pro', 
                     contents=[prompt] + images,
                     config={'tools': [{'google_search': {}}]}
                 )
@@ -118,3 +119,4 @@ if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
                     play_victory_bell(); st.balloons()
             except Exception as e:
                 st.error(f"☠️ UN TRADITORE HA MANOMESSO IL DECODIFICATORE: {e}")
+                
