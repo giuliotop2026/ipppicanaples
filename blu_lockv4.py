@@ -3,7 +3,7 @@ from google import genai
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- 1. GRAFICA "HACIENDA DE LA VEGA" ---
+# --- 1. GRAFICA "PALACIO DEL VENGADOR" ---
 st.markdown("""
     <style>
     .stApp { 
@@ -19,7 +19,7 @@ st.markdown("""
         text-shadow: 2px 2px 4px #8b4513;
         border-bottom: 4px solid #000000;
     }
-    .stAlert p { color: #1a1a1a !important; font-size: 1.4rem !important; font-weight: bold; font-style: italic; }
+    .stAlert p { color: #1a1a1a !important; font-size: 1.4rem !important; font-weight: bold; }
     .stButton>button { 
         background-color: #000000 !important; color: #ffd700 !important; 
         border: 2px solid #ffd700 !important; font-weight: bold; font-size: 1.8em; 
@@ -34,85 +34,83 @@ def play_victory_bell():
     audio_url = "https://www.myinstants.com/media/sounds/boxing-bell.mp3"
     components.html(f'<audio autoplay><source src="{audio_url}" type="audio/mpeg"></audio>', height=0, width=0)
 
-# --- 2. CONNESSIONE AL CERVELLO DEL VENDICATORE CON MOTORE DI RICERCA ---
+# --- 2. CONNESSIONE AL CERVELLO OMNISCIENTE ---
 try:
-    # IL CERVELLO ORA HA LA "MIRA TELESCOPICA" (SEARCH TOOL)
     client_gemini = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 except KeyError:
-    st.error("☠️ CABALLERO, LA SERRATURA È BLOCCATA! CONTROLLA LA GEMINI_API_KEY.")
+    st.error("☠️ CABALLERO, LA CHIAVE API È SPARITA! TROVALA O LA SPADA RESTERÀ FREDDA.")
     st.stop()
 
-st.title("⚔️ ZORRO: THE SEARCHING BLADE")
-st.markdown("### *'La mia spada colpisce ciò che l'occhio non vede. Fiuto il vento e trovo la verità tra le ombre del web.'*")
+st.title("⚔️ ZORRO 1.5: THE OMNISCIENT EYE")
+st.markdown("### *'I filtri sono il mio scudo, la ricerca live è la mia lama. Cerco la Chiave Assoluta nell'abisso del web.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
-nazione = st.selectbox("🗺️ MAPPA DELLE MISSIONI:", [
-    "AUSTRALIA", "UK", "USA", "ITALIA", "FRANCIA", "IRLANDA", "GERMANIA", 
+nazione = st.selectbox("🗺️ MAPPA DELLE OPERAZIONI:", [
+    "AUSTRALIA", "USA", "UK", "ITALIA", "FRANCIA", "IRLANDA", "GERMANIA", 
     "SVEZIA", "CILE", "BRASILE", "SUD AFRICA", "GIAPPONE"
 ])
 
-uploaded_files = st.file_uploader("📜 AFFIGGI I MANIFESTI DEI RICERCATI:", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
+uploaded_files = st.file_uploader("📜 AFFIGGI I MANIFESTI DEI SOSPETTI:", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 if uploaded_files:
-    st.markdown("### 🧐 SOSPETTATI SOTTO IL MANTELLO:")
+    st.markdown("### 🧐 SOSPETTATI SOTTO IL MIRINO:")
     cols = st.columns(len(uploaded_files))
     for i, file in enumerate(uploaded_files):
         with cols[i]:
             st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (PROTOCOLLO ZORRO 1.2 CON WEB SEARCH) ---
-if st.button("🗡️ INCIDI LA 'Z' (ANALISI TOTALE CON RICERCA)"):
+# --- 4. IL GRILLETTO (PROTOCOLLO CHIAVE ASSOLUTA) ---
+if st.button("🗡️ SCATENA L'OCCHIO DI ZORRO (RICERCA ASSOLUTA)"):
     if not uploaded_files:
-        st.warning("UN VERO CAVALIERE NON SCENDE IN CAMPO SENZA MAPPA! CARICA I FILE.")
+        st.warning("CARICA I MANIFESTI, CABALLERO! SENZA MAPPA NON C'È TESORO.")
     else:
-        with st.spinner("ZORRO STA SCANSIONANDO IL WEB E LE OMBRE... ⏳"):
+        with st.spinner("ZORRO STA INTERROGANDO IL VENTO E IL WEB PER TROVARE LA CHIAVE... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
                 prompt = f"""
-                SEI ZORRO, IL DIFENSORE DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-19, 2026-01-20]
-                TERRITORIO ATTUALE: {nazione} - DATA ODIERNA: 27 FEBBRAIO 2026. [cite: 2026-02-27]
+                SEI ZORRO, L'OCCHIO OMNISCIENTE DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-19, 2026-01-20]
+                TERRITORIO: {nazione} - DATA: 27 FEBBRAIO 2026. [cite: 2026-02-27]
 
-                FASE 1: ESTRAZIONE E RICERCA (MIRA TELESCOPICA)
-                - IDENTIFICA L'IPPODROMO E IL NUMERO DI GARA DALLE IMMAGINI.
-                - SE I DATI (RT/RATING, GG, SEQ) SONO MANCANTI O VUOTI (TIPICO IN AUSTRALIA/USA): 
-                  USA OBBLIGATORIAMENTE LO STRUMENTO 'GOOGLE SEARCH' PER TROVARE LE STATISTICHE DI QUELLA SPECIFICA GARA E DEI CAVALLI PARTENTI.
-                  CERCA: 'HORSE RACING RESULTS [IPPODROMO] [DATA]', 'RATING CAVALLO [NOME]', 'LAST RUNS [NOME CAVALLO]'. [cite: 2026-02-27]
+                MISSIONE SUPREMA: TROVARE LA 'CHIAVE ASSOLUTA'.
+                NON LIMITARTI AI FILTRI. USA 'GOOGLE SEARCH' PER TROVARE L'ANOMALIA CHE BATTE LA STATISTICA. [cite: 2026-02-27]
 
-                FASE 2: FILTRI DI GRANITO (ZERO ERRORI)
-                1. MURO FORMA: L'ULTIMO RISULTATO DEVE ESSERE 1 O 2. SE IL WEB DICE CHE HA PERSO L'ULTIMA, SCARTALO. [cite: 2026-02-25]
-                2. FILTRO RUGGINE: GG < 45. SE IL WEB DICE CHE NON CORRE DA MESI, SCARTALO. [cite: 2026-02-25]
-                3. CUORE IMPAVIDO: ALMENO DUE PODI (1, 2, 3) NELLE ULTIME 3 GARE. [cite: 2026-02-25]
-                
-                FASE 3: LEGGI SUPREME (POLMONI D'ACCIAIO)
-                4. LA CHIAVE DEL VINCITORE: CERCA IL SECONDO MIGLIORE PER DENSITÀ TECNICA (RATING) CHE SCHIACCIA IL FAVORITO DI CARTA INSTABILE. [cite: 2026-02-20]
-                5. USA FOCUS: SE TERRITORIO USA, IL CANDIDATO DEVE ESSERE IL FAVORITO O MOLTO VICINO (SCARTO MAX +2.00) E QUOTA < 8.00. [cite: 2026-02-26]
+                FASE 1: SCANSIONE LIVE (MIRA TELESCOPICA)
+                - CERCA: 'TRACK BIAS [IPPODROMO] TODAY', 'JOCKEY FORM [NOME FANTINO] TODAY', 'MARKET MOVERS HORSE RACING [NAZIONE]'.
+                - IDENTIFICA SE IL FAVORITO È 'BURRO' (PARTICELLA INSTABILE SENZA VANTAGGIO TECNICO). [cite: 2026-02-20]
 
-                FASE 4: REFERTO FINALE DEL VENDICATORE
+                FASE 2: FILTRI DI GRANITO (SISTEMA DI SICUREZZA)
+                - MURO FORMA (1-2), RUGGINE (< 45 GG), CUORE IMPAVIDO (2 PODI IN 3 GARE). [cite: 2026-02-25]
+
+                FASE 3: SINTESI DELLA CHIAVE ASSOLUTA (10000% CERTEZZA)
+                1. ANALIZZA IL RATING GAP: SE IL FAVORITO HA GAP < 5, È SOSPETTO. [cite: 2026-02-20]
+                2. CERCA IL VINCITORE NASCOSTO: CHI HA IL MIGLIOR RATING TRA I SUPERSTITI E HA IL VENTO A FAVORE (FANTINO IN FORMA O PISTA ADATTA)?
+                3. SE UN CAVALLO HA: FILTRI OK + RATING TOP + CONTESTO LIVE POSITIVO (LATE MONEY O EXPERT TIPS) -> QUELLA È LA CHIAVE ASSOLUTA. [cite: 2026-02-20]
+
+                FASE 4: REFERTO FINALE
                 '🌍 MISSIONE: [NAZIONE] - [IPPODROMO]'
-                '🔥 MOTIVAZIONE: [UNA FRASE DI CAZZIMMA DI ZORRO SUL TROVARE LA VERITÀ NASCOSTA].'
+                '🔥 SENTENZA DEL VENDICATORE: [UNA FRASE DI CAZZIMMA DI ZORRO SULLA VERITÀ SVELATA].'
                 
-                '🔍 SCANSIONE SUPERSTITI (DATI TROVATI SUL WEB):'
-                - PARTICELLA [NUMERO]: PASSATO (GG [X], SEQ [Y], RATING [Z], QUOTA [Q])
+                '🔍 SCANSIONE SUPERSTITI:'
+                - PARTICELLA [NUMERO]: [STATO E CONTESTO LIVE TROVATO]
                 
-                SE TROVI IL SACRO GRAAL (10000% CERTEZZA):
+                SE LA CHIAVE È TROVATA:
                 '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #] - [NOME]'
-                'BULLONE SERRATO: [SPIEGA COSA HA TROVATO IL WEB SUI POLMONI D'ACCIAIO DI QUESTO CAVALLO].' [cite: 2026-02-07, 2026-02-20]
+                'BULLONE SERRATO: [SPIEGA PERCHÉ QUESTA È LA CHIAVE ASSOLUTA CHE BATTE OGNI FILTRO].' [cite: 2026-02-07, 2026-02-20]
                 
-                SE NON C'È PERFEZIONE: '🌵 NESSUNA PEPITA NEL DESERTO. NEMMENO IL VENTO PORTA NOTIZIE DI CAMPIONI OGGI.' [cite: 2026-02-15]
+                SE È ANCORA ROULETTE:
+                '🌵 IL FIUME È TORBIDO. LA CHIAVE NON È PURA. RINFODERO LA SPADA PER SALVARE L'ORO.' [cite: 2026-01-19, 2026-02-15]
                 """
 
-                # ESECUZIONE CON STRUMENTO DI RICERCA ATTIVATO
                 res = client_gemini.models.generate_content(
-                    model='gemini-2.5-flash', 
+                    model='gemini-2.0-flash', 
                     contents=[prompt] + images,
                     config={'tools': [{'google_search': {}}]}
                 )
                 sentenza = res.text
                 
                 st.info(sentenza)
-                if "TAGLIA RISCOSSA" in sentenza.upper() or "SEGNO DELLA Z" in sentenza.upper():
+                if "SEGNO DELLA Z" in sentenza.upper():
                     play_victory_bell(); st.balloons()
             except Exception as e:
-                st.error(f"☠️ UN SERPENTE HA MORSO IL CAVALLO: {e}")
-                
+                st.error(f"☠️ UN TRADITORE HA MANOMESSO LA SPADA: {e}")
