@@ -35,12 +35,12 @@ except KeyError:
     st.error("☠️ CABALLERO, LA CHIAVE API È SPARITA!")
     st.stop()
 
-st.title("⚔️ ZORRO 1.35: EL DECODIFICADOR SUPREMO (TITAN)")
+st.title("⚔️ ZORRO 1.25: EL DECODIFICADOR SUPREMO")
 st.markdown("### *'Se il rating tace, il cuore del campione grida nei commenti. USA: la classe schiaccia la nebbia.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ MAPPA DELLE OPERAZIONI:", [
-    "USA", "UK", "SVEZIA", "AUSTRALIA", "ITALIA", "FRANCIA", "IRLANDA", "GERMANIA"
+    "USA", "SVEZIA", "AUSTRALIA", "ITALIA", "FRANCIA", "UK", "IRLANDA", "GERMANIA"
 ])
 
 uploaded_files = st.file_uploader("📜 AFFIGGI I MANIFESTI (DATI PRIMARI):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
@@ -60,14 +60,15 @@ if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
+                # LOGICA SPECIFICA PER USA FOCUS
                 usa_logic = ""
                 if nazione == "USA":
                     usa_logic = """
                     REGOLE SPECIALI USA FOCUS:
-                    - SE 'RT.' MANCA, USA GOOGLE SEARCH PER TROVARE I 'BEYER SPEED FIGURES' O 'EQUIBASE SPEED FIGURES' RECENTI DI OGNI PARTICELLA.
-                    - ANALIZZA LA 'CLASSE': SE UN CAVALLO SCENDE DA 'ALLOWANCE' O 'STAKES' A 'CLAIMING', È UN TITANO ANCHE SE L'ULTIMO RISULTATO È UN 4.
-                    - REGOLA DEL TITANO LEGITTIMO: SE IL FAVORITO HA QUOTA < 2.00 E HA IL MIGLIOR SPEED FIGURE CERCATO ONLINE, BLINDALO COME CHIAVE.
-                    - SE IL FAVORITO HA GG > 45 O SPEED FIGURE DEBOLE, CERCA IL CHALLENGER CON GAP RATING >= 5.
+                    - SE 'RT.' MANCA, USA GOOGLE SEARCH PER TROVARE I 'BEYER SPEED FIGURES' O 'EQUIBASE SPEED FIGURES' RECENTI DI OGNI PARTICELLA. [cite: 2026-02-27]
+                    - ANALIZZA LA 'CLASSE': SE UN CAVALLO SCENDE DA 'ALLOWANCE' O 'STAKES' A 'CLAIMING', È UN TITANO ANCHE SE L'ULTIMO RISULTATO È UN 4. [cite: 2026-02-26]
+                    - REGOLA DEL TITANO LEGITTIMO: SE IL FAVORITO HA QUOTA < 2.00 E HA IL MIGLIOR SPEED FIGURE CERCATO ONLINE, BLINDALO COME CHIAVE. [cite: 2026-02-20]
+                    - SE IL FAVORITO HA GG > 45 O SPEED FIGURE DEBOLE, CERCA IL CHALLENGER CON GAP RATING >= 5. [cite: 2026-02-20]
                     """
 
                 prompt = f"""
@@ -100,29 +101,18 @@ if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
                 
                 SE LA CHIAVE ESISTE:
                 '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #]'
-                'BULLONE SERRATO: [SPIEGA PERCHÉ QUESTA È LA CHIAVE SUPREMA: EVIDENZIA IL CONTRASTO TRA IL FAVORITO ARRUGGINITO E IL CHALLENGER IN FORMA].' [cite: 2026-02-07, 2026-02-20]
+                'BULLONE SERRATO: [SPIEGA PERCHÉ QUESTA È LA CHIAVE SUPREMA: CITA SPEED FIGURES O CLASS DROPS SE USA].' [cite: 2026-02-07, 2026-02-20]
                 
                 SE È ANCORA ROULETTE: '🌵 NESSUNA PEPITA. LA NEBBIA È TROPPO FITTA PER COLPIRE CON CERTEZZA.' [cite: 2026-02-15]
                 """
 
-                # --- SISTEMA DI SICUREZZA RICALIBRATO SUI NOMI BLINDATI ---
-                try:
-                    # TITANO SUPREMO SCANSIONATO: gemini-3.1-pro-preview
-                    res = client_gemini.models.generate_content(
-                        model='models/gemini-3-pro-preview', 
-                        contents=[prompt] + images,
-                        config={'tools': [{'google_search': {}}]}
-                    )
-                except Exception as e:
-                    # NUCLEO FLASH SCANSIONATO: gemini-3-flash-preview
-                    st.warning(f"⚠️ TITANO PRO IN MANUTENZIONE, SCATENO IL NUCLEO FLASH...")
-                    res = client_gemini.models.generate_content(
-                        model='models/gemini-3-pro-preview', 
-                        contents=[prompt] + images,
-                        config={'tools': [{'google_search': {}}]}
-                    )
-                
+                res = client_gemini.models.generate_content(
+                    model='gemini-2.0-flash', 
+                    contents=[prompt] + images,
+                    config={'tools': [{'google_search': {}}]}
+                )
                 sentenza = res.text
+                
                 st.info(sentenza)
                 if "IL SEGNO DELLA Z" in sentenza.upper():
                     play_victory_bell(); st.balloons()
