@@ -3,7 +3,7 @@ from google import genai
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- 1. GRAFICA "EL TRIBUNAL" (SINTASSI RIGOROSA E STILE VENDICATORE) ---
+# --- 1. GRAFICA "CATEDRAL DE LA JUSTICIA" ---
 st.markdown("""
     <style>
     .stApp { 
@@ -34,15 +34,15 @@ def play_victory_bell():
     audio_url = "https://www.myinstants.com/media/sounds/boxing-bell.mp3"
     components.html(f'<audio autoplay><source src="{audio_url}" type="audio/mpeg"></audio>', height=0, width=0)
 
-# --- 2. CONNESSIONE AL CERVELLO OMNISCIENTE ---
+# --- 2. CONNESSIONE AL CERVELLO DEL VENDICATORE ---
 try:
     client_gemini = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 except KeyError:
-    st.error("☠️ CABALLERO, LA CHIAVE API È SPARITA! IL CANTIERE È BLOCCATO.")
+    st.error("☠️ CABALLERO, LA CHIAVE API È SPARITA!")
     st.stop()
 
-st.title("⚔️ ZORRO 1.7: EL TRIBUNAL DE LA VERDAD")
-st.markdown("### *'La verità non ammette errori. Se il web smentisce l'immagine, la mia spada resta nel fodero.'*")
+st.title("⚔️ ZORRO 1.8: LA VOLUNTAD DE ORO")
+st.markdown("### *'Se le tabelle sono mute, interrogo il commento. Se il web mormora di un campione, io incido la Z.'*")
 
 # --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ MAPPA DELLE OPERAZIONI:", [
@@ -59,12 +59,12 @@ if uploaded_files:
         with cols[i]:
             st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (PROTOCOLLO CHIAVE SUPREMA) ---
-if st.button("🗡️ SCATENA IL TRIBUNALE (VERIFICA ASSOLUTA)"):
+# --- 4. IL GRILLETTO (PROTOCOLLO VOLUNTAD DE ORO) ---
+if st.button("🗡️ SCATENA LA DEDUZIONE DI ZORRO (CHIAVE SUPREMA)"):
     if not uploaded_files:
-        st.warning("CARICA I MANIFESTI, CABALLERO! SENZA MAPPA NON C'È TESORO.")
+        st.warning("CARICA I MANIFESTI, CABALLERO!")
     else:
-        with st.spinner("ZORRO STA TRIANGOLANDO LA VERITÀ TRA IL WEB E IL MANIFESTO... ⏳"):
+        with st.spinner("ZORRO STA FIUTANDO L'ORO TRA LE RIGHE E IL WEB... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
@@ -72,37 +72,33 @@ if st.button("🗡️ SCATENA IL TRIBUNALE (VERIFICA ASSOLUTA)"):
                 SEI ZORRO, IL GIUDICE SUPREMO DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
                 TERRITORIO: {nazione} - DATA ODIERNA: 27 FEBBRAIO 2026. [cite: 2026-02-27]
 
-                FILOSOFIA: OGNI ANALISI DEVE SCANSIONARE L'ABISSO TRA QUOTA E DENSITÀ TECNICA REALE. [cite: 2026-02-20]
-                MISSIONE: TROVARE LA CHIAVE SUPREMA CHE UNISCE TUTTI I DATI SENZA ERRORI.
+                MISSIONE SUPREMA: TROVARE IL VINCITORE ANCHE QUANDO I DATI TABELLARI SONO FRAMMENTATI.
 
-                FASE 0: IL TRIBUNALE DEI DATI (CROSS-CHECK OBBLIGATORIO)
-                - ESTRAI I DATI (RT, GG, SEQ) DAL MANIFESTO (IMMAGINI).
-                - USA 'GOOGLE SEARCH' PER VERIFICARE I DATI DI OGGI (27/02/2026).
-                - SE IL WEB CONTRADDICE IL MANIFESTO (DIFFERENZA RT > 2 O SEQ RECENTE DIVERSA): DICHIARA 'DATI CORROTTI: ROULETTE RILEVATA'. IL CANTIERE VIENE CHIUSO. [cite: 2026-02-15]
+                FASE 0: L'ORECCHIO DEL POPOLO (DEDUZIONE TESTUALE E WEB)
+                - SE LE TABELLE SEQ/GG SONO VUOTE: Scansiona il 'COMMENTO CORSA' e le descrizioni testuali. [cite: 2026-02-27]
+                - USA 'GOOGLE SEARCH' PER CERCARE SPECIFICAMENTE: 'FORM GUIDE [NOME CAVALLO] [DATA]', 'RACING POST [NOME CAVALLO]', 'PUNTERS.COM.AU [NOME CAVALLO]'.
+                - PROTOCOLLO DEDUTTIVO: Se il testo dice 'Beaten narrowly last time' o 'Winner of 2 from 3', questo VALE come conferma per il MURO FORMA e il CUORE IMPAVIDO. [cite: 2026-02-20]
 
-                FASE 1: FILTRI DI GRANITO (10000% CERTEZZA)
-                1. MURO FORMA: ULTIMO RISULTATO 1 O 2. [cite: 2026-02-25]
-                2. FILTRO RUGGINE: GG < 45. [cite: 2026-02-25]
-                3. CUORE IMPAVIDO: ALMENO DUE PODI NELLE ULTIME 3 GARE. [cite: 2026-02-25]
-                - IDENTIFICA I CAVALLI COME 'PARTICELLA [NUMERO]' PER EVITARE ERRORI. [cite: 2026-01-25]
+                FASE 1: FILTRI DI GRANITO FLESSIBILE (CAZZIMMA TATTICA)
+                - MURO FORMA: Ultimo risultato 1 o 2 (da tabella o da testo). [cite: 2026-02-25]
+                - FILTRO RUGGINE: GG < 45. Se il testo dice 'In form' o 'Recent run', assumi GG < 45. [cite: 2026-02-25]
+                - CUORE IMPAVIDO: Almeno 2 podi in 3 gare. Accetta conferme verbali (es: 'Consistent performer with many placings'). [cite: 2026-02-25]
 
-                FASE 2: LA CHIAVE SUPREMA (SINTESI)
-                - LA CHIAVE SUPREMA È LA PARTICELLA CHE:
-                    A) HA DATI COINCIDENTI AL 100% TRA MANIFESTO E WEB. [cite: 2026-02-07]
-                    B) HA IL MIGLIOR RATING (DENSITÀ TECNICA REALE) DEL CAMPO. [cite: 2026-02-20]
-                    C) HA IL VENTO A FAVORE (TERRENO E FANTINO CONFERMATI LIVE). [cite: 2026-02-27]
-                - SE IL FAVORITO HA GAP RATING < 5 RISPETTO AL SECONDO, È 'BURRO'. CERCA IL VERO VINCITORE NASCOSTO. [cite: 2026-02-20]
+                FASE 2: LA CHIAVE SUPREMA (RICERCA DELL'ANOMALIA)
+                - IDENTIFICA LA CHIAVE: La particella che unisce miglior RATING (tabellare o web) e miglior CONDIZIONE LIVE (fantino/terreno). [cite: 2026-02-20, 2026-02-27]
+                - USA Focus: Favorito tecnico con quota < 8.00. [cite: 2026-02-26]
+                - Australia Focus: Se Quota < 3.00 e Commento Positivo, la Pepita è reale. [cite: 2026-02-27]
 
                 FASE 3: REFERTO FINALE
                 '🌍 MISSIONE: [NAZIONE] - [IPPODROMO]'
-                '🔥 SENTENZA: [FRASE DI ZORRO SULLA NOBILTÀ DELLA VERITÀ E IL CEMENTO DEL CANTIERE].'
+                '🔥 SENTENZA: [UNA FRASE DI CAZZIMMA DI ZORRO SULL'ORO CHE NON PUÒ ESSERE NASCOSTO].'
                 
-                SE LA CHIAVE SUPREMA ESISTE:
-                '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #]'
-                'BULLONE SERRATO: [SPIEGA PERCHÉ MANIFESTO E WEB CONFERMANO I POLMONI D'ACCIAIO].' [cite: 2026-02-07, 2026-02-20]
+                SE LA CHIAVE È TROVATA (ANCHE PER DEDUZIONE):
+                '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #] - [NOME]'
+                'BULLONE SERRATO: [SPIEGA PERCHÉ IL TESTO O IL WEB CONFERMANO I POLMONI D'ACCIAIO NONOSTANTE LE TABELLE VUOTE].' [cite: 2026-02-07, 2026-02-20]
                 
-                SE I DATI SONO DIVERSI O LA GARA È DEBOLE:
-                '🌵 NESSUNA PEPITA. I DATI SONO UN'ILLUSIONE. UN VERO CAVALIERE NON SI SPORCA LE MANI CON LA ROULETTE.' [cite: 2026-02-15]
+                SE PROPRIO NON ESISTE NULLA:
+                '🌵 NESSUNA PEPITA. NEMMENO LE OMBRE SANNO CHI VINCERÀ OGGI.' [cite: 2026-02-15]
                 """
 
                 res = client_gemini.models.generate_content(
