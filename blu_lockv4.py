@@ -99,7 +99,7 @@ if st.button("🗡️ SCATENA LO SCUDO DI ZORRO (VERIFICA ASSOLUTA)"):
                 """
 
                 res = client_gemini.models.generate_content(
-                    model='gemini-2.0-flash', 
+                    model='gemini-2.5-flash', 
                     contents=[prompt] + images,
                     config={'tools': [{'google_search': {}}]}
                 )
