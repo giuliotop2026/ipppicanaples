@@ -3,7 +3,7 @@ from google import genai
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- 1. GRAFICA "EL DECODIFICADOR" (INVARIATA) ---
+# --- 1. GRAFICA "EL DECODIFICADOR" (INVIOLABILE) ---
 st.markdown("""
     <style>
     .stApp { 
@@ -38,9 +38,9 @@ except KeyError:
 st.title("⚔️ ZORRO 1.25: EL DECODIFICADOR SUPREMO")
 st.markdown("### *'Se il rating tace, il cuore del campione grida nei commenti. USA: la classe schiaccia la nebbia.'*")
 
-# --- 3. SELEZIONE TERRITORIO ---
+# --- 3. SELEZIONE TERRITORIO (SUD AFRICA AGGIUNTO) ---
 nazione = st.selectbox("🗺️ MAPPA DELLE OPERAZIONI:", [
-    "USA", "SVEZIA", "AUSTRALIA", "ITALIA", "FRANCIA", "UK", "IRLANDA", "GERMANIA"
+    "SUD AFRICA", "USA", "SVEZIA", "AUSTRALIA", "ITALIA", "FRANCIA", "UK", "IRLANDA", "GERMANIA"
 ])
 
 uploaded_files = st.file_uploader("📜 AFFIGGI I MANIFESTI (DATI PRIMARI):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
@@ -51,7 +51,7 @@ if uploaded_files:
     for i, file in enumerate(uploaded_files):
         with cols[i]: st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (PROTOCOLLO AGGIORNATO USA 4.0) ---
+# --- 4. IL GRILLETTO (PROTOCOLLO GRANITO 3.0) ---
 if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
     if not uploaded_files:
         st.warning("CARICA I MANIFESTI, CABALLERO!")
@@ -60,61 +60,65 @@ if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
-                # LOGICA SPECIFICA PER USA FOCUS
-                usa_logic = ""
+                # LOGICA SPECIFICA PER TERRITORIO
+                logic_focus = ""
                 if nazione == "USA":
-                    usa_logic = """
+                    logic_focus = """
                     REGOLE SPECIALI USA FOCUS:
-                    - SE 'RT.' MANCA, USA GOOGLE SEARCH PER TROVARE I 'BEYER SPEED FIGURES' O 'EQUIBASE SPEED FIGURES' RECENTI DI OGNI PARTICELLA. [cite: 2026-02-27]
-                    - ANALIZZA LA 'CLASSE': SE UN CAVALLO SCENDE DA 'ALLOWANCE' O 'STAKES' A 'CLAIMING', È UN TITANO ANCHE SE L'ULTIMO RISULTATO È UN 4. [cite: 2026-02-26]
-                    - REGOLA DEL TITANO LEGITTIMO: SE IL FAVORITO HA QUOTA < 2.00 E HA IL MIGLIOR SPEED FIGURE CERCATO ONLINE, BLINDALO COME CHIAVE. [cite: 2026-02-20]
-                    - SE IL FAVORITO HA GG > 45 O SPEED FIGURE DEBOLE, CERCA IL CHALLENGER CON GAP RATING >= 5. [cite: 2026-02-20]
+                    - SE 'RT.' MANCA, CERCA I 'BEYER SPEED FIGURES'. [cite: 2026-02-27]
+                    - ANALIZZA LA 'CLASSE': SE SCENDE DA 'STAKES' A 'CLAIMING', È UN TITANO. [cite: 2026-02-26]
+                    """
+                elif nazione == "SUD AFRICA":
+                    logic_focus = """
+                    REGOLE SPECIALI SUD AFRICA (GRANITO 3.0):
+                    - ANALIZZA I DATI DI 'COMPUTAFORM' SE PRESENTI NEI COMMENTI. [cite: 2026-02-25]
+                    - IDENTIFICA IL TITANO CON IL MIGLIOR RATING TECNICO (RT) E FORMA 1-2. [cite: 2026-02-20]
+                    - IGNORA LE QUOTE: LA CHIAVE È IL SECONDO MIGLIORE PER DENSITÀ TECNICA E POLMONI D'ACCIAIO. [cite: 2026-02-20]
                     """
 
                 prompt = f"""
                 SEI ZORRO, IL DECODIFICATORE DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
-                TERRITORIO: {nazione} - DATA: 27 FEBBRAIO 2026. [cite: 2026-02-27]
+                TERRITORIO: {nazione} - DATA: 28 FEBBRAIO 2026.
 
-                {usa_logic}
+                {logic_focus}
 
-                MISSIONE SUPREMA: IDENTIFICARE LA CHIAVE CHE BATTE OGNI FILTRO USANDO LA SINTESI TECNICA E LA RICERCA LIVE.
+                MISSIONE SUPREMA: IDENTIFICARE LA CHIAVE CHE BATTE OGNI FILTRO (10000% CERTEZZA). [cite: 2026-02-07]
 
                 FASE 1: ANALISI FONDAMENTALE (MANIFESTO + WEB)
                 - ESTRAI GG E SEQ. (LETTURA: TOP BOX = LATEST). [cite: 2026-02-27]
                 - IDENTIFICA IL FAVORITO E IL SECONDO FAVORITO. [cite: 2026-02-26]
-                - SE 'RT.' MANCA O SE SIAMO IN USA, ANALIZZA I COMMENTI E I DATI DI VELOCITÀ (SPEED FIGURES) ONLINE.
 
-                FASE 2: FILTRI DI GRANITO (10000% CERTEZZA)
-                1. MURO FORMA: ULTIMO RISULTATO 1 O 2 (O COMMENTO DI VITTORIA RECENTE/CLASS DROP). [cite: 2026-02-25]
-                2. FILTRO RUGGINE: GG < 45. SCARTA FAVORITI ARRUGGINITI (> 45 GG). [cite: 2026-02-25]
+                FASE 2: FILTRI DI GRANITO
+                1. MURO FORMA: ULTIMO RISULTATO 1 O 2. [cite: 2026-02-25]
+                2. FILTRO RUGGINE: GG < 45. [cite: 2026-02-25]
                 3. CUORE IMPAVIDO: ALMENO DUE PODI NELLE ULTIME 3 GARE. [cite: 2026-02-25]
 
                 FASE 3: LA CHIAVE SUPREMA (SINTESI)
-                - LA CHIAVE SUPREMA È LA PARTICELLA CHE:
-                    A) PASSA I FILTRI (FORMA 1-2, GG < 45) O È UN TITANO LEGITTIMO USA. [cite: 2026-02-20]
-                    B) HA IL MIGLIOR RATING TECNICO (RT O SPEED FIGURE CERCATO). [cite: 2026-02-20]
-                    C) SCHIACCIA UN FAVORITO DEBOLE (GG > 45 O CATEGORIA INFERIORE).
+                - LA CHIAVE SUPREMA È LA PARTICELLA CHE PASSA TUTTI I FILTRI E SCHIACCIA IL FAVORITO DEBOLE (GG > 45). [cite: 2026-02-20]
 
                 FASE 4: REFERTO FINALE
                 '🌍 MISSIONE: [NAZIONE] - [IPPODROMO]'
                 '🔥 SENTENZA DEL DECODIFICATORE: [FRASE DI CAZZIMMA DI ZORRO].'
-                
-                SE LA CHIAVE ESISTE:
-                '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #]'
-                'BULLONE SERRATO: [SPIEGA PERCHÉ QUESTA È LA CHIAVE SUPREMA: CITA SPEED FIGURES O CLASS DROPS SE USA].' [cite: 2026-02-07, 2026-02-20]
-                
-                SE È ANCORA ROULETTE: '🌵 NESSUNA PEPITA. LA NEBBIA È TROPPO FITTA PER COLPIRE CON CERTEZZA.' [cite: 2026-02-15]
+                SE LA CHIAVE ESISTE: '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #]'.
+                ALTRIMENTI: '🌵 NESSUNA PEPITA. LA NEBBIA È TROPPO FITTA.' [cite: 2026-02-15]
                 """
 
+                # ESECUZIONE CON MOTORE 2.5 FLASH
                 res = client_gemini.models.generate_content(
                     model='gemini-2.5-flash', 
                     contents=[prompt] + images,
                     config={'tools': [{'google_search': {}}]}
                 )
-                sentenza = res.text
                 
-                st.info(sentenza)
-                if "IL SEGNO DELLA Z" in sentenza.upper():
-                    play_victory_bell(); st.balloons()
+                # PROTEZIONE ANTI-NONE PER EVITARE ERRORI .UPPER()
+                sentenza = res.text if res.text else ""
+                
+                if sentenza:
+                    st.info(sentenza)
+                    if "IL SEGNO DELLA Z" in sentenza.upper():
+                        play_victory_bell(); st.balloons()
+                else:
+                    st.error("☠️ IL DECODIFICATORE È RIMASTO IN SILENZIO. RIPROVA IL COLPO!")
+
             except Exception as e:
                 st.error(f"☠️ UN TRADITORE HA MANOMESSO IL DECODIFICATORE: {e}")
