@@ -3,7 +3,7 @@ from google import genai
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- 1. GRAFICA "EL DECODIFICADOR" (INVIOLABILE) ---
+# --- 1. GRAFICA "EL DECODIFICADOR" (INALTERATA) ---
 st.markdown("""
     <style>
     .stApp { 
@@ -51,7 +51,7 @@ if uploaded_files:
     for i, file in enumerate(uploaded_files):
         with cols[i]: st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (PROTOCOLLO GRANITO 3.0) ---
+# --- 4. IL GRILLETTO (PROTOCOLLO AGGIORNATO 4.1) ---
 if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
     if not uploaded_files:
         st.warning("CARICA I MANIFESTI, CABALLERO!")
@@ -65,14 +65,15 @@ if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
                 if nazione == "USA":
                     logic_focus = """
                     REGOLE SPECIALI USA FOCUS:
-                    - SE 'RT.' MANCA, CERCA I 'BEYER SPEED FIGURES'. [cite: 2026-02-27]
+                    - SE 'RT.' MANCA, USA GOOGLE SEARCH PER TROVARE I 'BEYER SPEED FIGURES'. [cite: 2026-02-27]
                     - ANALIZZA LA 'CLASSE': SE SCENDE DA 'STAKES' A 'CLAIMING', È UN TITANO. [cite: 2026-02-26]
                     """
                 elif nazione == "SUD AFRICA":
                     logic_focus = """
-                    REGOLE SPECIALI SUD AFRICA (GRANITO 3.0):
-                    - ANALIZZA I DATI DI 'COMPUTAFORM' SE PRESENTI NEI COMMENTI. [cite: 2026-02-25]
-                    - IDENTIFICA IL TITANO CON IL MIGLIOR RATING TECNICO (RT) E FORMA 1-2. [cite: 2026-02-20]
+                    REGOLE SPECIALI SUD AFRICA (FILTRO TITANIO 4.1):
+                    - ANALIZZA I DATI DI 'COMPUTAFORM' E 'SIGNPOSTS'. [cite: 2026-02-25]
+                    - FILTRO TITANIO: SE IL FAVORITO HA IL MIGLIOR RT ED È SEGNALATO COME 'BEST BET' NEI SIGNPOSTS, NON SCHIACCIARLO. È UN TITANO INVIOLABILE.
+                    - LA CHIAVE SUPREMA DEVE AVERE GAP RATING >= 5 RISPETTO AL FAVORITO PER SCHIACCIARLO. [cite: 2026-02-20]
                     - IGNORA LE QUOTE: LA CHIAVE È IL SECONDO MIGLIORE PER DENSITÀ TECNICA E POLMONI D'ACCIAIO. [cite: 2026-02-20]
                     """
 
@@ -94,7 +95,7 @@ if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
                 3. CUORE IMPAVIDO: ALMENO DUE PODI NELLE ULTIME 3 GARE. [cite: 2026-02-25]
 
                 FASE 3: LA CHIAVE SUPREMA (SINTESI)
-                - LA CHIAVE SUPREMA È LA PARTICELLA CHE PASSA TUTTI I FILTRI E SCHIACCIA IL FAVORITO DEBOLE (GG > 45). [cite: 2026-02-20]
+                - LA CHIAVE SUPREMA È LA PARTICELLA CHE PASSA TUTTI I FILTRI E SCHIACCIA IL FAVORITO DEBOLE (GG > 45 O GAP RATING NEGATIVO). [cite: 2026-02-20]
 
                 FASE 4: REFERTO FINALE
                 '🌍 MISSIONE: [NAZIONE] - [IPPODROMO]'
@@ -103,14 +104,12 @@ if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
                 ALTRIMENTI: '🌵 NESSUNA PEPITA. LA NEBBIA È TROPPO FITTA.' [cite: 2026-02-15]
                 """
 
-                # ESECUZIONE CON MOTORE 2.5 FLASH
                 res = client_gemini.models.generate_content(
                     model='gemini-2.5-flash', 
                     contents=[prompt] + images,
                     config={'tools': [{'google_search': {}}]}
                 )
                 
-                # PROTEZIONE ANTI-NONE PER EVITARE ERRORI .UPPER()
                 sentenza = res.text if res.text else ""
                 
                 if sentenza:
