@@ -3,7 +3,9 @@ from google import genai
 from PIL import Image
 import streamlit.components.v1 as components
 
-# --- 1. GRAFICA "EL DECODIFICADOR" (INALTERATA) ---
+# --- 1. GRAFICA "EL DECODIFICADOR" ---
+st.set_page_config(page_title="ZORRO SUPREMO", page_icon="⚔️", layout="centered")
+
 st.markdown("""
     <style>
     .stApp { 
@@ -28,17 +30,21 @@ def play_victory_bell():
     audio_url = "https://www.myinstants.com/media/sounds/boxing-bell.mp3"
     components.html(f'<audio autoplay><source src="{audio_url}" type="audio/mpeg"></audio>', height=0, width=0)
 
+def play_abort_buzzer():
+    audio_url = "https://www.myinstants.com/media/sounds/wrong-answer-sound-effect.mp3"
+    components.html(f'<audio autoplay><source src="{audio_url}" type="audio/mpeg"></audio>', height=0, width=0)
+
 # --- 2. CONNESSIONE AL CERVELLO OMNISCIENTE ---
 try:
     client_gemini = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 except KeyError:
-    st.error("☠️ CABALLERO, LA CHIAVE API È SPARITA!")
+    st.error("☠️ CABALLERO, LA CHIAVE API È SPARITA! CONFIGURA I SECRETS SU STREAMLIT CLOUD.")
     st.stop()
 
 st.title("⚔️ ZORRO 1.25: EL DECODIFICADOR SUPREMO")
-st.markdown("### *'Se il rating tace, il cuore del campione grida nei commenti. USA: la classe schiaccia la nebbia.'*")
+st.markdown("### *'SE IL RATING TACE, IL CUORE DEL CAMPIONE GRIDA. LA MATEMATICA SCHIACCIA LA NEBBIA.'*")
 
-# --- 3. SELEZIONE TERRITORIO (SUD AFRICA AGGIUNTO) ---
+# --- 3. SELEZIONE TERRITORIO ---
 nazione = st.selectbox("🗺️ MAPPA DELLE OPERAZIONI:", [
     "SUD AFRICA", "USA", "SVEZIA", "AUSTRALIA", "ITALIA", "FRANCIA", "UK", "IRLANDA", "GERMANIA"
 ])
@@ -51,57 +57,52 @@ if uploaded_files:
     for i, file in enumerate(uploaded_files):
         with cols[i]: st.image(file, caption=f"Manifesto #{i+1}", use_column_width=True)
 
-# --- 4. IL GRILLETTO (PROTOCOLLO AGGIORNATO 4.1) ---
-if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
+# --- 4. IL GRILLETTO (MOTORE ADATTIVO INTEGRATO) ---
+if st.button("🗡️ SCATENA IL DECODIFICATORE MATEMATICO"):
     if not uploaded_files:
         st.warning("CARICA I MANIFESTI, CABALLERO!")
     else:
-        with st.spinner("ZORRO STA DECODIFICANDO L'ANIMA DELLA GARA... ⏳"):
+        with st.spinner("ZORRO STA CALCOLANDO L'INDICE DI DENSITÀ TECNICA REALE... ⏳"):
             try:
                 images = [Image.open(f) for f in uploaded_files]
 
-                # LOGICA SPECIFICA PER TERRITORIO
-                logic_focus = ""
-                if nazione == "USA":
-                    logic_focus = """
-                    REGOLE SPECIALI USA FOCUS:
-                    - SE 'RT.' MANCA, USA GOOGLE SEARCH PER TROVARE I 'BEYER SPEED FIGURES'. [cite: 2026-02-27]
-                    - ANALIZZA LA 'CLASSE': SE SCENDE DA 'STAKES' A 'CLAIMING', È UN TITANO. [cite: 2026-02-26]
-                    """
-                elif nazione == "SUD AFRICA":
-                    logic_focus = """
-                    REGOLE SPECIALI SUD AFRICA (FILTRO TITANIO 4.1):
-                    - ANALIZZA I DATI DI 'COMPUTAFORM' E 'SIGNPOSTS'. [cite: 2026-02-25]
-                    - FILTRO TITANIO: SE IL FAVORITO HA IL MIGLIOR RT ED È SEGNALATO COME 'BEST BET' NEI SIGNPOSTS, NON SCHIACCIARLO. È UN TITANO INVIOLABILE.
-                    - LA CHIAVE SUPREMA DEVE AVERE GAP RATING >= 5 RISPETTO AL FAVORITO PER SCHIACCIARLO. [cite: 2026-02-20]
-                    - IGNORA LE QUOTE: LA CHIAVE È IL SECONDO MIGLIORE PER DENSITÀ TECNICA E POLMONI D'ACCIAIO. [cite: 2026-02-20]
-                    """
-
                 prompt = f"""
-                SEI ZORRO, IL DECODIFICATORE DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. [cite: 2026-01-20]
-                TERRITORIO: {nazione} - DATA: 28 FEBBRAIO 2026.
+                SEI ZORRO, IL DECODIFICATORE SUPREMO DEL PROGETTO BLUE LOCK. LA TUA SINTASSI DEVE ESSERE RIGOROSAMENTE IN MAIUSCOLO.
+                TERRITORIO: {nazione}.
+                MISSIONE: ESEGUIRE IL PROTOCOLLO GRANITO 3.0 E TROVARE LA CHIAVE CON POLMONI D'ACCIAIO, IGNORANDO TOTALMENTE LE QUOTE.
 
-                {logic_focus}
+                ORDINE DI ESECUZIONE INVIOLABILE E SPIETATO (IL MOTORE ADATTIVO):
+                
+                FASE 1: PROTOCOLLO DATI FANTASMA E SCANSIONE DELLA SABBIA
+                SE DALLA FOTO NOTI CHE MANCANO I RATING (RT) O I GIORNI DI RIPOSO (GG), NON SCARTARE SUBITO. 
+                CERCA LA COMPENSAZIONE NELLA 'CLASSE SUPREMA':
+                - IN USA/AUSTRALIA/SUD AFRICA: GUARDA IL SALTO DI CATEGORIA, IL PESO, IL NOME DEL FANTINO O I PIAZZAMENTI IN CARRIERA.
+                SE I DATI MATEMATICI MANCANO MA LA CLASSE È EVIDENTE, ASSEGNA UN 'BONUS CLASSE FANTASMA' (DA 10 A 30 PUNTI) PER SOSTITUIRE LE VARIABILI MANCANTI.
+                SE INVECE MANCANO I DATI E LA GARA È COMPOSTA SOLO DA DEBUTTANTI SENZA STORICO O TROPPO CAOTICA, ALLORA INTERROMPI TUTTO IMMEDIATAMENTE.
+                LA SENTENZA DEVE ESSERE ESATTAMENTE: 
+                "🚨 PERICOLO RILEVATO. DATI INCOMPLETI O GARA CAOTICA. ORDINE SUPREMO: NON GIOCARE."
+                
+                FASE 2: CALCOLO DELL'INDICE DI DENSITÀ TECNICA REALE
+                VALUTA *TUTTI* I CAVALLI DELLA GARA, INCLUSO IL FAVORITO. CALCOLA MENTALMENTE QUESTO PUNTEGGIO:
+                - BASE (SE RT È PRESENTE, PER GLI SFIDANTI): (RT CAVALLO - RT FAVORITO) * 2.5.
+                - BASE (SE RT È PRESENTE, PER IL FAVORITO): (RT FAVORITO - RT SECONDO MIGLIORE) * 2.5.
+                - BASE (SE RT MANCA): USA IL 'BONUS CLASSE FANTASMA' CALCOLATO NELLA FASE 1.
+                - RUGGINE (SE GG È PRESENTE E > 30): SOTTRAI (GG - 30) * 0.5. (SE < 30): AGGIUNGI (30 - GG) * 0.2.
+                - POLMONI: AGGIUNGI 15 PUNTI PER OGNI PIAZZAMENTO (1°, 2°, 3° POSTO) NELLE ULTIME 3 GARE.
+                - INVIOLABILITÀ: SE L'ULTIMO RISULTATO È 1 O 2, AGGIUNGI 20 PUNTI BONUS.
 
-                MISSIONE SUPREMA: IDENTIFICARE LA CHIAVE CHE BATTE OGNI FILTRO (10000% CERTEZZA). [cite: 2026-02-07]
-
-                FASE 1: ANALISI FONDAMENTALE (MANIFESTO + WEB)
-                - ESTRAI GG E SEQ. (LETTURA: TOP BOX = LATEST). [cite: 2026-02-27]
-                - IDENTIFICA IL FAVORITO E IL SECONDO FAVORITO. [cite: 2026-02-26]
-
-                FASE 2: FILTRI DI GRANITO
-                1. MURO FORMA: ULTIMO RISULTATO 1 O 2. [cite: 2026-02-25]
-                2. FILTRO RUGGINE: GG < 45. [cite: 2026-02-25]
-                3. CUORE IMPAVIDO: ALMENO DUE PODI NELLE ULTIME 3 GARE. [cite: 2026-02-25]
-
-                FASE 3: LA CHIAVE SUPREMA (SINTESI)
-                - LA CHIAVE SUPREMA È LA PARTICELLA CHE PASSA TUTTI I FILTRI E SCHIACCIA IL FAVORITO DEBOLE (GG > 45 O GAP RATING NEGATIVO). [cite: 2026-02-20]
-
-                FASE 4: REFERTO FINALE
-                '🌍 MISSIONE: [NAZIONE] - [IPPODROMO]'
-                '🔥 SENTENZA DEL DECODIFICATORE: [FRASE DI CAZZIMMA DI ZORRO].'
-                SE LA CHIAVE ESISTE: '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #]'.
-                ALTRIMENTI: '🌵 NESSUNA PEPITA. LA NEBBIA È TROPPO FITTA.' [cite: 2026-02-15]
+                FASE 3: LA SOGLIA DEL CEMENTO
+                SE NESSUN CAVALLO (NÉ FAVORITO NÉ SFIDANTE) RAGGIUNGE UN INDICE TOTALE DI ALMENO 55.0 PUNTI (CON DATI PURI O CLASSE FANTASMA), LA GARA È DI SABBIA E DEVE ESSERE SCARTATA.
+                LA SENTENZA DEVE ESSERE ESATTAMENTE:
+                "🚨 NESSUN CAVALLO RAGGIUNGE LA SOGLIA DEL GRANITO. ORDINE SUPREMO: NON GIOCARE."
+                
+                FASE 4: REFERTO FINALE DELLA VITTORIA
+                SE ESISTE UN CAVALLO CHE SUPERA I 55.0 PUNTI ED È IL MIGLIORE IN ASSOLUTO (CHE SIA IL FAVORITO TITANO O IL VINCITORE NASCOSTO), EGLI È IL NOSTRO BERSAGLIO.
+                RESTITUISCI ESATTAMENTE QUESTO FORMATO:
+                '🌍 MISSIONE: [NAZIONE]'
+                '🔥 SENTENZA DEL DECODIFICATORE: LA CLASSE SCHIACCIA LA NEBBIA E IL CANTIERE È SERRATO.'
+                '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #] - [NOME CAVALLO]'
+                '📊 INDICE DI DENSITÀ CALCOLATO: [INSERISCI IL PUNTEGGIO STIMATO E SPIEGA BREVEMENTE COME HAI CALCOLATO I PUNTI O COMPENSATO I DATI MANCANTI]'
                 """
 
                 res = client_gemini.models.generate_content(
@@ -110,14 +111,21 @@ if st.button("🗡️ SCATENA IL DECODIFICATORE (CHIAVE SUPREMA)"):
                     config={'tools': [{'google_search': {}}]}
                 )
                 
-                sentenza = res.text if res.text else ""
+                sentenza = res.text.strip().upper() if res.text else ""
                 
                 if sentenza:
-                    st.info(sentenza)
-                    if "IL SEGNO DELLA Z" in sentenza.upper():
-                        play_victory_bell(); st.balloons()
+                    if "NON GIOCARE" in sentenza:
+                        st.error(sentenza)
+                        play_abort_buzzer()
+                    elif "IL SEGNO DELLA Z" in sentenza:
+                        st.success(sentenza)
+                        play_victory_bell()
+                        st.balloons()
+                    else:
+                        st.warning(sentenza)
                 else:
-                    st.error("☠️ IL DECODIFICATORE È RIMASTO IN SILENZIO. RIPROVA IL COLPO!")
+                    st.error("☠️ IL DECODIFICATORE È RIMASTO IN SILENZIO. IL CANTIERE È BLOCCATO.")
 
             except Exception as e:
                 st.error(f"☠️ UN TRADITORE HA MANOMESSO IL DECODIFICATORE: {e}")
+                
