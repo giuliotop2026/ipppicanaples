@@ -31,9 +31,9 @@ def play_victory_bell():
 
 # --- 2. CONNESSIONE AL CERVELLO OMNISCIENTE ---
 try:
-    client_gemini = genai.Client(api_key="AIzaSyCIxojJWV76mkW8QSRgx7rfOPMKsElWj1g")
-except Exception as e:
-    st.error(f"☝️ ERRORE DI INIZIALIZZAZIONE: {e}".upper())
+    client_gemini = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
+except KeyError:
+    st.error("☝️ CABALLERO, LA CHIAVE API È SPARITA!")
     st.stop()
 
 st.title("⚔️ ZORRO 1.15: EL DECODIFICADOR SUPREMO - GRANITO 3.0")
