@@ -137,7 +137,7 @@ def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
 
 # --- 4. SELEZIONE E INTERFACCIA ---
 nazione = st.selectbox("🗺️ SELEZIONA IL TERRITORIO OPERATIVO:", [
-    "ITALIA", "FRANCIA", "UK", "IRLANDA", "SVEZIA", "DANIMARCA", "GERMANIA", "USA", "AUSTRALIA", "SUDAFRICA", "GIAPPONE"
+    "ITALIA", "FRANCIA", "UK", "IRLANDA", "SVEZIA", "DANIMARCA", "GERMANIA", "USA", "AUSTRALIA", "SUDAFRICA", "GIAPPONE", "ARABIA SAUDITA", "EMIRATI ARABI"
 ])
 
 uploaded_files = st.file_uploader("📜 CARICA LE SCHEDE (DATI DA INSERIRE NEL MOTORE MONEYBALL):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
