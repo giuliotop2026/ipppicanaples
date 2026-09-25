@@ -5,7 +5,7 @@ from PIL import Image
 import streamlit.components.v1 as components
 
 # --- 1. CONFIGURAZIONE PAGINA E GRAFICA ---
-st.set_page_config(page_title="Moneyball 1.0", page_icon="⚾", layout="centered")
+st.set_page_config(page_title="Moneyball 1.1", page_icon="⚾", layout="centered")
 
 st.markdown("""
     <style>
@@ -43,21 +43,21 @@ if not GEMINI_KEY:
 # Inizializza il client Gemini
 client_gemini = genai.Client(api_key=GEMINI_KEY)
 
-st.title("⚾ MONEYBALL 1.0: ALGORITMO QUANTITATIVO")
+st.title("⚾ MONEYBALL 1.1: ALGORITMO QUANTITATIVO")
 st.markdown("### *'IL BASEBALL CI HA INSEGNATO A VINCERE CON LA MATEMATICA. ORA LO APPLICHIAMO AI CAVALLI.'*")
 
-# --- 3. FUNZIONI CORE (TUTTE SU FLASH 2.5) ---
+# --- 3. FUNZIONI CORE ---
 def estrai_dati_visione(images, max_tentativi=3):
     prompt_ocr = """
-    SEI UN ESTRATTORE DI DATI DI ALTA PRECISIONE. LEGGI LE IMMAGINI ALLEGATE.
-    ATTENZIONE FONDAMENTALE: SPESSO RICEVERAI 2 IMMAGINI. UNA HA LE STATISTICHE (GG, Forma, Rec.), L'ALTRA HA LE QUOTE SNAI (Tasti V, P2, P3).
-    - INCROCIA I DATI IN BASE AL NUMERO DEL CAVALLO (PARTICELLA).
-    - LA COLONNA "Rec." DELLA PRIMA FOTO NON È LA QUOTA! IGNORALA.
-    - LA VERA QUOTA (Prendi il valore "V") SI TROVA NELLA SECONDA FOTO ACCANTO AL NOME DEL CAVALLO (es. 1.85, 5.50, ecc).
+    SEI UN ESTRATTORE DI DATI DI ALTA PRECISIONE. IL TUO UNICO SCOPO È CREARE UNA TABELLA MARKDOWN CON I DATI DEI CAVALLI.
+    REGOLE VITALI:
+    1. Se ricevi due foto, unisci i dati usando il NUMERO del cavallo (Particella: 1, 2, 3...).
+    2. LA QUOTA (V): Cerca i bottoni grigi con la lettera "V" o "Vincente". Il numero sotto la V (es. 1.85, 5.50) è la Quota. 
+    3. COLONNA Rec: I numeri sotto la colonna "Rec" (es. 10.1, 12.7) NON SONO LE QUOTE! IGNORALI TOTALMENTE.
     
-    RESTITUISCI I DATI ESCLUSIVAMENTE IN UNA TABELLA MARKDOWN.
+    RESTITUISCI SOLO LA TABELLA MARKDOWN.
     COLONNE: | PARTICELLA | QUOTA (V) | FANTINO / ALLENATORE | PESO | GG (GIORNI) | FORMA (es. 1-2-3-0) | COMMENTO |
-    NON FARE ANALISI, TRASCRIVI FEDELMENTE INCROCIANDO LE DUE FOTO. SE MANCA IL PESO METTI "-".
+    Se un dato è illeggibile, scrivi "ASSENTE", ma fai l'impossibile per non lasciare vuota la Quota e la Forma.
     """
     for tentativo in range(max_tentativi):
         try:
@@ -77,21 +77,24 @@ def estrai_dati_visione(images, max_tentativi=3):
 
 def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
     prompt_analisi = f"""
-    RUOLO: SEI IL MOTORE MATEMATICO DEL 'PROGETTO MONEYBALL 1.0'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. 
+    RUOLO: SEI IL MOTORE MATEMATICO DEL 'PROGETTO MONEYBALL 1.1'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. 
 
     TERRITORIO: {nazione}
     DATI GREZZI (TABELLA):
     {dati_estratti}
 
-    MISSIONE: IDENTIFICARE IL PIAZZATO BLINDATO TRA I 3 FAVORITI.
-    DEVI RAGIONARE STEP-BY-STEP E ASSEGNARE UN PUNTEGGIO DA 0 A 100 AI 3 CAVALLI CON LA QUOTA PIÙ BASSA (Basandoti rigorosamente sulla colonna QUOTA).
+    MISSIONE: IDENTIFICARE IL PIAZZATO BLINDATO.
+    
+    REGOLE DI SELEZIONE INIZIALE:
+    - Cerca i 3 cavalli con la QUOTA più bassa.
+    - PIANO B (ANTICRASH): Se le quote sono marcate come "ASSENTE", "-" o sono palesemente errate, NON ABORTIRE LA MISSIONE. Ignora le quote ed elabora lo score matematico per TUTTI I CAVALLI DELLA TABELLA.
     
     CRITERI DI SCORING MATEMATICO (PESI AGGIORNATI):
-    1. FORMA RECENTE (Max 50 punti): Numeri 1, 2, 3 presenti nelle ultime corse = +50 punti. Zeri (0) o lettere (p,c,f) = -30 punti (Instabilità).
-    2. RUGGINE / GG (Max 30 punti): Qualsiasi GG inferiore a 40 (quindi 8, 13, 20 ecc.) = +30 punti. GG > 45 = -20 punti.
-    3. BONUS DATI EXTRA (Max 20 punti): Se c'è un fantino top o commento molto positivo = +20. Se il campo è VUOTO o inesistente = 0 (nessuna penalità, ignoralo).
+    1. FORMA RECENTE (Max 50 punti): Numeri 1, 2, 3 presenti nelle ultime corse = +50 punti. Zeri (0) o lettere (p,c,f,RP,RI) = -30 punti (Instabilità).
+    2. RUGGINE / GG (Max 30 punti): Qualsiasi GG inferiore a 40 (es. 8, 13, 20) = +30 punti. GG > 45 = -20 punti.
+    3. BONUS DATI EXTRA (Max 20 punti): Se c'è un commento molto positivo = +20. Se il campo è vuoto = 0 (nessuna penalità).
 
-    ELABORA PER I 3 FAVORITI:
+    ELABORA PER I CAVALLI SELEZIONATI (I 3 favoriti o TUTTI se Piano B attivo):
     - Nome/Particella:
     - Punti Forma: ...
     - Punti Ruggine (GG): ...
@@ -99,15 +102,15 @@ def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
     - TOTALE SCORE: .../100
 
     LA CHIAVE SUPREMA: 
-    Il cavallo con lo Score più alto è il PIAZZATO BLINDATO, SOLO SE supera i 75 PUNTI. (Se un cavallo ha Forma perfetta e GG recente farà 80 punti, quindi è valido anche senza commento!).
+    Il cavallo con lo Score più alto è il PIAZZATO BLINDATO, SOLO SE supera i 75 PUNTI (nessuna penalità tollerata).
 
     REFERTO FINALE:
     '🌍 MISSIONE: {nazione}'
     '📊 SCORE MONEYBALL: [Riassumi i punteggi]'
     
-    SE ESISTE UN CAVALLO >= 75/100 E CON ZERO PENALITÀ:
+    SE ESISTE UN CAVALLO >= 75/100:
     '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO]'
-    'BULLONE SERRATO: [Spiega tecnicamente la solidità statistica del cavallo]'
+    'BULLONE SERRATO: [Spiega tecnicamente la solidità statistica del cavallo, menzionando forma e giorni di riposo]'
     
     SE NESSUNO RAGGIUNGE 75 PUNTI O HANNO ZERI IN FORMA:
     '🌵 NESSUN MARGINE STATISTICO. CAVALLI INSTABILI. MISSIONE ABORTITA.'
@@ -146,21 +149,21 @@ if uploaded_files:
         file.seek(0)
 
 # --- 5. ESECUZIONE (IL GRILLETTO) ---
-if st.button("⚾ AVVIA MONEYBALL 1.0 (CALCOLO SCORING)"):
+if st.button("⚾ AVVIA MONEYBALL 1.1 (CALCOLO SCORING)"):
     if not uploaded_files:
         st.warning("⚠️ CARICA LE SCHEDE PRIMA DI AVVIARE L'ALGORITMO!")
     else:
         images = [Image.open(f) for f in uploaded_files]
         
-        with st.status("🕵️ Avvio Algoritmo Moneyball 1.0...", expanded=True) as status:
+        with st.status("🕵️ Avvio Algoritmo Moneyball 1.1...", expanded=True) as status:
             try:
-                # STADIO 1: Visione con FLASH
-                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH (Anti-Errore Quote)...")
+                # STADIO 1: Visione
+                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH...")
                 dati_estratti = estrai_dati_visione(images)
                 st.write("✅ Dati strutturati con successo in Tabella!")
                 
-                # STADIO 2: Calcolo con FLASH
-                st.write("🧠 STADIO 2: Calcolo Scoring con Gemini 2.5 FLASH (Modalità Super Veloce)...")
+                # STADIO 2: Calcolo Logico
+                st.write("🧠 STADIO 2: Calcolo Scoring con Fallback Attivo...")
                 sentenza = calcola_scoring_logico(dati_estratti, nazione)
                 
                 status.update(label="🎯 Elaborazione Moneyball Completata!", state="complete", expanded=False)
