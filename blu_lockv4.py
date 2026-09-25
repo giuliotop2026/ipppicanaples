@@ -49,10 +49,15 @@ st.markdown("### *'IL BASEBALL CI HA INSEGNATO A VINCERE CON LA MATEMATICA. ORA 
 # --- 3. FUNZIONI CORE (TUTTE SU FLASH 2.5) ---
 def estrai_dati_visione(images, max_tentativi=3):
     prompt_ocr = """
-    SEI UN ESTRATTORE DI DATI. LEGGI QUESTE IMMAGINI E TRASCRIVI I DATI.
+    SEI UN ESTRATTORE DI DATI DI ALTA PRECISIONE. LEGGI LE IMMAGINI ALLEGATE.
+    ATTENZIONE FONDAMENTALE: SPESSO RICEVERAI 2 IMMAGINI. UNA HA LE STATISTICHE (GG, Forma, Rec.), L'ALTRA HA LE QUOTE SNAI (Tasti V, P2, P3).
+    - INCROCIA I DATI IN BASE AL NUMERO DEL CAVALLO (PARTICELLA).
+    - LA COLONNA "Rec." DELLA PRIMA FOTO NON È LA QUOTA! IGNORALA.
+    - LA VERA QUOTA (Prendi il valore "V") SI TROVA NELLA SECONDA FOTO ACCANTO AL NOME DEL CAVALLO (es. 1.85, 5.50, ecc).
+    
     RESTITUISCI I DATI ESCLUSIVAMENTE IN UNA TABELLA MARKDOWN.
-    COLONNE: | PARTICELLA | QUOTA | FANTINO / ALLENATORE | PESO | GG (GIORNI) | FORMA (es. 1-2-3-0) | COMMENTO |
-    NON FARE ANALISI, TRASCRIVI SOLO FEDELMENTE CIÒ CHE LEGGI.
+    COLONNE: | PARTICELLA | QUOTA (V) | FANTINO / ALLENATORE | PESO | GG (GIORNI) | FORMA (es. 1-2-3-0) | COMMENTO |
+    NON FARE ANALISI, TRASCRIVI FEDELMENTE INCROCIANDO LE DUE FOTO. SE MANCA IL PESO METTI "-".
     """
     for tentativo in range(max_tentativi):
         try:
@@ -79,7 +84,7 @@ def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
     {dati_estratti}
 
     MISSIONE: IDENTIFICARE IL PIAZZATO BLINDATO TRA I 3 FAVORITI.
-    DEVI RAGIONARE STEP-BY-STEP E ASSEGNARE UN PUNTEGGIO DA 0 A 100 AI 3 CAVALLI CON LA QUOTA PIÙ BASSA.
+    DEVI RAGIONARE STEP-BY-STEP E ASSEGNARE UN PUNTEGGIO DA 0 A 100 AI 3 CAVALLI CON LA QUOTA PIÙ BASSA (Basandoti rigorosamente sulla colonna QUOTA).
     
     CRITERI DI SCORING MATEMATICO (PESI AGGIORNATI):
     1. FORMA RECENTE (Max 50 punti): Numeri 1, 2, 3 presenti nelle ultime corse = +50 punti. Zeri (0) o lettere (p,c,f) = -30 punti (Instabilità).
@@ -150,7 +155,7 @@ if st.button("⚾ AVVIA MONEYBALL 1.0 (CALCOLO SCORING)"):
         with st.status("🕵️ Avvio Algoritmo Moneyball 1.0...", expanded=True) as status:
             try:
                 # STADIO 1: Visione con FLASH
-                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH...")
+                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH (Anti-Errore Quote)...")
                 dati_estratti = estrai_dati_visione(images)
                 st.write("✅ Dati strutturati con successo in Tabella!")
                 
