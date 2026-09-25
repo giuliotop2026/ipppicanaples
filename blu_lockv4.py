@@ -72,50 +72,45 @@ def estrai_dati_visione(images, max_tentativi=3):
 
 def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
     prompt_analisi = f"""
-    RUOLO: SEI IL MOTORE MATEMATICO DEL 'PROGETTO MONEYBALL 1.0' (NOME IN CODICE: ZORRO). 
-    SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. 
+    RUOLO: SEI IL MOTORE MATEMATICO DEL 'PROGETTO MONEYBALL 1.0'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. 
 
     TERRITORIO: {nazione}
     DATI GREZZI (TABELLA):
     {dati_estratti}
 
-    MISSIONE SUPREMA: IDENTIFICARE IL PIAZZATO BLINDATO TRA I 3 FAVORITI.
-    
+    MISSIONE: IDENTIFICARE IL PIAZZATO BLINDATO TRA I 3 FAVORITI.
     DEVI RAGIONARE STEP-BY-STEP E ASSEGNARE UN PUNTEGGIO DA 0 A 100 AI 3 CAVALLI CON LA QUOTA PIÙ BASSA.
     
-    CRITERI DI SCORING MATEMATICO (GRANITO 3.0):
-    1. FORMA RECENTE (Max 35 punti): 1,2,3 nelle ultime = +35. Zeri (0) o (p,c,f) = -20.
-    2. RUGGINE / GG (Max 20 punti): GG tra 15 e 40 = +20. GG > 45 = -20.
-    3. FANTINO E PESO (Max 20 punti): Fantino top o scarico = +20.
-    4. COMMENTO (Max 25 punti): "progresso", "atteso", "polmoni d'acciaio" = +25. "sorpresa", "difficile" = -15.
+    CRITERI DI SCORING MATEMATICO (PESI AGGIORNATI):
+    1. FORMA RECENTE (Max 50 punti): Numeri 1, 2, 3 presenti nelle ultime corse = +50 punti. Zeri (0) o lettere (p,c,f) = -30 punti (Instabilità).
+    2. RUGGINE / GG (Max 30 punti): Qualsiasi GG inferiore a 40 (quindi 8, 13, 20 ecc.) = +30 punti. GG > 45 = -20 punti.
+    3. BONUS DATI EXTRA (Max 20 punti): Se c'è un fantino top o commento molto positivo = +20. Se il campo è VUOTO o inesistente = 0 (nessuna penalità, ignoralo).
 
     ELABORA PER I 3 FAVORITI:
     - Nome/Particella:
     - Punti Forma: ...
-    - Punti Ruggine: ...
-    - Punti Fantino/Peso: ...
-    - Punti Commento: ...
+    - Punti Ruggine (GG): ...
+    - Punti Bonus Extra: ...
     - TOTALE SCORE: .../100
 
     LA CHIAVE SUPREMA: 
-    Il cavallo con lo Score più alto è il PIAZZATO BLINDATO, SOLO SE supera 80/100. 
+    Il cavallo con lo Score più alto è il PIAZZATO BLINDATO, SOLO SE supera i 75 PUNTI. (Se un cavallo ha Forma perfetta e GG recente farà 80 punti, quindi è valido anche senza commento!).
 
     REFERTO FINALE:
     '🌍 MISSIONE: {nazione}'
     '📊 SCORE MONEYBALL: [Riassumi i punteggi]'
     
-    SE ESISTE UN CAVALLO > 80/100:
+    SE ESISTE UN CAVALLO >= 75/100 E CON ZERO PENALITÀ:
     '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO]'
-    'BULLONE SERRATO: [Spiega tecnicamente perché schiaccia le quote dei bookmaker]'
+    'BULLONE SERRATO: [Spiega tecnicamente la solidità statistica del cavallo]'
     
-    SE NESSUNO SUPERA GLI 80 PUNTI:
+    SE NESSUNO RAGGIUNGE 75 PUNTI O HANNO ZERI IN FORMA:
     '🌵 NESSUN MARGINE STATISTICO. CAVALLI INSTABILI. MISSIONE ABORTITA.'
     """
 
     for tentativo in range(max_tentativi):
         try:
             res_analisi = client_gemini.models.generate_content(
-                # Ora anche il cervello usa il modello Flash!
                 model='gemini-2.5-flash', 
                 contents=prompt_analisi
             )
