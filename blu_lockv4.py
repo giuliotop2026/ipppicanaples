@@ -46,18 +46,21 @@ client_gemini = genai.Client(api_key=GEMINI_KEY)
 st.title("⚾ MONEYBALL 1.1: ALGORITMO QUANTITATIVO")
 st.markdown("### *'IL BASEBALL CI HA INSEGNATO A VINCERE CON LA MATEMATICA. ORA LO APPLICHIAMO AI CAVALLI.'*")
 
-# --- 3. FUNZIONI CORE ---
+# --- 3. FUNZIONI CORE (TUTTE SU FLASH 2.5) ---
 def estrai_dati_visione(images, max_tentativi=3):
     prompt_ocr = """
-    SEI UN ESTRATTORE DI DATI DI ALTA PRECISIONE. IL TUO UNICO SCOPO È CREARE UNA TABELLA MARKDOWN CON I DATI DEI CAVALLI.
-    REGOLE VITALI:
-    1. Se ricevi due foto, unisci i dati usando il NUMERO del cavallo (Particella: 1, 2, 3...).
-    2. LA QUOTA (V): Cerca i bottoni grigi con la lettera "V" o "Vincente". Il numero sotto la V (es. 1.85, 5.50) è la Quota. 
-    3. COLONNA Rec: I numeri sotto la colonna "Rec" (es. 10.1, 12.7) NON SONO LE QUOTE! IGNORALI TOTALMENTE.
+    SEI UN TRASCRITTORE VISIVO. IL TUO COMPITO È LEGGERE I NUMERI NELLE IMMAGINI E CREARE UNA TABELLA.
+    VIETATO ESSERE PIGRI: Devi leggere attentamente i numeri sotto la colonna "GG" (Giorni) e le sequenze sotto la colonna "Ultimi Arrivi" o "Forma".
     
-    RESTITUISCI SOLO LA TABELLA MARKDOWN.
-    COLONNE: | PARTICELLA | QUOTA (V) | FANTINO / ALLENATORE | PESO | GG (GIORNI) | FORMA (es. 1-2-3-0) | COMMENTO |
-    Se un dato è illeggibile, scrivi "ASSENTE", ma fai l'impossibile per non lasciare vuota la Quota e la Forma.
+    REGOLE VITALI:
+    1. Crea una tabella markdown per ogni cavallo in gara (1, 2, 3...).
+    2. QUOTA (V): Si trova nella schermata SNAI (i bottoni grigi con V, P2, P3). Prendi il valore V. Ignora la colonna "Rec". Se manca la quota, metti "-".
+    3. FONDAMENTALE: Copia ESATTAMENTE i numeri sotto "GG" (es. 12, 4, 30) e le sequenze sotto "Ultimi Arrivi" (es. 1 2 RP 4). Non inventare nulla.
+    
+    COLONNE DELLA TABELLA:
+    | PARTICELLA | QUOTA (V) | FANTINO / ALLENATORE | PESO | GG (GIORNI) | FORMA | COMMENTO |
+    
+    Se un campo specifico non esiste (come il fantino o il commento), metti un semplice trattino "-", ma NON scartare mai i numeri di GG e FORMA presenti sulle foto!
     """
     for tentativo in range(max_tentativi):
         try:
@@ -87,12 +90,12 @@ def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
     
     REGOLE DI SELEZIONE INIZIALE:
     - Cerca i 3 cavalli con la QUOTA più bassa.
-    - PIANO B (ANTICRASH): Se le quote sono marcate come "ASSENTE", "-" o sono palesemente errate, NON ABORTIRE LA MISSIONE. Ignora le quote ed elabora lo score matematico per TUTTI I CAVALLI DELLA TABELLA.
+    - PIANO B (ANTICRASH): Se le quote sono assenti, inleggibili o segnate con un trattino ("-"), NON ABORTIRE LA MISSIONE. Ignora le quote ed elabora lo score matematico per TUTTI I CAVALLI DELLA TABELLA.
     
     CRITERI DI SCORING MATEMATICO (PESI AGGIORNATI):
     1. FORMA RECENTE (Max 50 punti): Numeri 1, 2, 3 presenti nelle ultime corse = +50 punti. Zeri (0) o lettere (p,c,f,RP,RI) = -30 punti (Instabilità).
     2. RUGGINE / GG (Max 30 punti): Qualsiasi GG inferiore a 40 (es. 8, 13, 20) = +30 punti. GG > 45 = -20 punti.
-    3. BONUS DATI EXTRA (Max 20 punti): Se c'è un commento molto positivo = +20. Se il campo è vuoto = 0 (nessuna penalità).
+    3. BONUS DATI EXTRA (Max 20 punti): Se c'è un commento molto positivo = +20. Se il campo è vuoto o c'è un "-" = 0 (nessuna penalità).
 
     ELABORA PER I CAVALLI SELEZIONATI (I 3 favoriti o TUTTI se Piano B attivo):
     - Nome/Particella:
@@ -158,7 +161,7 @@ if st.button("⚾ AVVIA MONEYBALL 1.1 (CALCOLO SCORING)"):
         with st.status("🕵️ Avvio Algoritmo Moneyball 1.1...", expanded=True) as status:
             try:
                 # STADIO 1: Visione
-                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH...")
+                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH (Anti-Pigrizia)...")
                 dati_estratti = estrai_dati_visione(images)
                 st.write("✅ Dati strutturati con successo in Tabella!")
                 
