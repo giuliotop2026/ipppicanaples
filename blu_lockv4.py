@@ -33,7 +33,7 @@ def play_victory_bell():
     audio_url = "https://www.myinstants.com/media/sounds/boxing-bell.mp3"
     components.html(f'<audio autoplay><source src="{audio_url}" type="audio/mpeg"></audio>', height=0, width=0)
 
-# --- 2. CONTROLLO CHIAVI API (SOLO GEMINI) ---
+# --- 2. CONTROLLO CHIAVI API ---
 GEMINI_KEY = st.secrets.get("GEMINI_API_KEY")
 
 if not GEMINI_KEY:
@@ -115,8 +115,8 @@ def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
     for tentativo in range(max_tentativi):
         try:
             res_analisi = client_gemini.models.generate_content(
-                # Qui usiamo la nuovissima stringa richiesta da Google!
-                model='gemini-3.1-pro-preview', 
+                # Modello impostato su 1.5 Pro, compatibile con il Free Tier
+                model='gemini-1.5-pro', 
                 contents=prompt_analisi
             )
             return res_analisi.text
@@ -155,12 +155,12 @@ if st.button("⚾ AVVIA MONEYBALL 1.0 (CALCOLO SCORING)"):
         with st.status("🕵️ Avvio Algoritmo Moneyball 1.0...", expanded=True) as status:
             try:
                 # STADIO 1: Visione con FLASH
-                st.write("👁️ STADIO 1: Estrazione parametri con Gemini FLASH (Low-Token Mode)...")
+                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH (Low-Token Mode)...")
                 dati_estratti = estrai_dati_visione(images)
                 st.write("✅ Dati strutturati con successo in Tabella!")
                 
-                # STADIO 2: Calcolo con PRO PREVIEW
-                st.write("🧠 STADIO 2: Calcolo Scoring con Gemini 3.1 PRO PREVIEW (Modalità Testo)...")
+                # STADIO 2: Calcolo con 1.5 PRO
+                st.write("🧠 STADIO 2: Calcolo Scoring con Gemini 1.5 PRO (Modalità Testo, Free Tier)...")
                 sentenza = calcola_scoring_logico(dati_estratti, nazione)
                 
                 status.update(label="🎯 Elaborazione Moneyball Completata!", state="complete", expanded=False)
