@@ -46,7 +46,7 @@ client_gemini = genai.Client(api_key=GEMINI_KEY)
 st.title("⚾ MONEYBALL 1.1: ALGORITMO QUANTITATIVO")
 st.markdown("### *'IL BASEBALL CI HA INSEGNATO A VINCERE CON LA MATEMATICA. ORA LO APPLICHIAMO AI CAVALLI.'*")
 
-# --- 3. FUNZIONI CORE (TUTTE SU FLASH 2.5) ---
+# --- 3. FUNZIONI CORE CON ANTI-BLOCCO (FLASH 2.5) ---
 def estrai_dati_visione(images, max_tentativi=3):
     prompt_ocr = """
     COMPITO: Estrai i dati dei cavalli da queste immagini e fondili in un'unica tabella Markdown.
@@ -68,11 +68,12 @@ def estrai_dati_visione(images, max_tentativi=3):
             )
             return res_vision.text
         except Exception as e:
-            if "503" in str(e).upper() or "UNAVAILABLE" in str(e).upper():
+            error_msg = str(e).upper()
+            if "503" in error_msg or "UNAVAILABLE" in error_msg or "429" in error_msg or "RESOURCE_EXHAUSTED" in error_msg:
                 if tentativo < max_tentativi - 1:
-                    time.sleep(2 ** tentativo)
+                    time.sleep(15)
                 else:
-                    raise Exception("IL SERVER DI GOOGLE È SATURO. RIPROVA.")
+                    raise Exception("HAI SUPERATO IL LIMITE VELOCITÀ DI GOOGLE. ASPETTA 1 MINUTO E RIPROVA.")
             else:
                 raise Exception(f"ERRORE OCR: {str(e)}")
 
@@ -91,7 +92,7 @@ def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
     - PIANO B (ANTICRASH): Se le quote sono assenti o con trattini ("-"), NON ABORTIRE LA MISSIONE. Elabora lo score matematico per TUTTI I CAVALLI DELLA TABELLA.
     
     CRITERI DI SCORING MATEMATICO:
-    1. FORMA RECENTE (Max 50 punti): Numeri 1, 2, 3 presenti nelle ultime corse = +50 punti. Zeri (0) o lettere (p,c,f,RP,RI) = -30 punti (Instabilità).
+    1. FORMA RECENTE (Max 50 punti): Numeri 1, 2, 3 presenti nelle ultime corse = +50 punti. Zeri (0) o lettere (p,c,f,RP,RI,FE) = -30 punti (Instabilità).
     2. RUGGINE / GG (Max 30 punti): GG inferiore a 40 = +30 punti. GG > 45 = -20 punti.
     3. BONUS EXTRA (Max 20 punti): Commento molto positivo = +20. Se vuoto = 0.
 
@@ -111,7 +112,7 @@ def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
     
     SE ESISTE ALMENO UN CAVALLO CON SCORE >= 75/100:
     '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO]'
-    'BULLONE SERRATO: [Spiega tecnicamente la solidità del cavallo. Se ce ne sono due o più che superano i 75 punti, consigliali entrambi oppure scegli quello con la Quota più alta come vera Value Bet].'
+    'BULLONE SERRATO: [Spiega la solidità del cavallo. REGOLA DI SPAREGGIO: Se due o più cavalli hanno lo STESSO punteggio altissimo, eleggi come vincitore assoluto quello con la QUOTA PIÙ BASSA, per massimizzare la probabilità di successo e blindare le Multiple].'
     
     SE NESSUN CAVALLO IN ASSOLUTO RAGGIUNGE I 75 PUNTI:
     '🌵 NESSUN MARGINE STATISTICO. I FAVORITI SONO INSTABILI. MISSIONE ABORTITA.'
@@ -125,11 +126,12 @@ def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
             )
             return res_analisi.text
         except Exception as e:
-            if "503" in str(e).upper() or "UNAVAILABLE" in str(e).upper():
+            error_msg = str(e).upper()
+            if "503" in error_msg or "UNAVAILABLE" in error_msg or "429" in error_msg or "RESOURCE_EXHAUSTED" in error_msg:
                 if tentativo < max_tentativi - 1:
-                    time.sleep(3 * (2 ** tentativo))
+                    time.sleep(15)
                 else:
-                    raise Exception("IL MOTORE LOGICO È SATURO. MISSIONE ABORTITA.")
+                    raise Exception("HAI SUPERATO IL LIMITE VELOCITÀ DI GOOGLE. ASPETTA 1 MINUTO E RIPROVA.")
             else:
                 raise Exception(f"ERRORE DI SISTEMA LOGICO: {str(e)}")
 
@@ -159,7 +161,7 @@ if st.button("⚾ AVVIA MONEYBALL 1.1 (CALCOLO SCORING)"):
         with st.status("🕵️ Avvio Algoritmo Moneyball 1.1...", expanded=True) as status:
             try:
                 # STADIO 1: Visione
-                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH (Migliorato)...")
+                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH (Anti-Errore e Anti-Blocco)...")
                 dati_estratti = estrai_dati_visione(images)
                 st.write("✅ Dati strutturati con successo in Tabella!")
                 
