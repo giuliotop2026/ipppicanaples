@@ -49,18 +49,16 @@ st.markdown("### *'IL BASEBALL CI HA INSEGNATO A VINCERE CON LA MATEMATICA. ORA 
 # --- 3. FUNZIONI CORE (TUTTE SU FLASH 2.5) ---
 def estrai_dati_visione(images, max_tentativi=3):
     prompt_ocr = """
-    SEI UN TRASCRITTORE VISIVO DI PRECISIONE ASSOLUTA.
-    Crea una tabella markdown incrociando i dati di queste foto per ogni cavallo in gara (1, 2, 3...).
+    COMPITO: Estrai i dati dei cavalli da queste immagini e fondili in un'unica tabella Markdown.
     
-    REGOLE VITALI ANTI-ERRORE:
-    1. QUOTA (V): Prendila dalla schermata SNAI (bottoni grigi con V).
-    2. COLONNA GG (GIORNI): FAI MASSIMA ATTENZIONE. Prima di GG c'è spesso una colonna chiamata "Rt.", "Rec." o "St.". IGNORALE COMPLETAMENTE. Devi prendere SOLO ed ESCLUSIVAMENTE il numero che si trova esattamente sotto l'intestazione "GG" (es. 12, 17, 14, ecc).
-    3. FORMA: Copia le sequenze esatte sotto "Ultimi Arrivi" o "Forma" (es. 1 2 RP 4).
+    COME LEGGERE LE IMMAGINI:
+    - FOTO 1 (Statistiche): Da qui devi estrarre il N. (Particella), il numero esatto sotto la colonna "GG" (Giorni), e la sequenza sotto "Ultimi Arrivi" (es. 1 2 RP 4).
+    - FOTO 2 (Quote): Da qui devi estrarre la QUOTA (il numero nel bottone grigio Vincente) e abbinarla alla giusta Particella.
     
-    COLONNE DELLA TABELLA:
+    TABELLA RICHIESTA:
     | PARTICELLA | QUOTA (V) | FANTINO / ALLENATORE | PESO | GG (GIORNI) | FORMA | COMMENTO |
     
-    Se un campo specifico non esiste metti "-", ma non confondere MAI la colonna Rt/Rec con la colonna GG!
+    Sforzati di non lasciare MAI vuote le colonne GG e FORMA. Se vedi i quadratini verdi/rossi nella prima foto, trascrivi cosa c'è scritto dentro! Se manca un dato minore come Peso o Commento, metti "-".
     """
     for tentativo in range(max_tentativi):
         try:
@@ -161,7 +159,7 @@ if st.button("⚾ AVVIA MONEYBALL 1.1 (CALCOLO SCORING)"):
         with st.status("🕵️ Avvio Algoritmo Moneyball 1.1...", expanded=True) as status:
             try:
                 # STADIO 1: Visione
-                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH (Anti-Errore Colonne)...")
+                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH (Migliorato)...")
                 dati_estratti = estrai_dati_visione(images)
                 st.write("✅ Dati strutturati con successo in Tabella!")
                 
