@@ -90,14 +90,14 @@ def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
     
     REGOLE DI SELEZIONE INIZIALE:
     - Cerca i 3 cavalli con la QUOTA più bassa.
-    - PIANO B (ANTICRASH): Se le quote sono assenti, inleggibili o segnate con un trattino ("-"), NON ABORTIRE LA MISSIONE. Ignora le quote ed elabora lo score matematico per TUTTI I CAVALLI DELLA TABELLA.
+    - PIANO B (ANTICRASH): Se le quote sono assenti o con trattini ("-"), NON ABORTIRE LA MISSIONE. Elabora lo score matematico per TUTTI I CAVALLI DELLA TABELLA.
     
-    CRITERI DI SCORING MATEMATICO (PESI AGGIORNATI):
+    CRITERI DI SCORING MATEMATICO:
     1. FORMA RECENTE (Max 50 punti): Numeri 1, 2, 3 presenti nelle ultime corse = +50 punti. Zeri (0) o lettere (p,c,f,RP,RI) = -30 punti (Instabilità).
-    2. RUGGINE / GG (Max 30 punti): Qualsiasi GG inferiore a 40 (es. 8, 13, 20) = +30 punti. GG > 45 = -20 punti.
-    3. BONUS DATI EXTRA (Max 20 punti): Se c'è un commento molto positivo = +20. Se il campo è vuoto o c'è un "-" = 0 (nessuna penalità).
+    2. RUGGINE / GG (Max 30 punti): GG inferiore a 40 = +30 punti. GG > 45 = -20 punti.
+    3. BONUS EXTRA (Max 20 punti): Commento molto positivo = +20. Se vuoto = 0.
 
-    ELABORA PER I CAVALLI SELEZIONATI (I 3 favoriti o TUTTI se Piano B attivo):
+    ELABORA LO SCORE PER I CAVALLI SELEZIONATI:
     - Nome/Particella:
     - Punti Forma: ...
     - Punti Ruggine (GG): ...
@@ -105,18 +105,18 @@ def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
     - TOTALE SCORE: .../100
 
     LA CHIAVE SUPREMA: 
-    Il cavallo con lo Score più alto è il PIAZZATO BLINDATO, SOLO SE supera i 75 PUNTI (nessuna penalità tollerata).
+    Il cavallo con lo Score più alto è il PIAZZATO BLINDATO, SOLO SE supera i 75 PUNTI.
 
     REFERTO FINALE:
     '🌍 MISSIONE: {nazione}'
     '📊 SCORE MONEYBALL: [Riassumi i punteggi]'
     
-    SE ESISTE UN CAVALLO >= 75/100:
+    SE ESISTE ALMENO UN CAVALLO CON SCORE >= 75/100:
     '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO]'
-    'BULLONE SERRATO: [Spiega tecnicamente la solidità statistica del cavallo, menzionando forma e giorni di riposo]'
+    'BULLONE SERRATO: [Spiega tecnicamente la solidità del cavallo. Se ce ne sono due o più che superano i 75 punti, consigliali entrambi oppure scegli quello con la Quota più alta come vera Value Bet].'
     
-    SE NESSUNO RAGGIUNGE 75 PUNTI O HANNO ZERI IN FORMA:
-    '🌵 NESSUN MARGINE STATISTICO. CAVALLI INSTABILI. MISSIONE ABORTITA.'
+    SE NESSUN CAVALLO IN ASSOLUTO RAGGIUNGE I 75 PUNTI:
+    '🌵 NESSUN MARGINE STATISTICO. I FAVORITI SONO INSTABILI. MISSIONE ABORTITA.'
     """
 
     for tentativo in range(max_tentativi):
@@ -161,7 +161,7 @@ if st.button("⚾ AVVIA MONEYBALL 1.1 (CALCOLO SCORING)"):
         with st.status("🕵️ Avvio Algoritmo Moneyball 1.1...", expanded=True) as status:
             try:
                 # STADIO 1: Visione
-                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH (Anti-Pigrizia)...")
+                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH (Anti-Errore)...")
                 dati_estratti = estrai_dati_visione(images)
                 st.write("✅ Dati strutturati con successo in Tabella!")
                 
