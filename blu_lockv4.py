@@ -115,7 +115,8 @@ def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
     for tentativo in range(max_tentativi):
         try:
             res_analisi = client_gemini.models.generate_content(
-                model='gemini-3.1-pro', 
+                # Qui usiamo la versione PRO corretta per l'API
+                model='gemini-2.5-pro', 
                 contents=prompt_analisi
             )
             return res_analisi.text
@@ -159,7 +160,7 @@ if st.button("⚾ AVVIA MONEYBALL 1.0 (CALCOLO SCORING)"):
                 st.write("✅ Dati strutturati con successo in Tabella!")
                 
                 # STADIO 2: Calcolo con PRO
-                st.write("🧠 STADIO 2: Calcolo Scoring con Gemini 3.1 PRO (Modalità Testo)...")
+                st.write("🧠 STADIO 2: Calcolo Scoring con Gemini PRO (Modalità Testo)...")
                 sentenza = calcola_scoring_logico(dati_estratti, nazione)
                 
                 status.update(label="🎯 Elaborazione Moneyball Completata!", state="complete", expanded=False)
