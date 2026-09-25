@@ -1,12 +1,11 @@
 import time
 import streamlit as st
 from google import genai
-from openai import OpenAI
 from PIL import Image
 import streamlit.components.v1 as components
 
 # --- 1. CONFIGURAZIONE PAGINA E GRAFICA ---
-st.set_page_config(page_title="Zorro 1.15", page_icon="⚔️", layout="centered")
+st.set_page_config(page_title="Moneyball 1.0", page_icon="⚾", layout="centered")
 
 st.markdown("""
     <style>
@@ -31,39 +30,37 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 def play_victory_bell():
-    # Nota: L'autoplay potrebbe essere bloccato da alcuni browser (come Chrome/Safari) se l'utente non ha interagito con la pagina.
     audio_url = "https://www.myinstants.com/media/sounds/boxing-bell.mp3"
     components.html(f'<audio autoplay><source src="{audio_url}" type="audio/mpeg"></audio>', height=0, width=0)
 
-# --- 2. CONTROLLO CHIAVI API ---
+# --- 2. CONTROLLO CHIAVI API (SOLO GEMINI) ---
 GEMINI_KEY = st.secrets.get("GEMINI_API_KEY")
-PERPLEXITY_KEY = st.secrets.get("PERPLEXITY_API_KEY")
 
-if not GEMINI_KEY or not PERPLEXITY_KEY:
-    st.error("☝️ CABALLERO, MANCANO LE CHIAVI! ASSICURATI DI AVERE SIA 'GEMINI_API_KEY' CHE 'PERPLEXITY_API_KEY' NELLE SECRETS.")
+if not GEMINI_KEY:
+    st.error("☝️ ATTENZIONE: MANCA LA CHIAVE! ASSICURATI DI AVERE 'GEMINI_API_KEY' NELLE SECRETS.")
     st.stop()
 
+# Inizializza il client Gemini
 client_gemini = genai.Client(api_key=GEMINI_KEY)
-client_perplex = OpenAI(api_key=PERPLEXITY_KEY, base_url="https://api.perplexity.ai")
 
-st.title("⚔️ ZORRO 1.15: MOTORE IBRIDO SUPREMO")
-st.markdown("### *'L'OCCHIO DI GOOGLE, IL CERVELLO DI PERPLEXITY. LA CHIAVE È IL CEMENTO CHE BLINDA IL CANTIERE.'*")
+st.title("⚾ MONEYBALL 1.0: ALGORITMO QUANTITATIVO")
+st.markdown("### *'IL BASEBALL CI HA INSEGNATO A VINCERE CON LA MATEMATICA. ORA LO APPLICHIAMO AI CAVALLI.'*")
 
-# --- 3. FUNZIONI CORE ---
-def estrai_dati_gemini(images, max_tentativi=3):
-    """Estrazione visiva forzando Gemini a restituire una struttura a tabella."""
+# --- 3. FUNZIONI CORE (FLASH PER IMMAGINI, PRO PER TESTO) ---
+def estrai_dati_visione(images, max_tentativi=3):
+    """
+    Usa GEMINI FLASH: Modello leggerissimo ed economico per elaborare le immagini pesanti.
+    Risparmia il 90% dei token.
+    """
     prompt_ocr = """
-    SEI UN ESTRATTORE DI DATI DI ALTISSIMA PRECISIONE. 
-    LEGGI QUESTE IMMAGINI RELATIVE A CORSE DI CAVALLI E TRASCRIVI I DATI.
-    
-    REGOLA FONDAMENTALE: RESTITUISCI I DATI ESCLUSIVAMENTE IN UNA TABELLA MARKDOWN ORDINATA.
-    COLONNE RICHIESTE:
-    | PARTICELLA (NUMERO) | QUOTA | GG (GIORNI DALL'ULTIMA CORSA) | SEQ | FORMA | COMMENTO DELLA CORSA |
-    
-    NON FARE NESSUNA ANALISI, LIMITATI A TRASCRIVERE FEDELMENTE CIÒ CHE LEGGI.
+    SEI UN ESTRATTORE DI DATI. LEGGI QUESTE IMMAGINI E TRASCRIVI I DATI.
+    RESTITUISCI I DATI ESCLUSIVAMENTE IN UNA TABELLA MARKDOWN.
+    COLONNE: | PARTICELLA | QUOTA | FANTINO / ALLENATORE | PESO | GG (GIORNI) | FORMA (es. 1-2-3-0) | COMMENTO |
+    NON FARE ANALISI, TRASCRIVI SOLO FEDELMENTE CIÒ CHE LEGGI.
     """
     for tentativo in range(max_tentativi):
         try:
+            # QUI USIAMO IL FLASH (Consuma pochissimo con le immagini)
             res_vision = client_gemini.models.generate_content(
                 model='gemini-2.5-flash', 
                 contents=[prompt_ocr] + images
@@ -74,115 +71,119 @@ def estrai_dati_gemini(images, max_tentativi=3):
                 if tentativo < max_tentativi - 1:
                     time.sleep(2 ** tentativo)
                 else:
-                    raise Exception("L'OCCHIO DI GOOGLE È CIECO (503 SERVER ERROR).")
+                    raise Exception("IL SERVER DI GOOGLE È SATURO. RIPROVA.")
             else:
-                raise Exception(f"ERRORE SCONOSCIUTO VISIONE: {str(e)}")
+                raise Exception(f"ERRORE OCR: {str(e)}")
 
-def analizza_con_perplexity(dati_estratti, nazione, max_tentativi=4):
-    """Analisi logica con Perplexity basata sui dati tabellari estratti."""
+def calcola_scoring_logico(dati_estratti, nazione, max_tentativi=3):
+    """
+    Usa GEMINI 3.1 PRO: Modello potentissimo per la logica. 
+    Riceve solo puro testo (la tabella), quindi costa pochissimi token.
+    """
     prompt_analisi = f"""
-    TERRITORIO: {nazione} - DATA: OGGI.
-    
-    ECCO I DATI GREZZI ESTRATTI (IN FORMATO TABELLARE):
+    RUOLO: SEI IL MOTORE MATEMATICO DEL 'PROGETTO MONEYBALL 1.0' (NOME IN CODICE: ZORRO). 
+    SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. 
+
+    TERRITORIO: {nazione}
+    DATI GREZZI (TABELLA):
     {dati_estratti}
 
-    MISSIONE SUPREMA: IDENTIFICARE IL PIAZZATO BLINDATO TRA I 3 FAVORITI USANDO LA SINTESI TECNICA E IL PROTOCOLLO 'GRANITO 3.0 - PIAZZATO BLINDATO', APPLICANDO I 'PARAMETRI DI PERFEZIONE 15.15 (USA FOCUS)'. IL FALLIMENTO NON È AMMESSO. ZERO ERRORI.
+    MISSIONE SUPREMA: IDENTIFICARE IL PIAZZATO BLINDATO TRA I 3 FAVORITI.
+    
+    DEVI RAGIONARE STEP-BY-STEP E ASSEGNARE UN PUNTEGGIO DA 0 A 100 AI 3 CAVALLI CON LA QUOTA PIÙ BASSA.
+    
+    CRITERI DI SCORING MATEMATICO (GRANITO 3.0):
+    1. FORMA RECENTE (Max 35 punti): 1,2,3 nelle ultime = +35. Zeri (0) o (p,c,f) = -20.
+    2. RUGGINE / GG (Max 20 punti): GG tra 15 e 40 = +20. GG > 45 = -20.
+    3. FANTINO E PESO (Max 20 punti): Fantino top o scarico = +20.
+    4. COMMENTO (Max 25 punti): "progresso", "atteso", "polmoni d'acciaio" = +25. "sorpresa", "difficile" = -15.
 
-    FASE 1: ISOLAMENTO DELLE 3 PARTICELLE
-    - INDIVIDUA ESATTAMENTE I 3 CAVALLI CON LE QUOTE PIÙ BASSE BASANDOTI SULLA TABELLA FORNITA.
-    - IDENTIFICALI SOLO TRAMITE LA LORO PARTICELLA (NUMERO) PER EVITARE ERRORI. NON USARE MAI I NOMI DEI CAVALLI.
-    - DA QUESTO MOMENTO, IGNORA COMPLETAMENTE LE QUOTE E CONCENTRATI SULLA DENSITÀ TECNICA.
+    ELABORA PER I 3 FAVORITI:
+    - Nome/Particella:
+    - Punti Forma: ...
+    - Punti Ruggine: ...
+    - Punti Fantino/Peso: ...
+    - Punti Commento: ...
+    - TOTALE SCORE: .../100
 
-    FASE 2: FILTRI DI GRANITO SUI 3 SOSPETTATI
-    1. MURO FORMA: LA FORMA RECENTE DEVE ESSERE INVIOLABILE (NESSUN ERRORE CONSENTITO).
-    2. FILTRO RUGGINE: GG < 45. SCARTA CHIUNQUE SIA ARRUGGINITO.
-    3. MOTORE D'ACCIAIO: ANALIZZA IL COMMENTO PER TROVARE CHI HA "POLMONI D'ACCIAIO E VOGLIA DI VINCERE".
+    LA CHIAVE SUPREMA: 
+    Il cavallo con lo Score più alto è il PIAZZATO BLINDATO, SOLO SE supera 80/100. 
 
-    FASE 3: LA CHIAVE SUPREMA (IL CEMENTO CHE BLINDA IL CANTIERE)
-    - IL FAVORITO DI CARTA È UNA PARTICELLA SPESSO INSTABILE.
-    - LA CHIAVE È SEMPRE IL SECONDO MIGLIORE (O IL TERZO) PER DENSITÀ TECNICA E POLMONI D'ACCIAIO.
-    - IL VERO VINCITORE NASCOSTO È IL PIAZZATO SCELTO PER REGOLARITÀ CHE SCHIACCIA IL FAVORITO.
-    - SCANSIONA L'ABISSO TRA QUOTA E DENSITÀ TECNICA REALE. SELEZIONA L'UNICO TRA I 3 CHE OFFRE CERTEZZA AL 10000%.
-
-    FASE 4: REFERTO FINALE
+    REFERTO FINALE:
     '🌍 MISSIONE: {nazione}'
-    '🔥 SENTENZA DEL DECODIFICATORE: [UNA FRASE DI CAZZIMMA DI ZORRO SUL PIAZZATO BLINDATO CHE SCHIACCIA L'INSTABILITÀ].'
+    '📊 SCORE MONEYBALL: [Riassumi i punteggi]'
     
-    SE LA CHIAVE ESISTE (IL PIAZZATO D'ACCIAIO TRA I 3 CHE HA SUPERATO TUTTI I FILTRI DI GRANITO):
-    '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO #]'
-    'BULLONE SERRATO: [SPIEGA PERCHÉ QUESTA PARTICELLA È IL CEMENTO CHE BLINDA IL CANTIERE, EVIDENZIANDO I SUOI POLMONI D'ACCIAIO E LA SUA REGOLARITÀ CONTRO L'INSTABILITÀ DEL FAVORITO DI CARTA].'
+    SE ESISTE UN CAVALLO > 80/100:
+    '🏆 IL SEGNO DELLA Z: PARTICELLA [NUMERO]'
+    'BULLONE SERRATO: [Spiega tecnicamente perché schiaccia le quote dei bookmaker]'
     
-    SE NESSUNO DEI 3 OFFRE 10000% CERTEZZA, SE CI SONO DUBBI O RUGGINE: 
-    '🌵 NESSUNA PEPITA. LA NEBBIA È TROPPO FITTA PER COLPIRE CON CERTEZZA. MISSIONE ABORTITA PER SALVAGUARDARE IL CAPITALE.'
+    SE NESSUNO SUPERA GLI 80 PUNTI:
+    '🌵 NESSUN MARGINE STATISTICO. CAVALLI INSTABILI. MISSIONE ABORTITA.'
     """
 
     for tentativo in range(max_tentativi):
         try:
-            res_analisi = client_perplex.chat.completions.create(
-                model='sonar-pro', 
-                messages=[
-                    {"role": "system", "content": "SEI ZORRO, IL DECODIFICATORE DEL 'PROGETTO BLUE LOCK'. SINTASSI: RIGOROSAMENTE IN MAIUSCOLO. MANTIENI UN TONO AUTOREVOLE E TAGLIENTE."},
-                    {"role": "user", "content": prompt_analisi}
-                ]
+            # QUI USIAMO IL PRO (Ma essendo solo testo, consuma quasi zero token!)
+            res_analisi = client_gemini.models.generate_content(
+                model='gemini-3.1-pro', 
+                contents=prompt_analisi
             )
-            return res_analisi.choices[0].message.content
+            return res_analisi.text
         except Exception as e:
-            errore_str = str(e).upper()
-            if "503" in errore_str or "UNAVAILABLE" in errore_str or "RATE LIMIT" in errore_str:
+            if "503" in str(e).upper() or "UNAVAILABLE" in str(e).upper():
                 if tentativo < max_tentativi - 1:
                     time.sleep(3 * (2 ** tentativo))
                 else:
-                    raise Exception("LE LINEE DI SINTESI SONO CADUTE. MISSIONE ABORTITA.")
+                    raise Exception("IL MOTORE LOGICO È SATURO. MISSIONE ABORTITA.")
             else:
-                raise Exception(f"TRADITORE SCONOSCIUTO HA MANOMESSO IL CERVELLO: {errore_str}")
+                raise Exception(f"ERRORE DI SISTEMA LOGICO: {str(e)}")
 
 # --- 4. SELEZIONE E INTERFACCIA ---
-nazione = st.selectbox("🗺️ MAPPA DELLE OPERAZIONI:", [
+nazione = st.selectbox("🗺️ SELEZIONA IL TERRITORIO OPERATIVO:", [
     "SVEZIA", "AUSTRALIA", "ITALIA", "FRANCIA", "USA", "UK", "IRLANDA", "GERMANIA"
 ])
 
-uploaded_files = st.file_uploader("📜 AFFIGGI I MANIFESTI (DATI PRIMARI PER L'OCCHIO DI GOOGLE):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
+uploaded_files = st.file_uploader("📜 CARICA LE SCHEDE (DATI DA INSERIRE NEL MOTORE MONEYBALL):", type=["jpg", "png", "jpeg"], accept_multiple_files=True)
 
 if uploaded_files:
-    st.markdown("### 👁️ SOSPETTATI SOTTO SCANSIONE VISIVA:")
+    st.markdown("### 👁️ DATI SOTTO SCANSIONE:")
     cols = st.columns(len(uploaded_files))
     for i, file in enumerate(uploaded_files):
-        with cols[i]: st.image(file, caption=f"MANIFESTO #{i+1}", use_column_width=True)
+        with cols[i]: st.image(file, caption=f"Scheda #{i+1}", use_column_width=True)
 
 # --- 5. ESECUZIONE (IL GRILLETTO) ---
-if st.button("🗡️ SCATENA IL DECODIFICATORE IBRIDO (CHIAVE SUPREMA)"):
+if st.button("⚾ AVVIA MONEYBALL 1.0 (CALCOLO SCORING)"):
     if not uploaded_files:
-        st.warning("⚠️ CARICA I MANIFESTI PER L'ESTRAZIONE VISIVA, CABALLERO!")
+        st.warning("⚠️ CARICA LE SCHEDE PRIMA DI AVVIARE L'ALGORITMO!")
     else:
         images = [Image.open(f) for f in uploaded_files]
         
-        # Usiamo st.status per una visualizzazione dell'elaborazione molto più bella e moderna
-        with st.status("🕵️ Avvio Protocollo Granito 3.0...", expanded=True) as status:
+        with st.status("🕵️ Avvio Algoritmo Moneyball 1.0...", expanded=True) as status:
             try:
-                # STADIO 1
-                st.write("👁️ STADIO 1: L'Occhio di Google sta estraendo i dati grezzi in formato tabellare...")
-                dati_estratti = estrai_dati_gemini(images)
-                st.write("✅ Dati estratti con successo!")
+                # STADIO 1: Visione con FLASH
+                st.write("👁️ STADIO 1: Estrazione parametri con Gemini FLASH (Low-Token Mode)...")
+                dati_estratti = estrai_dati_visione(images)
+                st.write("✅ Dati strutturati con successo in Tabella!")
                 
-                # STADIO 2
-                st.write("🧠 STADIO 2: Il Cervello Perplexity sta applicando il protocollo di analisi...")
-                sentenza = analizza_con_perplexity(dati_estratti, nazione)
+                # STADIO 2: Calcolo con PRO
+                st.write("🧠 STADIO 2: Calcolo Scoring con Gemini 3.1 PRO (Modalità Testo)...")
+                sentenza = calcola_scoring_logico(dati_estratti, nazione)
                 
-                status.update(label="🎯 Protocollo completato!", state="complete", expanded=False)
+                status.update(label="🎯 Elaborazione Moneyball Completata!", state="complete", expanded=False)
                 
-                # Mostriamo i dati nel menu a tendina
-                with st.expander("📄 VISUALIZZA I DATI GREZZI ESTRATTI (TABELLA)"):
+                # Visualizzazione Dati Grezzi
+                with st.expander("📄 VISUALIZZA IL DATABASE ESTRATTO (TABELLA)"):
                     st.markdown(dati_estratti)
                 
-                # Sentenza finale
-                st.success("### 📜 REFERTO DEL DECODIFICATORE:")
+                # Sentenza Finale
+                st.success("### 📜 REFERTO MONEYBALL:")
                 st.info(sentenza)
                 
-                # Vittoria
+                # Controllo Vittoria
                 if "IL SEGNO DELLA Z" in sentenza.upper():
                     play_victory_bell()
                     st.balloons()
 
             except Exception as e:
-                status.update(label="❌ Errore durante il protocollo", state="error", expanded=True)
+                status.update(label="❌ Errore durante il calcolo", state="error", expanded=True)
                 st.error(f"⚠️ ATTENZIONE: {str(e)}")
