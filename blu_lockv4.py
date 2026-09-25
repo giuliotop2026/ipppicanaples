@@ -49,18 +49,18 @@ st.markdown("### *'IL BASEBALL CI HA INSEGNATO A VINCERE CON LA MATEMATICA. ORA 
 # --- 3. FUNZIONI CORE (TUTTE SU FLASH 2.5) ---
 def estrai_dati_visione(images, max_tentativi=3):
     prompt_ocr = """
-    SEI UN TRASCRITTORE VISIVO. IL TUO COMPITO È LEGGERE I NUMERI NELLE IMMAGINI E CREARE UNA TABELLA.
-    VIETATO ESSERE PIGRI: Devi leggere attentamente i numeri sotto la colonna "GG" (Giorni) e le sequenze sotto la colonna "Ultimi Arrivi" o "Forma".
+    SEI UN TRASCRITTORE VISIVO DI PRECISIONE ASSOLUTA.
+    Crea una tabella markdown incrociando i dati di queste foto per ogni cavallo in gara (1, 2, 3...).
     
-    REGOLE VITALI:
-    1. Crea una tabella markdown per ogni cavallo in gara (1, 2, 3...).
-    2. QUOTA (V): Si trova nella schermata SNAI (i bottoni grigi con V, P2, P3). Prendi il valore V. Ignora la colonna "Rec". Se manca la quota, metti "-".
-    3. FONDAMENTALE: Copia ESATTAMENTE i numeri sotto "GG" (es. 12, 4, 30) e le sequenze sotto "Ultimi Arrivi" (es. 1 2 RP 4). Non inventare nulla.
+    REGOLE VITALI ANTI-ERRORE:
+    1. QUOTA (V): Prendila dalla schermata SNAI (bottoni grigi con V).
+    2. COLONNA GG (GIORNI): FAI MASSIMA ATTENZIONE. Prima di GG c'è spesso una colonna chiamata "Rt.", "Rec." o "St.". IGNORALE COMPLETAMENTE. Devi prendere SOLO ed ESCLUSIVAMENTE il numero che si trova esattamente sotto l'intestazione "GG" (es. 12, 17, 14, ecc).
+    3. FORMA: Copia le sequenze esatte sotto "Ultimi Arrivi" o "Forma" (es. 1 2 RP 4).
     
     COLONNE DELLA TABELLA:
     | PARTICELLA | QUOTA (V) | FANTINO / ALLENATORE | PESO | GG (GIORNI) | FORMA | COMMENTO |
     
-    Se un campo specifico non esiste (come il fantino o il commento), metti un semplice trattino "-", ma NON scartare mai i numeri di GG e FORMA presenti sulle foto!
+    Se un campo specifico non esiste metti "-", ma non confondere MAI la colonna Rt/Rec con la colonna GG!
     """
     for tentativo in range(max_tentativi):
         try:
@@ -161,12 +161,12 @@ if st.button("⚾ AVVIA MONEYBALL 1.1 (CALCOLO SCORING)"):
         with st.status("🕵️ Avvio Algoritmo Moneyball 1.1...", expanded=True) as status:
             try:
                 # STADIO 1: Visione
-                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH (Anti-Errore)...")
+                st.write("👁️ STADIO 1: Estrazione parametri con Gemini 2.5 FLASH (Anti-Errore Colonne)...")
                 dati_estratti = estrai_dati_visione(images)
                 st.write("✅ Dati strutturati con successo in Tabella!")
                 
                 # STADIO 2: Calcolo Logico
-                st.write("🧠 STADIO 2: Calcolo Scoring con Fallback Attivo...")
+                st.write("🧠 STADIO 2: Calcolo Scoring...")
                 sentenza = calcola_scoring_logico(dati_estratti, nazione)
                 
                 status.update(label="🎯 Elaborazione Moneyball Completata!", state="complete", expanded=False)
